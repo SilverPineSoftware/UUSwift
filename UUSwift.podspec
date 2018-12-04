@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "UUSwift"
-  s.version          = "0.0.2"
+  s.version          = "0.0.3"
 
   s.description      = <<-DESC
                        UUSwift is a framework to extend the base Foundation and UIKit classes.
@@ -14,6 +14,12 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, '10.0'
   s.requires_arc = true
+  s.swift_version = "4.0"
+
+  s.subspec 'Core' do |ss|
+    ss.source_files = 'UUSwift/**/*.{h,m,swift}'
+    ss.frameworks = 'UIKit', 'Foundation'
+  end
 
 end
 

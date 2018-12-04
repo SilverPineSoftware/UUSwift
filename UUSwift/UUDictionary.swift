@@ -45,7 +45,7 @@ public extension Dictionary
             
         }
         
-        return sb as String!
+        return sb as String
     }
     
     public func uuSafeGetDate(_ key: Key, formatter: DateFormatter) -> Date?
