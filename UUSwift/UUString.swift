@@ -9,7 +9,7 @@
 
 import Foundation
 
-extension String
+public extension String
 {
     // Access a sub string based on integer start index and integer length.
     //
@@ -41,8 +41,7 @@ extension String
         
         if (start != nil && end != nil)
         {
-            let range = start! ..< end!
-            return self.substring(with: range)
+            return String.init(self[start! ..< end!])
         }
         
         return ""
@@ -104,4 +103,53 @@ extension String
             return nil
         }
     }
+    
+    public func uuToHexData() -> NSData?
+    {
+        let length:Int = self.count
+        
+        // Must greater than zero and be divisible by two
+        if (length <= 0 || (length % 2) != 0)
+        {
+            return nil;
+        }
+        
+        let data:NSMutableData = NSMutableData()
+        
+        for i in stride(from: 0, to: length, by: 2)
+        {
+            let sc:Scanner = Scanner(string: self.uuSubString(i, 2)) //Substring was deprecated, so using uu
+            
+            var hex:UInt32 = 0
+            if (sc.scanHexInt32(&hex))
+            {
+                var tmp:UInt8 = UInt8(hex)
+                data.append(&tmp, length: MemoryLayout<UInt8>.size) //sizeof deprecated
+            }
+            else
+            {
+                return nil
+            }
+        }
+        
+        return data
+    }
+    
+    public func uuBase64UrlDecode() -> Data?
+    {
+        // Base64 URL mode swaps '-' with '+' and '_' with '/'
+        var tmp = self
+        tmp = tmp.replacingOccurrences(of: "-", with: "+")
+        tmp = tmp.replacingOccurrences(of: "_", with: "/")
+        
+        let currentLength = tmp.lengthOfBytes(using: .utf8)
+        let multipleOfFourLength = 4 * Int(ceil(Double(currentLength) / 4.0))
+        
+        // Base64 also requires padding to a multiple of four
+        tmp = tmp.padding(toLength: multipleOfFourLength, withPad: "=", startingAt: 0)
+        
+        return Data(base64Encoded: tmp, options: .ignoreUnknownCharacters)
+    }
+    
 }
+
