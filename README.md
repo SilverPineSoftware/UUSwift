@@ -20,7 +20,7 @@ This library requires a deployment target of iOS 10.0 or greater.
 
 ## Changelog
 
-See [`CHANGELOG.md`](https://github.com/NYTimes/NYTPhotoViewer/blob/develop/CHANGELOG.md).
+See [`CHANGELOG.md`](https://github.com/SilverPineSoftware/UUSwift/blob/develop/CHANGELOG.md).
 
 ## Contributing
 
