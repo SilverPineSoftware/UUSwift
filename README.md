@@ -18,10 +18,6 @@ pod 'UUSwift'
 
 This library requires a deployment target of iOS 10.0 or greater.
 
-## Changelog
-
-See [`CHANGELOG.md`](https://github.com/SilverPineSoftware/UUSwift/blob/develop/CHANGELOG.md).
-
 ## Contributing
 
 Please **open pull requests against the `develop` branch**
@@ -36,7 +32,7 @@ UUSwift is an updated implementation of the Objective-C classes
 
 ## License
 
-UUSwift is available under the Apache 2.0 license. See [`LICENSE.md`](https://github.com/SilverPineSoftware/UUSwift/blob/develop/LICENSE.md) for more information.
+UUSwift is available under the Apache 2.0 license. See [`LICENSE.md`](https://github.com/SilverPineSoftware/UUSwift/blob/master/LICENSE.md) for more information.
 
 ## Contributors
 
