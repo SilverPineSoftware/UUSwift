@@ -30,6 +30,7 @@
 		C5CB4EEF21B701B8002FE35E /* UUView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED821B701B8002FE35E /* UUView.swift */; };
 		C5CB4EF021B701B8002FE35E /* UUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED921B701B8002FE35E /* UUViewController.swift */; };
 		C5CB4EF121B701B8002FE35E /* UUObjectFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EDA21B701B8002FE35E /* UUObjectFactory.swift */; };
+		C5EB4A4021C07B3000ADADD0 /* UUImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB4A3F21C07B3000ADADD0 /* UUImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		C5CB4ED821B701B8002FE35E /* UUView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUView.swift; sourceTree = "<group>"; };
 		C5CB4ED921B701B8002FE35E /* UUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUViewController.swift; sourceTree = "<group>"; };
 		C5CB4EDA21B701B8002FE35E /* UUObjectFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUObjectFactory.swift; sourceTree = "<group>"; };
+		C5EB4A3F21C07B3000ADADD0 /* UUImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				C5CB4ED521B701B7002FE35E /* UUEditViewController.swift */,
 				C5CB4ECF21B701B7002FE35E /* UUGradientView.swift */,
 				C5CB4ED021B701B7002FE35E /* UUHttpSession.swift */,
+				C5EB4A3F21C07B3000ADADD0 /* UUImage.swift */,
 				C5CB4EC921B701B7002FE35E /* UUJson.swift */,
 				C5CB4ECC21B701B7002FE35E /* UUMapView.swift */,
 				C5CB4EDA21B701B8002FE35E /* UUObjectFactory.swift */,
@@ -218,6 +221,7 @@
 				C5CB4EEF21B701B8002FE35E /* UUView.swift in Sources */,
 				C5CB4EEA21B701B8002FE35E /* UUDictionary.swift in Sources */,
 				C5CB4EDD21B701B8002FE35E /* UUCircularImageView.swift in Sources */,
+				C5EB4A4021C07B3000ADADD0 /* UUImage.swift in Sources */,
 				C5CB4EDC21B701B8002FE35E /* UURemoteData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
