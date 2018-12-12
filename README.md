@@ -15,6 +15,16 @@ UUSwift is available through [CocoaPods](http://cocoapods.org). To install it, s
 pod 'UUSwift'
 ```
 
+### Carthage
+
+UUSwift may be installed via [Carthage](https://github.com/Carthage/Carthage). To install it, simply add the following line to your `Cartfile`:
+
+```
+github "SilverPineSoftware/UUSwift"
+```
+
+Then, following the instructions for [integrating Carthage frameworks into your app](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos), link the `UUSwift` framework into your project.
+
 ## Requirements
 
 This library requires a deployment target of iOS 10.0 or greater.
