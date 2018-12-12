@@ -7,6 +7,10 @@ Useful Utilities is a collection of helper classes that extend or complement exi
 
 ## Installation
 
+### Binary Download
+
+UUSwift is [available as a pre-compiled framework file](https://github.com/SilverPineSoftware/UUSwift/tree/master/Binary) that can be added to your project without any additional setup.
+
 ### Cocoapods
 
 UUSwift is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your `Podfile`:
