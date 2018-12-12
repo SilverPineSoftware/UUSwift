@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "UUSwift"
-  s.version          = "0.0.3"
+  s.version          = "0.0.4"
 
   s.description      = <<-DESC
                        UUSwift is a framework to extend the base Foundation and UIKit classes.

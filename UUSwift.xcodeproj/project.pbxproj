@@ -31,6 +31,9 @@
 		C5CB4EF021B701B8002FE35E /* UUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED921B701B8002FE35E /* UUViewController.swift */; };
 		C5CB4EF121B701B8002FE35E /* UUObjectFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EDA21B701B8002FE35E /* UUObjectFactory.swift */; };
 		C5EB4A4021C07B3000ADADD0 /* UUImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB4A3F21C07B3000ADADD0 /* UUImage.swift */; };
+		C5EB4A4521C0906700ADADD0 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = C5EB4A4221C0906700ADADD0 /* LICENSE.md */; };
+		C5EB4A4621C0906700ADADD0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C5EB4A4321C0906700ADADD0 /* README.md */; };
+		C5EB4A4721C0906700ADADD0 /* UUSwift.podspec in Resources */ = {isa = PBXBuildFile; fileRef = C5EB4A4421C0906700ADADD0 /* UUSwift.podspec */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +63,9 @@
 		C5CB4ED921B701B8002FE35E /* UUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUViewController.swift; sourceTree = "<group>"; };
 		C5CB4EDA21B701B8002FE35E /* UUObjectFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUObjectFactory.swift; sourceTree = "<group>"; };
 		C5EB4A3F21C07B3000ADADD0 /* UUImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUImage.swift; sourceTree = "<group>"; };
+		C5EB4A4221C0906700ADADD0 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = SOURCE_ROOT; };
+		C5EB4A4321C0906700ADADD0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		C5EB4A4421C0906700ADADD0 /* UUSwift.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UUSwift.podspec; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +123,9 @@
 				C5CB4ED921B701B8002FE35E /* UUViewController.swift */,
 				C5CB4E9821B611F0002FE35E /* UUSwift.h */,
 				C5CB4E9921B611F0002FE35E /* Info.plist */,
+				C5EB4A4221C0906700ADADD0 /* LICENSE.md */,
+				C5EB4A4321C0906700ADADD0 /* README.md */,
+				C5EB4A4421C0906700ADADD0 /* UUSwift.podspec */,
 			);
 			path = UUSwift;
 			sourceTree = "<group>";
@@ -190,6 +199,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5EB4A4721C0906700ADADD0 /* UUSwift.podspec in Resources */,
+				C5EB4A4621C0906700ADADD0 /* README.md in Resources */,
+				C5EB4A4521C0906700ADADD0 /* LICENSE.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
