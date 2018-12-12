@@ -1,0 +1,11 @@
+framework module UUSwift {
+  umbrella header "UUSwift.h"
+
+  export *
+  module * { export * }
+}
+
+module UUSwift.Swift {
+    header "UUSwift-Swift.h"
+    requires objc
+}
