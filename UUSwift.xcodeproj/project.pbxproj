@@ -31,6 +31,8 @@
 		C51B9A0121DF18E0007077E0 /* UUEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED521B701B7002FE35E /* UUEditViewController.swift */; };
 		C51B9A0221DF18EB007077E0 /* UUCircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED121B701B7002FE35E /* UUCircularView.swift */; };
 		C51B9A0321DF18EF007077E0 /* UUCircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC621B701B7002FE35E /* UUCircularImageView.swift */; };
+		C57880A921DFC5CF00F38417 /* UUSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C5CB4E9821B611F0002FE35E /* UUSwift.h */; };
+		C57880AA21DFC5E700F38417 /* UUSwift_Mac.h in Headers */ = {isa = PBXBuildFile; fileRef = C51B99E421DEEAA9007077E0 /* UUSwift_Mac.h */; };
 		C5CB4E9A21B611F0002FE35E /* UUSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C5CB4E9821B611F0002FE35E /* UUSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5CB4EDB21B701B8002FE35E /* UURemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC421B701B7002FE35E /* UURemoteImage.swift */; };
 		C5CB4EDC21B701B8002FE35E /* UURemoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC521B701B7002FE35E /* UURemoteData.swift */; };
@@ -179,6 +181,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C57880A921DFC5CF00F38417 /* UUSwift.h in Headers */,
 				C51B99E621DEEAA9007077E0 /* UUSwift_Mac.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,6 +190,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C57880AA21DFC5E700F38417 /* UUSwift_Mac.h in Headers */,
 				C5CB4E9A21B611F0002FE35E /* UUSwift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
