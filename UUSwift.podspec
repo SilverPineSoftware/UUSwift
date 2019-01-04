@@ -1,25 +1,27 @@
 Pod::Spec.new do |s|
-  s.name             = "UUSwift"
-  s.version          = "0.0.4"
+  	s.name             = "UUSwift"
+  	s.version          = "0.0.5"
 
-  s.description      = <<-DESC
+  	s.description      = <<-DESC
                        UUSwift is a framework to extend the base Foundation and UIKit classes.
                        DESC
-  s.summary          = "UUSwift extends Foundation and UIKit to add additional functionality."
+  	s.summary          = "UUSwift extends Foundation and UIKit to add additional functionality."
 
-  s.homepage         = "https://github.com/SilverPineSoftware/UUSwift"
-  s.author           = "Silverpine Software"
-  s.license          = { :type => 'Apache 2.0' }
-  s.source           = { :git => "https://github.com/SilverPineSoftware/UUSwift.git", :tag => s.version.to_s }
+  	s.homepage         = "https://github.com/SilverPineSoftware/UUSwift"
+  	s.author           = "Silverpine Software"
+  	s.license          = { :type => 'Apache 2.0' }
+  	s.source           = { :git => "https://github.com/SilverPineSoftware/UUSwift.git", :tag => s.version.to_s }
 
-  s.platform     = :ios, '10.0'
-  s.requires_arc = true
-  s.swift_version = "4.0"
+	s.ios.deployment_target = "8.0"
+	s.osx.deployment_target = "10.10"
 
-  s.subspec 'Core' do |ss|
-    ss.source_files = 'UUSwift/**/*.{h,m,swift}'
-    ss.frameworks = 'UIKit', 'Foundation'
-  end
+	s.swift_version = "4.0"
+
+	s.subspec 'Core' do |ss|
+    	ss.source_files = 'UUSwift/**/*.{swift, plist}'
+    	ss.ios.frameworks = 'UIKit', 'Foundation'
+		ss.osx.frameworks = 'CoreFoundation'
+  	end
 
 end
 
