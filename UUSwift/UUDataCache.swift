@@ -7,7 +7,12 @@
 //  The only requirement is that you smile everytime you use it.
 //
 
+#if os(macOS)
+import CoreFoundation
+#else
 import Foundation
+#endif
+
 import CoreData
 
 // UUDataCacheProtocol defines a lightweight interface for caching of data

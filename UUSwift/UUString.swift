@@ -7,7 +7,11 @@
 //  The only requirement is that you smile everytime you use it.
 //
 
-import Foundation
+#if os(macOS)
+	import CoreFoundation
+#else
+	import Foundation
+#endif
 
 public extension String
 {

@@ -6,8 +6,11 @@
 //  You are free to use this code for whatever purposes you desire.
 //  The only requirement is that you smile everytime you use it.
 //
-
-import Foundation
+#if os(macOS)
+	import CoreFoundation
+#else
+	import Foundation
+#endif
 
 public extension Data
 {

@@ -13,6 +13,12 @@
 //  UUDataCache
 //  UURemoteData
 //
+#if os(macOS)
+import CoreFoundation
+#else
+import UIKit
+#endif
+
 
 import UIKit
 

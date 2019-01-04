@@ -7,7 +7,12 @@
 //  The only requirement is that you smile everytime you use it.
 //
 
-import UIKit
+#if os(macOS)
+import CoreFoundation
+#else
+import Foundation
+#endif
+
 
 public protocol UUObjectFactory
 {

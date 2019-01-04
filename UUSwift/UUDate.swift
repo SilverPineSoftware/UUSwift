@@ -7,7 +7,11 @@
 //  The only requirement is that you smile everytime you use it.
 //
 
+#if os(macOS)
+import CoreFoundation
+#else
 import UIKit
+#endif
 
 public struct UUDate
 {

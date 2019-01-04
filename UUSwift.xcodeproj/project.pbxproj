@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C51B99E621DEEAA9007077E0 /* UUSwift_Mac.h in Headers */ = {isa = PBXBuildFile; fileRef = C51B99E421DEEAA9007077E0 /* UUSwift_Mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C51B99EA21DEEAF9007077E0 /* UUHttpSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED021B701B7002FE35E /* UUHttpSession.swift */; };
+		C51B99EB21DEEAFE007077E0 /* UUDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECA21B701B7002FE35E /* UUDate.swift */; };
+		C51B99ED21DEEBEA007077E0 /* UUDebugLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED421B701B7002FE35E /* UUDebugLog.swift */; };
+		C51B99EE21DEEC38007077E0 /* UUString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED621B701B7002FE35E /* UUString.swift */; };
+		C51B99EF21DEEC6E007077E0 /* UUData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED221B701B7002FE35E /* UUData.swift */; };
+		C51B99F021DEEC9D007077E0 /* UUDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED321B701B7002FE35E /* UUDictionary.swift */; };
+		C51B99F121DEECB2007077E0 /* UUJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC921B701B7002FE35E /* UUJson.swift */; };
+		C51B99F221DEECE8007077E0 /* UURemoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC521B701B7002FE35E /* UURemoteData.swift */; };
+		C51B99F321DEED03007077E0 /* UUDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC721B701B7002FE35E /* UUDataCache.swift */; };
+		C51B99F421DEED18007077E0 /* UUCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC821B701B7002FE35E /* UUCoreData.swift */; };
+		C51B99F521DEED3B007077E0 /* UUObjectFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EDA21B701B8002FE35E /* UUObjectFactory.swift */; };
+		C51B99F621DEED5A007077E0 /* UURandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECE21B701B7002FE35E /* UURandom.swift */; };
 		C5CB4E9A21B611F0002FE35E /* UUSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C5CB4E9821B611F0002FE35E /* UUSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5CB4EDB21B701B8002FE35E /* UURemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC421B701B7002FE35E /* UURemoteImage.swift */; };
 		C5CB4EDC21B701B8002FE35E /* UURemoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC521B701B7002FE35E /* UURemoteData.swift */; };
@@ -36,6 +49,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C51B99E221DEEAA9007077E0 /* UUSwift_Mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UUSwift_Mac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C51B99E421DEEAA9007077E0 /* UUSwift_Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUSwift_Mac.h; sourceTree = "<group>"; };
+		C51B99E521DEEAA9007077E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5CB4E9521B611F0002FE35E /* UUSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UUSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5CB4E9821B611F0002FE35E /* UUSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUSwift.h; sourceTree = "<group>"; };
 		C5CB4E9921B611F0002FE35E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,6 +84,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C51B99DF21DEEAA9007077E0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C5CB4E9221B611F0002FE35E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -78,10 +101,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C51B99E321DEEAA9007077E0 /* UUSwift-Mac */ = {
+			isa = PBXGroup;
+			children = (
+				C51B99E421DEEAA9007077E0 /* UUSwift_Mac.h */,
+				C51B99E521DEEAA9007077E0 /* Info.plist */,
+			);
+			path = "UUSwift-Mac";
+			sourceTree = "<group>";
+		};
 		C5CB4E8B21B611F0002FE35E = {
 			isa = PBXGroup;
 			children = (
 				C5CB4E9721B611F0002FE35E /* UUSwift */,
+				C51B99E321DEEAA9007077E0 /* UUSwift-Mac */,
 				C5CB4E9621B611F0002FE35E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				C5CB4E9521B611F0002FE35E /* UUSwift.framework */,
+				C51B99E221DEEAA9007077E0 /* UUSwift_Mac.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,6 +166,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		C51B99DD21DEEAA9007077E0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C51B99E621DEEAA9007077E0 /* UUSwift_Mac.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C5CB4E9021B611F0002FE35E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -143,6 +185,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		C51B99E121DEEAA9007077E0 /* UUSwift-Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C51B99E921DEEAA9007077E0 /* Build configuration list for PBXNativeTarget "UUSwift-Mac" */;
+			buildPhases = (
+				C51B99DD21DEEAA9007077E0 /* Headers */,
+				C51B99DE21DEEAA9007077E0 /* Sources */,
+				C51B99DF21DEEAA9007077E0 /* Frameworks */,
+				C51B99E021DEEAA9007077E0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "UUSwift-Mac";
+			productName = "UUSwift-Mac";
+			productReference = C51B99E221DEEAA9007077E0 /* UUSwift_Mac.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		C5CB4E9421B611F0002FE35E /* UUSwift */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C5CB4E9D21B611F0002FE35E /* Build configuration list for PBXNativeTarget "UUSwift" */;
@@ -170,6 +230,9 @@
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Jonathan Hays";
 				TargetAttributes = {
+					C51B99E121DEEAA9007077E0 = {
+						CreatedOnToolsVersion = 10.1;
+					};
 					C5CB4E9421B611F0002FE35E = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
@@ -189,11 +252,19 @@
 			projectRoot = "";
 			targets = (
 				C5CB4E9421B611F0002FE35E /* UUSwift */,
+				C51B99E121DEEAA9007077E0 /* UUSwift-Mac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C51B99E021DEEAA9007077E0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C5CB4E9321B611F0002FE35E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -206,6 +277,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C51B99DE21DEEAA9007077E0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C51B99F421DEED18007077E0 /* UUCoreData.swift in Sources */,
+				C51B99ED21DEEBEA007077E0 /* UUDebugLog.swift in Sources */,
+				C51B99F021DEEC9D007077E0 /* UUDictionary.swift in Sources */,
+				C51B99F521DEED3B007077E0 /* UUObjectFactory.swift in Sources */,
+				C51B99EA21DEEAF9007077E0 /* UUHttpSession.swift in Sources */,
+				C51B99F321DEED03007077E0 /* UUDataCache.swift in Sources */,
+				C51B99F121DEECB2007077E0 /* UUJson.swift in Sources */,
+				C51B99EF21DEEC6E007077E0 /* UUData.swift in Sources */,
+				C51B99F621DEED5A007077E0 /* UURandom.swift in Sources */,
+				C51B99F221DEECE8007077E0 /* UURemoteData.swift in Sources */,
+				C51B99EE21DEEC38007077E0 /* UUString.swift in Sources */,
+				C51B99EB21DEEAFE007077E0 /* UUDate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C5CB4E9121B611F0002FE35E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -239,6 +329,64 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		C51B99E721DEEAA9007077E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "UUSwift-Mac/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = com.silverpine.UUSwift;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		C51B99E821DEEAA9007077E0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "UUSwift-Mac/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = com.silverpine.UUSwift;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
 		C5CB4E9B21B611F0002FE35E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -420,6 +568,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C51B99E921DEEAA9007077E0 /* Build configuration list for PBXNativeTarget "UUSwift-Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C51B99E721DEEAA9007077E0 /* Debug */,
+				C51B99E821DEEAA9007077E0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C5CB4E8F21B611F0002FE35E /* Build configuration list for PBXProject "UUSwift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
