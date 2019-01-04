@@ -20,7 +20,12 @@
 //  UUDataCache
 //
 
+#if os(macOS)
+import CoreFoundation
+#else
 import Foundation
+#endif
+
 
 public protocol UURemoteDataProtocol
 {

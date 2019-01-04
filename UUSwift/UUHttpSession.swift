@@ -7,7 +7,12 @@
 //  The only requirement is that you smile everytime you use it.
 //
 
-import UIKit
+#if os(macOS)
+	import CoreFoundation
+#else
+	import UIKit
+#endif
+
 
 public enum UUHttpMethod : String
 {
@@ -243,7 +248,11 @@ class UUImageResponseHandler : NSObject, UUHttpResponseHandler
     
     public func parseResponse(_ data: Data, _ response: HTTPURLResponse, _ request: URLRequest) -> Any?
     {
-        return UIImage.init(data: data)
+		#if os(macOS)
+			return NSImage.init(data: data)
+		#else
+			return UIImage.init(data: data)
+		#endif
     }
 }
 

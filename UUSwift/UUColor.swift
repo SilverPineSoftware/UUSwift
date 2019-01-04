@@ -7,15 +7,21 @@
 //  The only requirement is that you smile everytime you use it.
 //
 
-import UIKit
+#if os(macOS)
+	import CoreFoundation
+	public typealias UUColor = NSColor
+#else
+	import UIKit
+	public typealias UUColor = UIColor
+#endif
 
-public extension UIColor
+public extension UUColor
 {
     // Creates a UIColor object from a hex string in the form of
     //
     // RRGGBB or RRGGBBAA
     //
-    public static func uuColorFromHex(_ color: String) -> UIColor
+    public static func uuColorFromHex(_ color: String) -> UUColor
     {
         var rgba : [CGFloat] = [0, 0, 0, 1]
         
@@ -39,12 +45,12 @@ public extension UIColor
             }
         }
         
-        let c = UIColor(red: rgba[0], green: rgba[1], blue: rgba[2], alpha: rgba[3])
+        let c = UUColor(red: rgba[0], green: rgba[1], blue: rgba[2], alpha: rgba[3])
         return c
     }
     
     // Calculates the midpoint value of each color component between two colors
-    public static func uuCalculateMidColor(startColor: UIColor, endColor: UIColor) -> UIColor
+    public static func uuCalculateMidColor(startColor: UUColor, endColor: UUColor) -> UUColor
     {
         var r : CGFloat = 0
         var g : CGFloat = 0
@@ -66,7 +72,7 @@ public extension UIColor
             i = i + 1
         }
         
-        let midColor = UIColor.init(red: midColors[0], green: midColors[1], blue: midColors[2], alpha: midColors[3])
+        let midColor = UUColor.init(red: midColors[0], green: midColors[1], blue: midColors[2], alpha: midColors[3])
         return midColor
     }
 }
