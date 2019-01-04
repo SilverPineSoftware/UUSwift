@@ -6,6 +6,8 @@
 //  Copyright © 2018 Jonathan Hays. All rights reserved.
 //
 
+#if os(iOS)
+
 import UIKit
 
 public extension UIImage
@@ -389,3 +391,5 @@ public extension UIImage
 		return UIImage.uuCalculateScaleToHeightDestSize(height: height, srcSize: self.size)
 	}
 }
+
+#endif

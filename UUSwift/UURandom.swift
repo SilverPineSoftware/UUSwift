@@ -9,9 +9,9 @@
 //
 
 #if os(macOS)
-import CoreFoundation
+	import CoreFoundation
 #else
-import Foundation
+	import Foundation
 #endif
 
 

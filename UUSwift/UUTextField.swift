@@ -7,6 +7,8 @@
 //  The only requirement is that you smile everytime you use it.
 //
 
+#if os(iOS)
+
 import UIKit
 
 @IBDesignable class UUTextField: UITextField
@@ -63,3 +65,5 @@ import UIKit
         return UIEdgeInsetsInsetRect(bounds, paddingRect)
     }
 }
+
+#endif

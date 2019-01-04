@@ -13,6 +13,8 @@
 //  2) Handles keyboard show/hide notifications and moves the view frame to
 //     place the edit field right above the keyboard
 
+#if os(iOS)
+
 import UIKit
 
 open class UUEditViewController : UIViewController
@@ -136,5 +138,4 @@ open class UUEditViewController : UIViewController
     }
 }
 
-
-
+#endif

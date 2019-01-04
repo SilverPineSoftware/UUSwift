@@ -6,6 +6,7 @@
 //  You are free to use this code for whatever purposes you desire.
 //  The only requirement is that you smile everytime you use it.
 //
+#if os(iOS)
 
 import UIKit
 
@@ -18,3 +19,5 @@ public class UUCircularView: UIView
         layer.masksToBounds = true
     }
 }
+
+#endif

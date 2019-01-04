@@ -22,6 +22,15 @@
 		C51B99F621DEED5A007077E0 /* UURandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECE21B701B7002FE35E /* UURandom.swift */; };
 		C51B99F821DEF948007077E0 /* UURemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC421B701B7002FE35E /* UURemoteImage.swift */; };
 		C51B99F921DEF99E007077E0 /* UUColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECB21B701B7002FE35E /* UUColor.swift */; };
+		C51B99FB21DF18C5007077E0 /* UUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED921B701B8002FE35E /* UUViewController.swift */; };
+		C51B99FC21DF18C8007077E0 /* UUView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED821B701B8002FE35E /* UUView.swift */; };
+		C51B99FD21DF18CB007077E0 /* UUTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECD21B701B7002FE35E /* UUTextField.swift */; };
+		C51B99FE21DF18D4007077E0 /* UUMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECC21B701B7002FE35E /* UUMapView.swift */; };
+		C51B99FF21DF18D8007077E0 /* UUImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB4A3F21C07B3000ADADD0 /* UUImage.swift */; };
+		C51B9A0021DF18DD007077E0 /* UUGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECF21B701B7002FE35E /* UUGradientView.swift */; };
+		C51B9A0121DF18E0007077E0 /* UUEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED521B701B7002FE35E /* UUEditViewController.swift */; };
+		C51B9A0221DF18EB007077E0 /* UUCircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED121B701B7002FE35E /* UUCircularView.swift */; };
+		C51B9A0321DF18EF007077E0 /* UUCircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC621B701B7002FE35E /* UUCircularImageView.swift */; };
 		C5CB4E9A21B611F0002FE35E /* UUSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C5CB4E9821B611F0002FE35E /* UUSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5CB4EDB21B701B8002FE35E /* UURemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC421B701B7002FE35E /* UURemoteImage.swift */; };
 		C5CB4EDC21B701B8002FE35E /* UURemoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC521B701B7002FE35E /* UURemoteData.swift */; };
@@ -289,14 +298,23 @@
 				C51B99F021DEEC9D007077E0 /* UUDictionary.swift in Sources */,
 				C51B99F521DEED3B007077E0 /* UUObjectFactory.swift in Sources */,
 				C51B99EA21DEEAF9007077E0 /* UUHttpSession.swift in Sources */,
+				C51B99FB21DF18C5007077E0 /* UUViewController.swift in Sources */,
 				C51B99F321DEED03007077E0 /* UUDataCache.swift in Sources */,
 				C51B99F121DEECB2007077E0 /* UUJson.swift in Sources */,
 				C51B99EF21DEEC6E007077E0 /* UUData.swift in Sources */,
 				C51B99F621DEED5A007077E0 /* UURandom.swift in Sources */,
+				C51B99FE21DF18D4007077E0 /* UUMapView.swift in Sources */,
+				C51B9A0121DF18E0007077E0 /* UUEditViewController.swift in Sources */,
+				C51B9A0321DF18EF007077E0 /* UUCircularImageView.swift in Sources */,
 				C51B99F221DEECE8007077E0 /* UURemoteData.swift in Sources */,
+				C51B99FC21DF18C8007077E0 /* UUView.swift in Sources */,
 				C51B99EE21DEEC38007077E0 /* UUString.swift in Sources */,
 				C51B99EB21DEEAFE007077E0 /* UUDate.swift in Sources */,
+				C51B99FF21DF18D8007077E0 /* UUImage.swift in Sources */,
+				C51B99FD21DF18CB007077E0 /* UUTextField.swift in Sources */,
+				C51B9A0021DF18DD007077E0 /* UUGradientView.swift in Sources */,
 				C51B99F921DEF99E007077E0 /* UUColor.swift in Sources */,
+				C51B9A0221DF18EB007077E0 /* UUCircularView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,8 @@
 //  The only requirement is that you smile everytime you use it.
 //
 
+#if os(iOS)
+
 import UIKit
 
 public enum UUGradientDirection : Int
@@ -116,3 +118,5 @@ public enum UUGradientDirection : Int
         context.clear(transparentClipRect)
     }
 }
+
+#endif

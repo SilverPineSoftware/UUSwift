@@ -14,11 +14,11 @@
 //  UURemoteData
 //
 #if os(macOS)
-import CoreFoundation
-public typealias UUImage = NSImage
+	import CoreFoundation
+	public typealias UUImage = NSImage
 #else
-import UIKit
-public typealias UUImage = UIImage
+	import UIKit
+	public typealias UUImage = UIImage
 #endif
 
 

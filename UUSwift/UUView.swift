@@ -6,6 +6,8 @@
 //  The only requirement is that you smile everytime you use it.
 //
 
+#if os(iOS)
+
 import UIKit
 
 extension UIView
@@ -87,3 +89,5 @@ extension UIView
 		}
 	}
 }
+
+#endif

@@ -8,9 +8,9 @@
 //
 
 #if os(macOS)
-import CoreFoundation
+	import CoreFoundation
 #else
-import UIKit
+	import UIKit
 #endif
 
 public struct UUDate
