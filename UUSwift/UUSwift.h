@@ -6,7 +6,11 @@
 //  Copyright © 2018 Jonathan Hays. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#if TARGET_OS_IPHONE
+	#import <UIKit/UIKit.h>
+#else
+	#import <Cocoa/Cocoa.h>
+#endif
 
 //! Project version number for UUSwift.
 FOUNDATION_EXPORT double UUSwiftVersionNumber;
