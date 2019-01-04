@@ -8,7 +8,7 @@
 //
 
 #if os(macOS)
-	import CoreFoundation
+	import AppKit
 	public typealias UUColor = NSColor
 #else
 	import UIKit

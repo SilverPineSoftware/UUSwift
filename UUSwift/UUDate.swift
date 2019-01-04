@@ -8,7 +8,7 @@
 //
 
 #if os(macOS)
-	import CoreFoundation
+	import AppKit
 #else
 	import UIKit
 #endif

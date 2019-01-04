@@ -14,7 +14,7 @@
 //  UURemoteData
 //
 #if os(macOS)
-	import CoreFoundation
+	import AppKit
 	public typealias UUImage = NSImage
 #else
 	import UIKit

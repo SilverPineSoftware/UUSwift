@@ -9,9 +9,9 @@
 //
 
 #if os(macOS)
-	import CoreFoundation
+	import AppKit
 #else
-	import Foundation
+	import UIKit
 #endif
 
 
