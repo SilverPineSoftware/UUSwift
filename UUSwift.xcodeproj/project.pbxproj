@@ -62,7 +62,6 @@
 /* Begin PBXFileReference section */
 		C51B99E221DEEAA9007077E0 /* UUSwift_Mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UUSwift_Mac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C51B99E421DEEAA9007077E0 /* UUSwift_Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUSwift_Mac.h; sourceTree = "<group>"; };
-		C51B99E521DEEAA9007077E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5CB4E9521B611F0002FE35E /* UUSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UUSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5CB4E9821B611F0002FE35E /* UUSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUSwift.h; sourceTree = "<group>"; };
 		C5CB4E9921B611F0002FE35E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,8 +114,6 @@
 		C51B99E321DEEAA9007077E0 /* UUSwift-Mac */ = {
 			isa = PBXGroup;
 			children = (
-				C51B99E421DEEAA9007077E0 /* UUSwift_Mac.h */,
-				C51B99E521DEEAA9007077E0 /* Info.plist */,
 			);
 			path = "UUSwift-Mac";
 			sourceTree = "<group>";
@@ -166,6 +163,7 @@
 				C5CB4ED821B701B8002FE35E /* UUView.swift */,
 				C5CB4ED921B701B8002FE35E /* UUViewController.swift */,
 				C5CB4E9821B611F0002FE35E /* UUSwift.h */,
+				C51B99E421DEEAA9007077E0 /* UUSwift_Mac.h */,
 				C5CB4E9921B611F0002FE35E /* Info.plist */,
 				C5EB4A4221C0906700ADADD0 /* LICENSE.md */,
 				C5EB4A4321C0906700ADADD0 /* README.md */,
@@ -359,12 +357,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = SVT6H48N2C;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "UUSwift-Mac/Info.plist";
+				INFOPLIST_FILE = UUSwift/Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -372,6 +371,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_BUNDLE_IDENTIFIER = com.silverpine.UUSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -389,12 +389,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = SVT6H48N2C;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "UUSwift-Mac/Info.plist";
+				INFOPLIST_FILE = UUSwift/Info.plist;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -402,6 +403,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_BUNDLE_IDENTIFIER = com.silverpine.UUSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
