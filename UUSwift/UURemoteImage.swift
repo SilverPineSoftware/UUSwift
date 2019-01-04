@@ -15,16 +15,16 @@
 //
 #if os(macOS)
 import CoreFoundation
+public typealias UUImage = NSImage
 #else
 import UIKit
+public typealias UUImage = UIImage
 #endif
 
 
-import UIKit
-
 public protocol UURemoteImageProtocol
 {
-    func image(for key: String, skipDownload: Bool) -> UIImage?
+    func image(for key: String, skipDownload: Bool) -> UUImage?
     func isDownloadPending(for key: String) -> Bool
     
     func metaData(for key: String) -> [String:Any]
@@ -46,7 +46,7 @@ public class UURemoteImage: NSObject, UURemoteImageProtocol
     // UURemoteImageProtocol Implementation
     ////////////////////////////////////////////////////////////////////////////
     
-    public func image(for key: String, skipDownload: Bool = false) -> UIImage?
+    public func image(for key: String, skipDownload: Bool = false) -> UUImage?
     {
         let url = URL(string: key)
         if (url == nil)
@@ -57,7 +57,7 @@ public class UURemoteImage: NSObject, UURemoteImageProtocol
         let cached = UUDataCache.shared.data(for: key)
         if (cached != nil)
         {
-            return UIImage(data: cached!)
+            return UUImage(data: cached!)
         }
         
         var data : Data? = nil
@@ -73,7 +73,7 @@ public class UURemoteImage: NSObject, UURemoteImageProtocol
         
         if (data != nil)
         {
-            let img = UIImage(data: data!)
+            let img = UUImage(data: data!)
             if (img != nil)
             {
                 var md = metaData(for: key)

@@ -20,6 +20,8 @@
 		C51B99F421DEED18007077E0 /* UUCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC821B701B7002FE35E /* UUCoreData.swift */; };
 		C51B99F521DEED3B007077E0 /* UUObjectFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EDA21B701B8002FE35E /* UUObjectFactory.swift */; };
 		C51B99F621DEED5A007077E0 /* UURandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECE21B701B7002FE35E /* UURandom.swift */; };
+		C51B99F821DEF948007077E0 /* UURemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC421B701B7002FE35E /* UURemoteImage.swift */; };
+		C51B99F921DEF99E007077E0 /* UUColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECB21B701B7002FE35E /* UUColor.swift */; };
 		C5CB4E9A21B611F0002FE35E /* UUSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = C5CB4E9821B611F0002FE35E /* UUSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C5CB4EDB21B701B8002FE35E /* UURemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC421B701B7002FE35E /* UURemoteImage.swift */; };
 		C5CB4EDC21B701B8002FE35E /* UURemoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC521B701B7002FE35E /* UURemoteData.swift */; };
@@ -283,6 +285,7 @@
 			files = (
 				C51B99F421DEED18007077E0 /* UUCoreData.swift in Sources */,
 				C51B99ED21DEEBEA007077E0 /* UUDebugLog.swift in Sources */,
+				C51B99F821DEF948007077E0 /* UURemoteImage.swift in Sources */,
 				C51B99F021DEEC9D007077E0 /* UUDictionary.swift in Sources */,
 				C51B99F521DEED3B007077E0 /* UUObjectFactory.swift in Sources */,
 				C51B99EA21DEEAF9007077E0 /* UUHttpSession.swift in Sources */,
@@ -293,6 +296,7 @@
 				C51B99F221DEECE8007077E0 /* UURemoteData.swift in Sources */,
 				C51B99EE21DEEC38007077E0 /* UUString.swift in Sources */,
 				C51B99EB21DEEAFE007077E0 /* UUDate.swift in Sources */,
+				C51B99F921DEF99E007077E0 /* UUColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
