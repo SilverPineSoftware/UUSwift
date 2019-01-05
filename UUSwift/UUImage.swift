@@ -213,8 +213,8 @@ public extension UUImage
 
 	private func uuOSDraw(targetSize : CGSize, thumbnailRect : CGRect) -> UUImage
 	{
-		UIGraphicsBeginImageContext(targetSize)
-		
+		UIGraphicsBeginImageContextWithOptions(targetSize, false, UUImage.uuScreenScale())
+
 		self.draw(in: thumbnailRect)
 		
 		if let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -228,7 +228,7 @@ public extension UUImage
 
 	private static func uuScreenScale() -> CGFloat
 	{
-		return UIScreen.main.scale
+		return 1.0 //UIScreen.main.scale
 	}
 
 	#else
