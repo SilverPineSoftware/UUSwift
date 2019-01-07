@@ -6,36 +6,30 @@
 //  Copyright © 2018 Jonathan Hays. All rights reserved.
 //
 
-#if os(iOS)
+#if os(macOS)
+	import AppKit
+#else
+	import UIKit
+#endif
 
-import UIKit
-
-public extension UIImage
+public extension UUImage
 {
-
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// MARK: - Resizing functions
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	public func uuCropToSize(targetSize : CGSize) -> UIImage {
-		UIGraphicsBeginImageContext(targetSize)
-		
+	
+	public func uuCropToSize(targetSize : CGSize) -> UUImage
+	{
 		var thumbnailRect : CGRect = .zero
 		thumbnailRect.origin = CGPoint(x: 0, y: 0)
 		thumbnailRect.size = CGSize(width: self.size.width, height: self.size.height)
 		
-		self.draw(in: thumbnailRect)
-		
-		if let newImage = UIGraphicsGetImageFromCurrentImageContext()
-		{
-			UIGraphicsEndImageContext()
-			return newImage
-		}
-		
-		return self
+		return self.uuPlatformDraw(targetSize : targetSize, thumbnailRect : thumbnailRect)
 	}
 	
-	public func uuScaleToSize(targetSize : CGSize) -> UIImage {
+	
+	public func uuScaleToSize(targetSize : CGSize) -> UUImage
+	{
 		let imageSize = self.size
 		let width : CGFloat = imageSize.width
 		let height : CGFloat = imageSize.height
@@ -76,77 +70,17 @@ public extension UIImage
 			}
 		}
 		
-		UIGraphicsBeginImageContext(targetSize)
 		var thumbnailRect : CGRect = .zero
 		thumbnailRect.origin = thumbnailPoint
 		thumbnailRect.size.width = scaledWidth
 		thumbnailRect.size.height = scaledHeight
 		
-		self.draw(in: thumbnailRect)
-		
-		if let newImage = UIGraphicsGetImageFromCurrentImageContext()
-		{
-			UIGraphicsEndImageContext()
-			return newImage
-		}
-	
-		return self
+		return self.uuPlatformDraw(targetSize : targetSize, thumbnailRect : thumbnailRect)
 	}
 	
-	public func uuScaleToWidth(targetWidth: CGFloat) -> UIImage {
-		let destSize = self.uuCalculateScaleToWidth(width: targetWidth)
-		
-		UIGraphicsBeginImageContext(destSize)
-		
-		var destRect : CGRect = .zero
-		destRect.size = destSize
-		
-		self.draw(in: destRect)
-		
-		if let newImage = UIGraphicsGetImageFromCurrentImageContext()
-		{
-			UIGraphicsEndImageContext()
-			return newImage
-		}
-		
-		return self
-	}
-	
-	public func uuScaleToHeight(targetHeight : CGFloat) -> UIImage {
-		let destSize = self.uuCalculateScaleToHeight(height: targetHeight)
-		
-		UIGraphicsBeginImageContext(destSize)
-		
-		var destRect : CGRect = .zero
-		destRect.size = destSize
-		
-		self.draw(in: destRect)
-		
-		if let newImage = UIGraphicsGetImageFromCurrentImageContext()
-		{
-			UIGraphicsEndImageContext()
-			return newImage
-		}
-		
-		return self
-	}
-	
-	
-	public func uuScaleSmallestDimensionToSize(size : CGFloat) -> UIImage
+	public func uuScaleAndCropToSize(targetSize : CGSize) -> UUImage
 	{
-		if (self.size.width < self.size.height)
-		{
-			return self.uuScaleToWidth(targetWidth: size)
-		}
-		else
-		{
-			return self.uuScaleToHeight(targetHeight : size)
-		}
-	}
-	
-	public func uuScaleAndCropToSize(targetSize : CGSize) -> UIImage
-	{
-		let deviceScale = UIScreen.main.scale
+		let deviceScale = UUImage.uuScreenScale()
 		let sourceImage = self
 		let imageSize = sourceImage.size
 		let width : CGFloat = imageSize.width
@@ -185,13 +119,118 @@ public extension UIImage
 		}
 		
 		let targetSize = CGSize(width: targetWidth, height: targetHeight)
-		UIGraphicsBeginImageContext(targetSize)
 		
 		var thumbnailRect : CGRect = .zero
 		thumbnailRect.origin = thumbnailPoint
 		thumbnailRect.size = CGSize(width: scaledWidth, height: scaledHeight)
 		
-		sourceImage.draw(in: thumbnailRect)
+		return self.uuPlatformDraw(targetSize: targetSize, thumbnailRect : thumbnailRect)
+	}
+	
+	
+	public func uuScaleToWidth(targetWidth: CGFloat) -> UUImage
+	{
+		let destSize = self.uuCalculateScaleToWidth(width: targetWidth)
+		return self.uuScaleToSize(targetSize: destSize)
+	}
+	
+	public func uuScaleToHeight(targetHeight : CGFloat) -> UUImage
+	{
+		let destSize = self.uuCalculateScaleToHeight(height: targetHeight)
+		return self.uuScaleToSize(targetSize: destSize)
+	}
+	
+	public func uuScaleSmallestDimensionToSize(size : CGFloat) -> UUImage
+	{
+		if (self.size.width < self.size.height)
+		{
+			return self.uuScaleToWidth(targetWidth: size)
+		}
+		else
+		{
+			return self.uuScaleToHeight(targetHeight : size)
+		}
+	}
+	
+	public func uuPngData() -> Data? {
+		return self.uuPlatformPngData()
+	}
+	
+	public func uuJpegData(_ compressionQuality: CGFloat) -> Data? {
+		return self.uuPlatformJpegData(compressionQuality)
+	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// MARK: - Private helper functions
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private func uuCalculateScaleToFitDestSize(size : CGFloat) -> CGSize
+	{
+		if self.size.width < self.size.height
+		{
+			return self.uuCalculateScaleToWidth(width:size)
+		}
+		else
+		{
+			return self.uuCalculateScaleToHeight(height:size)
+		}
+	}
+	
+	private static func uuCalculateScaleToWidthDestSize(width : CGFloat, srcSize : CGSize) -> CGSize
+	{
+		let srcWidth = srcSize.width
+		let srcHeight = srcSize.height
+		let srcAspectRatio = srcHeight / srcWidth
+		
+		let targetWidth = width * UUImage.uuScreenScale()
+		let targetHeight = targetWidth * srcAspectRatio
+		
+		return CGSize(width: targetWidth, height: targetHeight)
+	}
+	
+	private static func uuCalculateScaleToHeightDestSize(height : CGFloat, srcSize : CGSize) -> CGSize
+	{
+		let srcWidth = srcSize.width
+		let srcHeight = srcSize.height
+		let srcAspectRatio = srcWidth / srcHeight
+		
+		let targetHeight = height * UUImage.uuScreenScale()
+		let targetWidth = targetHeight * srcAspectRatio
+		
+		return CGSize(width: targetWidth, height: targetHeight)
+	}
+	
+	private func uuCalculateScaleToWidth(width : CGFloat) -> CGSize
+	{
+		return UUImage.uuCalculateScaleToWidthDestSize(width: width, srcSize: self.size)
+	}
+	
+	private func uuCalculateScaleToHeight(height : CGFloat) -> CGSize
+	{
+		return UUImage.uuCalculateScaleToHeightDestSize(height: height, srcSize: self.size)
+	}
+
+	
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// MARK: - iOS implementation
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	#if os(iOS)
+
+	private func uuPlatformPngData() -> Data? {
+		return UIImagePNGRepresentation(self)
+	}
+	
+	private func uuPlatformJpegData(_ compressionQuality: CGFloat) -> Data? {
+		return UIImageJPEGRepresentation(self, compressionQuality)
+	}
+
+	private func uuPlatformDraw(targetSize : CGSize, thumbnailRect : CGRect) -> UUImage
+	{
+		UIGraphicsBeginImageContextWithOptions(targetSize, false, UUImage.uuScreenScale())
+
+		self.draw(in: thumbnailRect)
 		
 		if let newImage = UIGraphicsGetImageFromCurrentImageContext()
 		{
@@ -201,33 +240,140 @@ public extension UIImage
 		
 		return self
 	}
-	
-	
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// MARK: - Solid color image functions
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public static func uuSolidColorImage(color : UIColor) -> UIImage?
+	private static func uuScreenScale() -> CGFloat
 	{
-		let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
+		return 1.0 //UIScreen.main.scale
+	}
+
+	#else
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// MARK: - Mac implementation
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private func uuPlatformPngData() -> Data? {
 		
-		UIGraphicsBeginImageContext(rect.size)
-		let context = UIGraphicsGetCurrentContext()
+		var imageRect = CGRect(origin: .zero, size: self.size)
 		
-		context?.setFillColor(color.cgColor)
-		context?.fill(rect)
-		
-		if let image = UIGraphicsGetImageFromCurrentImageContext()
+		if let cgImage = self.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
 		{
-			UIGraphicsEndImageContext()
-			
-			return image
+			let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
+			bitmapRep.size = self.size
+			if let data = bitmapRep.representation(using: .png, properties: [:])
+			{
+				return data
+			}
 		}
 		
 		return nil
 	}
 	
-	public static func uuSolidColorImage(color : UIColor, cornerRadius : CGFloat, borderColor : UIColor, borderWidth : CGFloat) -> UIImage?
+	private func uuPlatformJpegData(_ compressionQuality: CGFloat) -> Data? {
+		
+		var imageRect = CGRect(origin: .zero, size: self.size)
+		
+		if let cgImage = self.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
+		{
+			let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
+			bitmapRep.size = self.size
+			if let data = bitmapRep.representation(using: .jpeg, properties: [NSBitmapImageRep.PropertyKey.compressionFactor: compressionQuality])
+			{
+				return data
+			}
+		}
+		
+		return nil
+	}
+	
+	private func uuPlatformDraw(targetSize : CGSize, thumbnailRect : CGRect) -> UUImage
+	{
+		guard let representation = self.bestRepresentation(for: thumbnailRect, context: nil, hints: nil) else {
+			return self
+		}
+		
+		let image = NSImage(size: targetSize, flipped: false, drawingHandler: { (_) -> Bool in
+			return representation.draw(in: thumbnailRect)
+		})
+		
+		return image
+	}
+
+	private static func uuScreenScale() -> CGFloat
+	{
+		return 1.0
+	}
+	
+	#endif
+	
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - Mac specific functions
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#if os(macOS)
+public extension UUImage {
+
+	public func pngData()->Data? {
+		
+		if let tiff = self.tiffRepresentation,
+		   let tiffData = NSBitmapImageRep(data: tiff)
+		{
+			return tiffData.representation(using: .png, properties: [:])
+		}
+		
+		return nil
+	}
+	
+	public func jpegData(compressionQuality : CGFloat)->Data? {
+		
+		if let tiff = self.tiffRepresentation,
+			let tiffData = NSBitmapImageRep(data: tiff)
+		{
+			return tiffData.representation(using: .jpeg, properties: [:])
+		}
+		
+		return nil
+	}
+}
+#endif
+
+	
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MARK: - iOS specific functions
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#if os(iOS)
+
+public extension UIImage {
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// MARK: - Solid color image functions
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public static func uuSolidColorImage(color : UIColor) -> UUImage?
+	{
+		let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
+	
+		UIGraphicsBeginImageContext(rect.size)
+		let context = UIGraphicsGetCurrentContext()
+	
+		context?.setFillColor(color.cgColor)
+		context?.fill(rect)
+	
+		if let image = UIGraphicsGetImageFromCurrentImageContext()
+		{
+			UIGraphicsEndImageContext()
+		
+			return image
+		}
+	
+		return nil
+	}
+
+	public static func uuSolidColorImage(color : UUColor, cornerRadius : CGFloat, borderColor : UIColor, borderWidth : CGFloat) -> UUImage?
 	{
 		let rect = CGRect(x: 0.0, y: 0.0, width: 2.0 * ((cornerRadius * 2.0) + 1), height: 2.0 * ((cornerRadius * 2.0) + 1))
 		let view = UIView(frame: rect)
@@ -240,43 +386,43 @@ public extension UIImage
 		{
 			return image.resizableImage(withCapInsets: UIEdgeInsets(top: cornerRadius, left: cornerRadius, bottom: cornerRadius, right: cornerRadius))
 		}
-		
+	
 		return nil
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// MARK: - Misc
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	public func uuRemoveOrientation() -> UIImage {
+	
+	public func uuRemoveOrientation() -> UUImage {
 		if self.imageOrientation == .up
 		{
 			return self
 		}
-		
+	
 		var affineTransformation : CGAffineTransform = .identity
-		
+	
 		switch self.imageOrientation
 		{
 			case .up, .upMirrored:
 			break
-
+		
 			case .down, .downMirrored:
 				affineTransformation = affineTransformation.translatedBy(x: self.size.width, y: self.size.height)
 				affineTransformation = affineTransformation.rotated(by: .pi)
 			break
-			
+		
 			case .left, .leftMirrored:
 				affineTransformation = affineTransformation.translatedBy(x: self.size.width, y: 0.0)
 				affineTransformation = affineTransformation.rotated(by: 2.0 * .pi)
 			break
-			
+		
 			case .right, .rightMirrored:
 				affineTransformation = affineTransformation.translatedBy(x: 0.0, y: self.size.height)
 				affineTransformation = affineTransformation.rotated(by: -2.0 * .pi)
 			break
 		}
-		
+	
 		if (self.imageOrientation == .upMirrored || self.imageOrientation == .downMirrored)
 		{
 			affineTransformation = affineTransformation.translatedBy(x: self.size.width, y: 0.0)
@@ -287,12 +433,12 @@ public extension UIImage
 			affineTransformation = affineTransformation.translatedBy(x: self.size.height, y: 0.0)
 			affineTransformation = affineTransformation.scaledBy(x: -1.0, y: 1.0)
 		}
-
+	
 		let colorSpace:CGColorSpace = CGColorSpaceCreateDeviceRGB()
 		let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
-
+		
 		if let cgImageRef = self.cgImage,
-			let contextRef = CGContext(data: nil, width: Int(self.size.width), height: Int(self.size.height), bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)
+		   let contextRef = CGContext(data: nil, width: Int(self.size.width), height: Int(self.size.height), bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)
 		{
 			contextRef.concatenate(affineTransformation)
 		
@@ -307,13 +453,13 @@ public extension UIImage
 			{
 				contextRef.draw(cgImageRef, in: CGRect(x: 0.0, y: 0.0, width: self.size.width, height: self.size.height))
 			}
-			
+		
 			if let imageRef = contextRef.makeImage()
 			{
 				return UIImage(cgImage: imageRef)
 			}
 		}
-		
+	
 		return self
 	}
 
@@ -324,14 +470,14 @@ public extension UIImage
 		if let outputContext = UIGraphicsGetCurrentContext()
 		{
 			view.layer.render(in: outputContext)
-		
+			
 			if let image = UIGraphicsGetImageFromCurrentImageContext()
 			{
 				UIGraphicsEndImageContext()
 				return image
 			}
 		}
-		
+	
 		return nil
 	}
 
@@ -339,57 +485,6 @@ public extension UIImage
 	{
 		return UIImage(named: imageName)?.resizableImage(withCapInsets: insets)
 	}
-	
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// MARK: - Private helper functions
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	private func uuCalculateScaleToFitDestSize(size : CGFloat) -> CGSize
-	{
-		if self.size.width < self.size.height
-		{
-			return self.uuCalculateScaleToWidth(width:size)
-		}
-		else
-		{
-			return self.uuCalculateScaleToHeight(height:size)
-		}
-	}
-
-	private static func uuCalculateScaleToWidthDestSize(width : CGFloat, srcSize : CGSize) -> CGSize
-	{
-		let srcWidth = srcSize.width
-		let srcHeight = srcSize.height
-		let srcAspectRatio = srcHeight / srcWidth
-		
-		let targetWidth = width * UIScreen.main.scale
-		let targetHeight = targetWidth * srcAspectRatio
-		
-		return CGSize(width: targetWidth, height: targetHeight)
-	}
-	
-	private static func uuCalculateScaleToHeightDestSize(height : CGFloat, srcSize : CGSize) -> CGSize
-	{
-		let srcWidth = srcSize.width
-		let srcHeight = srcSize.height
-		let srcAspectRatio = srcWidth / srcHeight
-
-		let targetHeight = height * UIScreen.main.scale
-		let targetWidth = targetHeight * srcAspectRatio
-		
-		return CGSize(width: targetWidth, height: targetHeight)
-	}
-	
-	private func uuCalculateScaleToWidth(width : CGFloat) -> CGSize
-	{
-		return UIImage.uuCalculateScaleToWidthDestSize(width: width, srcSize: self.size)
-	}
-	
-	private func uuCalculateScaleToHeight(height : CGFloat) -> CGSize
-	{
-		return UIImage.uuCalculateScaleToHeightDestSize(height: height, srcSize: self.size)
-	}
 }
-
 #endif
