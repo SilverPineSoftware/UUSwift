@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   	s.name             = "UUSwift"
-  	s.version          = "0.0.9"
+  	s.version          = "0.0.10"
 
   	s.description      = <<-DESC
                        UUSwift is a framework to extend the base Foundation and UIKit classes.
                        DESC
-  	s.summary          = "UUSwift extends Foundation and UIKit to add additional functionality."
+  	s.summary          = "UUSwift extends Foundation and UIKit to add additional functionality to make development more efficient."
 
   	s.homepage         = "https://github.com/SilverPineSoftware/UUSwift"
   	s.author           = "Silverpine Software"
