@@ -24,7 +24,7 @@ public extension UUImage
 		thumbnailRect.origin = CGPoint(x: 0, y: 0)
 		thumbnailRect.size = CGSize(width: self.size.width, height: self.size.height)
 		
-		return self.uuOSDraw(targetSize : targetSize, thumbnailRect : thumbnailRect)
+		return self.uuPlatformDraw(targetSize : targetSize, thumbnailRect : thumbnailRect)
 	}
 	
 	
@@ -75,7 +75,7 @@ public extension UUImage
 		thumbnailRect.size.width = scaledWidth
 		thumbnailRect.size.height = scaledHeight
 		
-		return self.uuOSDraw(targetSize : targetSize, thumbnailRect : thumbnailRect)
+		return self.uuPlatformDraw(targetSize : targetSize, thumbnailRect : thumbnailRect)
 	}
 	
 	public func uuScaleAndCropToSize(targetSize : CGSize) -> UUImage
@@ -124,7 +124,7 @@ public extension UUImage
 		thumbnailRect.origin = thumbnailPoint
 		thumbnailRect.size = CGSize(width: scaledWidth, height: scaledHeight)
 		
-		return self.uuOSDraw(targetSize: targetSize, thumbnailRect : thumbnailRect)
+		return self.uuPlatformDraw(targetSize: targetSize, thumbnailRect : thumbnailRect)
 	}
 	
 	
@@ -152,6 +152,13 @@ public extension UUImage
 		}
 	}
 	
+	public func uuPngData() -> Data? {
+		return self.uuPlatformPngData()
+	}
+	
+	public func uuJpegData(_ compressionQuality: CGFloat) -> Data? {
+		return self.uuPlatformJpegData(compressionQuality)
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// MARK: - Private helper functions
@@ -211,7 +218,15 @@ public extension UUImage
 
 	#if os(iOS)
 
-	private func uuOSDraw(targetSize : CGSize, thumbnailRect : CGRect) -> UUImage
+	private func uuPlatformPngData() -> Data? {
+		return UIImagePNGRepresentation(self)
+	}
+	
+	private func uuPlatformJpegData(_ compressionQuality: CGFloat) -> Data? {
+		return UIImageJPEGRepresentation(self, compressionQuality)
+	}
+
+	private func uuPlatformDraw(targetSize : CGSize, thumbnailRect : CGRect) -> UUImage
 	{
 		UIGraphicsBeginImageContextWithOptions(targetSize, false, UUImage.uuScreenScale())
 
@@ -237,7 +252,41 @@ public extension UUImage
 	// MARK: - Mac implementation
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	private func uuOSDraw(targetSize : CGSize, thumbnailRect : CGRect) -> UUImage
+	private func uuPlatformPngData() -> Data? {
+		
+		var imageRect = CGRect(origin: .zero, size: self.size)
+		
+		if let cgImage = self.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
+		{
+			let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
+			bitmapRep.size = self.size
+			if let data = bitmapRep.representation(using: .png, properties: [:])
+			{
+				return data
+			}
+		}
+		
+		return nil
+	}
+	
+	private func uuPlatformJpegData(_ compressionQuality: CGFloat) -> Data? {
+		
+		var imageRect = CGRect(origin: .zero, size: self.size)
+		
+		if let cgImage = self.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)
+		{
+			let bitmapRep = NSBitmapImageRep(cgImage: cgImage)
+			bitmapRep.size = self.size
+			if let data = bitmapRep.representation(using: .jpeg, properties: [NSBitmapImageRep.PropertyKey.compressionFactor: compressionQuality])
+			{
+				return data
+			}
+		}
+		
+		return nil
+	}
+	
+	private func uuPlatformDraw(targetSize : CGSize, thumbnailRect : CGRect) -> UUImage
 	{
 		guard let representation = self.bestRepresentation(for: thumbnailRect, context: nil, hints: nil) else {
 			return self
