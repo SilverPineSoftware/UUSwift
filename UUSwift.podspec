@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   	s.version          = "0.0.10"
 
   	s.description      = <<-DESC
-                       UUSwift is a framework to extend the base Foundation and UIKit classes.
+                       UUSwift is a framework to extend the base Foundation and UIKit classes. UUSwift eliminates many of the tedious tasks associated with Swift development such as date formating and string manipulation.
                        DESC
   	s.summary          = "UUSwift extends Foundation and UIKit to add additional functionality to make development more efficient."
 
