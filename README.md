@@ -3,7 +3,7 @@
 [![Version](http://cocoapod-badges.herokuapp.com/v/UUSwift/badge.png)](http://cocoadocs.org/docsets/UUSwift)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-Useful Utilities is a collection of helper classes that extend or complement existing UIKit framework classes.'
+Useful Utilities is a collection of helper classes that extend or complement existing UIKit framework classes.
 
 ## Installation
 
