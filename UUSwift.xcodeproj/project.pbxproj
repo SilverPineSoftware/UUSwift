@@ -55,10 +55,33 @@
 		C5EB4A4021C07B3000ADADD0 /* UUImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB4A3F21C07B3000ADADD0 /* UUImage.swift */; };
 		C5EB4A4521C0906700ADADD0 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = C5EB4A4221C0906700ADADD0 /* LICENSE.md */; };
 		C5EB4A4621C0906700ADADD0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C5EB4A4321C0906700ADADD0 /* README.md */; };
+		C5FE239021E56B9D00A3BB23 /* UUString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED621B701B7002FE35E /* UUString.swift */; };
+		C5FE239121E56BAA00A3BB23 /* UURemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC421B701B7002FE35E /* UURemoteImage.swift */; };
+		C5FE239221E56BAF00A3BB23 /* UURandom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECE21B701B7002FE35E /* UURandom.swift */; };
+		C5FE239321E56BAF00A3BB23 /* UURemoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC521B701B7002FE35E /* UURemoteData.swift */; };
+		C5FE239421E56BB500A3BB23 /* UUObjectFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EDA21B701B8002FE35E /* UUObjectFactory.swift */; };
+		C5FE239521E56BBC00A3BB23 /* UUJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC921B701B7002FE35E /* UUJson.swift */; };
+		C5FE239621E56BBF00A3BB23 /* UUHttpSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED021B701B7002FE35E /* UUHttpSession.swift */; };
+		C5FE239721E56BC300A3BB23 /* UUDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED321B701B7002FE35E /* UUDictionary.swift */; };
+		C5FE239821E56BC700A3BB23 /* UUDebugLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED421B701B7002FE35E /* UUDebugLog.swift */; };
+		C5FE239921E56BCA00A3BB23 /* UUDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECA21B701B7002FE35E /* UUDate.swift */; };
+		C5FE239A21E56BCD00A3BB23 /* UUDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC721B701B7002FE35E /* UUDataCache.swift */; };
+		C5FE239B21E56BD000A3BB23 /* UUData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED221B701B7002FE35E /* UUData.swift */; };
+		C5FE239C21E56BD400A3BB23 /* UUCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC821B701B7002FE35E /* UUCoreData.swift */; };
+		C5FE239D21E56BD800A3BB23 /* UUColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECB21B701B7002FE35E /* UUColor.swift */; };
+		C5FE239E21E56BE300A3BB23 /* UUCircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4EC621B701B7002FE35E /* UUCircularImageView.swift */; };
+		C5FE239F21E56BEA00A3BB23 /* UUCircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED121B701B7002FE35E /* UUCircularView.swift */; };
+		C5FE23A021E56BEA00A3BB23 /* UUEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED521B701B7002FE35E /* UUEditViewController.swift */; };
+		C5FE23A121E56BEA00A3BB23 /* UUGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECF21B701B7002FE35E /* UUGradientView.swift */; };
+		C5FE23A221E56BEA00A3BB23 /* UUImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EB4A3F21C07B3000ADADD0 /* UUImage.swift */; };
+		C5FE23A321E56BEA00A3BB23 /* UUMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECC21B701B7002FE35E /* UUMapView.swift */; };
+		C5FE23A421E56BEA00A3BB23 /* UUTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ECD21B701B7002FE35E /* UUTextField.swift */; };
+		C5FE23A521E56BEA00A3BB23 /* UUView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED821B701B8002FE35E /* UUView.swift */; };
+		C5FE23A621E56BEA00A3BB23 /* UUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CB4ED921B701B8002FE35E /* UUViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C51B99E221DEEAA9007077E0 /* UUSwiftMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UUSwiftMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C51B99E221DEEAA9007077E0 /* UUSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UUSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5CB4E9521B611F0002FE35E /* UUSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UUSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5CB4E9821B611F0002FE35E /* UUSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUSwift.h; sourceTree = "<group>"; };
 		C5CB4EC421B701B7002FE35E /* UURemoteImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UURemoteImage.swift; sourceTree = "<group>"; };
@@ -88,6 +111,7 @@
 		C5EB4A4321C0906700ADADD0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		C5EB4A4421C0906700ADADD0 /* UUSwift.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UUSwift.podspec; sourceTree = SOURCE_ROOT; };
 		C5FCB1C421DFD06A00102975 /* UUSwift-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UUSwift-Info.plist"; sourceTree = "<group>"; };
+		C5FE238821E56B8400A3BB23 /* UUSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UUSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +123,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C5CB4E9221B611F0002FE35E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5FE238521E56B8400A3BB23 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -120,7 +151,8 @@
 			isa = PBXGroup;
 			children = (
 				C5CB4E9521B611F0002FE35E /* UUSwift.framework */,
-				C51B99E221DEEAA9007077E0 /* UUSwiftMac.framework */,
+				C51B99E221DEEAA9007077E0 /* UUSwift.framework */,
+				C5FE238821E56B8400A3BB23 /* UUSwift.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,6 +209,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C5FE238321E56B8400A3BB23 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -195,7 +234,7 @@
 			);
 			name = UUSwiftMac;
 			productName = "UUSwift-Mac";
-			productReference = C51B99E221DEEAA9007077E0 /* UUSwiftMac.framework */;
+			productReference = C51B99E221DEEAA9007077E0 /* UUSwift.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		C5CB4E9421B611F0002FE35E /* UUSwift */ = {
@@ -216,6 +255,24 @@
 			productReference = C5CB4E9521B611F0002FE35E /* UUSwift.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		C5FE238721E56B8400A3BB23 /* UUSwiftTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C5FE238F21E56B8400A3BB23 /* Build configuration list for PBXNativeTarget "UUSwiftTV" */;
+			buildPhases = (
+				C5FE238321E56B8400A3BB23 /* Headers */,
+				C5FE238421E56B8400A3BB23 /* Sources */,
+				C5FE238521E56B8400A3BB23 /* Frameworks */,
+				C5FE238621E56B8400A3BB23 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UUSwiftTV;
+			productName = UUSwiftTV;
+			productReference = C5FE238821E56B8400A3BB23 /* UUSwift.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -231,6 +288,9 @@
 					C5CB4E9421B611F0002FE35E = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
+					};
+					C5FE238721E56B8400A3BB23 = {
+						CreatedOnToolsVersion = 10.1;
 					};
 				};
 			};
@@ -248,6 +308,7 @@
 			targets = (
 				C5CB4E9421B611F0002FE35E /* UUSwift */,
 				C51B99E121DEEAA9007077E0 /* UUSwiftMac */,
+				C5FE238721E56B8400A3BB23 /* UUSwiftTV */,
 			);
 		};
 /* End PBXProject section */
@@ -266,6 +327,13 @@
 			files = (
 				C5EB4A4621C0906700ADADD0 /* README.md in Resources */,
 				C5EB4A4521C0906700ADADD0 /* LICENSE.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5FE238621E56B8400A3BB23 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +400,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C5FE238421E56B8400A3BB23 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C5FE239421E56BB500A3BB23 /* UUObjectFactory.swift in Sources */,
+				C5FE239621E56BBF00A3BB23 /* UUHttpSession.swift in Sources */,
+				C5FE23A121E56BEA00A3BB23 /* UUGradientView.swift in Sources */,
+				C5FE239021E56B9D00A3BB23 /* UUString.swift in Sources */,
+				C5FE239A21E56BCD00A3BB23 /* UUDataCache.swift in Sources */,
+				C5FE23A421E56BEA00A3BB23 /* UUTextField.swift in Sources */,
+				C5FE23A621E56BEA00A3BB23 /* UUViewController.swift in Sources */,
+				C5FE239321E56BAF00A3BB23 /* UURemoteData.swift in Sources */,
+				C5FE239521E56BBC00A3BB23 /* UUJson.swift in Sources */,
+				C5FE239721E56BC300A3BB23 /* UUDictionary.swift in Sources */,
+				C5FE23A021E56BEA00A3BB23 /* UUEditViewController.swift in Sources */,
+				C5FE23A321E56BEA00A3BB23 /* UUMapView.swift in Sources */,
+				C5FE239E21E56BE300A3BB23 /* UUCircularImageView.swift in Sources */,
+				C5FE239C21E56BD400A3BB23 /* UUCoreData.swift in Sources */,
+				C5FE239F21E56BEA00A3BB23 /* UUCircularView.swift in Sources */,
+				C5FE239821E56BC700A3BB23 /* UUDebugLog.swift in Sources */,
+				C5FE239921E56BCA00A3BB23 /* UUDate.swift in Sources */,
+				C5FE239121E56BAA00A3BB23 /* UURemoteImage.swift in Sources */,
+				C5FE239221E56BAF00A3BB23 /* UURandom.swift in Sources */,
+				C5FE23A521E56BEA00A3BB23 /* UUView.swift in Sources */,
+				C5FE23A221E56BEA00A3BB23 /* UUImage.swift in Sources */,
+				C5FE239B21E56BD000A3BB23 /* UUData.swift in Sources */,
+				C5FE239D21E56BD800A3BB23 /* UUColor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -359,11 +457,12 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_BUNDLE_IDENTIFIER = com.silverpine.UUSwift;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_MODULE_NAME = UUSwift;
+				PRODUCT_NAME = UUSwift;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -391,11 +490,12 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_BUNDLE_IDENTIFIER = com.silverpine.UUSwift;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_MODULE_NAME = UUSwift;
+				PRODUCT_NAME = UUSwift;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -581,6 +681,62 @@
 			};
 			name = Release;
 		};
+		C5FE238D21E56B8400A3BB23 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 6T8KQ7345Y;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/UUSwift/UUSwift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.silverpine.UUSwift;
+				PRODUCT_MODULE_NAME = UUSwift;
+				PRODUCT_NAME = UUSwift;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		C5FE238E21E56B8400A3BB23 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 6T8KQ7345Y;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/UUSwift/UUSwift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.silverpine.UUSwift;
+				PRODUCT_MODULE_NAME = UUSwift;
+				PRODUCT_NAME = UUSwift;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -607,6 +763,15 @@
 			buildConfigurations = (
 				C5CB4E9E21B611F0002FE35E /* Debug */,
 				C5CB4E9F21B611F0002FE35E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C5FE238F21E56B8400A3BB23 /* Build configuration list for PBXNativeTarget "UUSwiftTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C5FE238D21E56B8400A3BB23 /* Debug */,
+				C5FE238E21E56B8400A3BB23 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

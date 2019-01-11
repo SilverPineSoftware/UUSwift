@@ -216,7 +216,7 @@ public extension UUImage
 	// MARK: - iOS implementation
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	#if os(iOS)
+	#if os(iOS) || os(tvOS)
 
 	private func uuPlatformPngData() -> Data? {
 		return UIImagePNGRepresentation(self)

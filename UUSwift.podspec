@@ -9,18 +9,19 @@ Pod::Spec.new do |s|
 
   	s.homepage         = "https://github.com/SilverPineSoftware/UUSwift"
   	s.author           = "Silverpine Software"
-  	s.license          = { :type => 'Apache 2.0' }
+  	s.license          = { :type => 'MIT' }
   	s.source           = { :git => "https://github.com/SilverPineSoftware/UUSwift.git", :tag => s.version.to_s }
 
 	s.ios.deployment_target = "8.0"
 	s.osx.deployment_target = "10.10"
-
+	s.tvos.deployment_target = "10.0"
 	s.swift_version = "4.0"
 
 	s.subspec 'Core' do |ss|
     	ss.source_files = 'UUSwift/**/*.{h,m,swift}'
     	ss.ios.frameworks = 'UIKit', 'Foundation'
 		ss.osx.frameworks = 'CoreFoundation'
+		ss.tvos.frameworks = 'UIKit', 'Foundation'
   	end
 
 end
