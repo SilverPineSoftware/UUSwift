@@ -454,7 +454,11 @@ public class UUHttpSession: NSObject
                 d[UUHttpSessionHttpErrorCodeKey] = NSNumber(value: httpResponseCode)
                 d[UUHttpSessionHttpErrorMessageKey] = HTTPURLResponse.localizedString(forStatusCode: httpResponseCode)
                 d[UUHttpSessionAppResponseKey] = parsedResponse
-                
+
+				if let validErrorResponse = parsedResponse {
+					d[NSLocalizedDescriptionKey] = validErrorResponse
+				}
+
                 err = NSError.init(domain:UUHttpSessionErrorDomain, code:UUHttpSessionError.httpError.rawValue, userInfo:d)
             }
         }
