@@ -22,6 +22,13 @@ public extension Dictionary
         
         for key in keys
         {
+            guard let stringKey = key as? String else
+            {
+                continue
+            }
+            
+            let formattedKey = stringKey.uuUrlEncoded()
+            
             var prefix = "&"
             if ((sb as String).count == 0)
             {
@@ -39,15 +46,26 @@ public extension Dictionary
             {
                 val = (rawVal as? NSNumber)?.stringValue
             }
-            
-            if (key is String && val != nil)
+            else if let arrayVal = rawVal as? [String]
             {
-                let formattedKey = (key as! String).uuUrlEncoded()
+                let arrayKey = "\(formattedKey)[]"
+                
+                for strVal in arrayVal
+                {
+                    let formattedVal = strVal.uuUrlEncoded()
+                    sb.appendFormat("%@%@=%@", prefix, arrayKey, formattedVal)
+                    prefix = "&"
+                }
+                
+                continue
+            }
+            
+            if (val != nil)
+            {
                 let formattedVal = val!.uuUrlEncoded()
                 
                 sb.appendFormat("%@%@=%@", prefix, formattedKey, formattedVal)
             }
-            
         }
         
         return sb as String

@@ -141,6 +141,15 @@ public class UUHttpRequest: NSObject
         return req
     }
     
+    public static func postFormRequest(_ url : String, _ queryArguments : [String:String], _ form : UUHttpForm) -> UUHttpRequest
+    {
+        let req = UUHttpRequest.init(url)
+        req.httpMethod = .post
+        req.queryArguments = queryArguments
+        req.setForm(form)
+        return req
+    }
+    
     public static func patchRequest(_ url : String, _ queryArguments : [String:String], _ body : Data?, _ contentType : String?) -> UUHttpRequest
     {
         let req = UUHttpRequest.init(url)
@@ -149,6 +158,12 @@ public class UUHttpRequest: NSObject
         req.body = body
         req.bodyContentType = contentType
         return req
+    }
+    
+    public func setForm(_ form: UUHttpForm)
+    {
+        body = form.formData()
+        bodyContentType = form.formContentType()
     }
 }
 
@@ -166,6 +181,85 @@ public class UUHttpResponse : NSObject
     {
         httpRequest = request
         httpResponse = response
+    }
+}
+
+public class UUHttpForm : NSObject
+{
+    public var formBoundary: String = "UUForm_PostBoundary"
+    private var formBuilder: NSMutableData = NSMutableData()
+    
+    public func add(field: String, value: String, contentType: String = UUContentType.textPlain, encoding: String.Encoding = .utf8)
+    {
+        appendNewLineIfNeeded()
+        
+        if let boundaryBytes = boundaryBytes(),
+           let fieldNameBytes = "Content-Disposition: form-data; name=\"\(field)\"\r\n\r\n".data(using: .utf8),
+           let contentTypeBytes = contentTypeBytes(contentType),
+           let fieldValueBytes = value.data(using: encoding)
+        {
+            formBuilder.append(boundaryBytes)
+            formBuilder.append(fieldNameBytes)
+            formBuilder.append(contentTypeBytes)
+            formBuilder.append(fieldValueBytes)
+        }
+    }
+    
+    public func addFile(fieldName: String, fileName: String, contentType: String, fileData: Data)
+    {
+        appendNewLineIfNeeded()
+        
+        if let boundaryBytes = boundaryBytes(),
+            let fieldNameBytes = "Content-Disposition: form-data; name=\"\(fieldName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8),
+            let contentTypeBytes = contentTypeBytes(contentType)
+        {
+            formBuilder.append(boundaryBytes)
+            formBuilder.append(fieldNameBytes)
+            formBuilder.append(contentTypeBytes)
+            formBuilder.append(fileData)
+        }
+    }
+    
+    private func boundaryBytes() -> Data?
+    {
+        return "--\(formBoundary)\r\n".data(using: .utf8)
+    }
+    
+    private func endBoundaryBytes() -> Data?
+    {
+        return "\r\n--\(formBoundary)--\r\n".data(using: .utf8)
+    }
+    
+    private func contentTypeBytes(_ contentType: String) -> Data?
+    {
+        return "Content-Type: \(contentType)\r\n\r\n".data(using: .utf8)
+    }
+    
+    private func appendNewLineIfNeeded()
+    {
+        if (formBuilder.length > 0)
+        {
+            if let bytes = "\r\n".data(using: .utf8)
+            {
+                formBuilder.append(bytes)
+            }
+        }
+    }
+    
+    public func formData() -> Data?
+    {
+        guard let tmp = formBuilder.mutableCopy() as? NSMutableData, let endBoundaryBytes = endBoundaryBytes() else
+        {
+            return nil
+        }
+        
+        tmp.append(endBoundaryBytes)
+        return tmp as Data
+    }
+    
+    public func formContentType() -> String
+    {
+        return "multipart/form-data; boundary=\(formBoundary)"
     }
 }
 
@@ -322,7 +416,10 @@ public class UUHttpSession: NSObject
             }
             else
             {
-                UUDebugLog("Raw Body: %@", request.body!.uuToHexString())
+                if (request.body!.count < 10000)
+                {
+                    UUDebugLog("Raw Body: %@", request.body!.uuToHexString())
+                }
             }
         }
         
