@@ -2,8 +2,8 @@
 //  UUDictionaryTests.swift
 //  UUSwiftTests
 //
-//  Created by Ryan DeVore on 2/22/19.
-//  Copyright © 2019 Jonathan Hays. All rights reserved.
+//  License:
+//  You are free to use this code for whatever purposes you desire. The only requirement is that you smile everytime you use it.
 //
 
 import XCTest
