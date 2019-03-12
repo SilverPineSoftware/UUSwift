@@ -186,6 +186,80 @@ public extension Date
     {
         return uuIsDatePartEqual(Date())
     }
+	
+	func uuCountDaysInMonth() -> Int {
+		let start = self.uuStartOfMonth()
+		let end = self.uuEndOfMonth()
+		return Calendar.current.dateComponents([.day], from: start, to:end).day! + 1
+	}
+	
+	func uuCountWeeksInMonth() -> Int {
+		
+		var calendar = Calendar.current
+		calendar.firstWeekday = 1
+		let weekRange = calendar.range(of: .weekOfMonth, in: .month, for: self)
+		return  weekRange!.count
+	}
+
+	func uuStartOfHour() -> Date {
+		return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day, .hour], from: Calendar.current.startOfDay(for: self)))!
+	}
+	
+	func uuStartOfDay() -> Date {
+		return Calendar.current.startOfDay(for: self)
+	}
+
+	func uuEndOfDay() -> Date {
+		return self.uuStartOfDay().addingTimeInterval((24.0 * 60.0 * 60.0) - 1)
+	}
+	
+	func uuStartOfNextDay() -> Date {
+		let date = Calendar.current.startOfDay(for: self)
+		return date.addingTimeInterval(24.0 * 60.0 * 60.0)
+	}
+	
+	func uuStartOfWeek() -> Date {
+		let startOfWeek = Calendar.current.date(from: Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
+		return startOfWeek
+	}
+	
+	func uuEndOfWeek() -> Date {
+		let endOfWeek = Calendar.current.date(byAdding: .day, value: 7, to: self.uuStartOfWeek())!
+		return endOfWeek
+	}
+	
+	func uuStartOfMonth() -> Date {
+		return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
+	}
+	
+	func uuEndOfMonth() -> Date {
+		return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.uuStartOfMonth())!
+	}
+
+	func uuAddDays(_ days : Int) -> Date {
+		var dateComponents = DateComponents()
+		dateComponents.day = days
+		
+		let newDate = Calendar.current.date(byAdding: dateComponents, to: self)
+		return newDate!
+	}
+	
+	func uuAddWeeks(_ weeks : Int) -> Date {
+		var dateComponents = DateComponents()
+		dateComponents.weekOfYear = weeks
+		
+		let newDate = Calendar.current.date(byAdding: dateComponents, to: self)
+		return newDate!
+	}
+	
+	func uuAddMonths(_ months : Int) -> Date {
+		var dateComponents = DateComponents()
+		dateComponents.month = months
+		
+		let newDate = Calendar.current.date(byAdding: dateComponents, to: self)
+		return newDate!
+	}
+
 }
 
 public extension String
