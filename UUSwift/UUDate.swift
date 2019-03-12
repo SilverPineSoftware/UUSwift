@@ -52,25 +52,44 @@ public struct UUDate
     }
 }
 
+public extension Locale
+{
+    public static var uuEnUSPosix : Locale
+    {
+        get
+        {
+            return Locale(identifier: "en_US_POSIX")
+        }
+    }
+}
+
 extension DateFormatter
 {
     private static var uuSharedFormatterCache : Dictionary<String, DateFormatter> = Dictionary()
     private static let lockingQueue: DispatchQueue = DispatchQueue(label: "UUDateFormatter_LockingQueue")
     
-    public static func uuCachedFormatter(_ format : String) -> DateFormatter
+    private static func uuCacheLookupKey(_ format : String, _ timeZone: TimeZone, _ locale: Locale) -> String
+    {
+        return "\(format)_\(timeZone.identifier)_\(locale.identifier)"
+    }
+    
+    public static func uuCachedFormatter(_ format : String, timeZone: TimeZone = TimeZone.current, locale: Locale = Locale.current) -> DateFormatter
     {
         var df : DateFormatter!
         
         lockingQueue.sync
         {
-            df = uuSharedFormatterCache[format]
+            let key = uuCacheLookupKey(format, timeZone, locale)
+            
+            df = uuSharedFormatterCache[key]
             if (df == nil)
             {
                 df = DateFormatter()
                 df!.dateFormat = format
-                df!.locale = Locale(identifier: "en_US_POSIX")
+                df!.locale = locale
                 df!.calendar = Calendar(identifier: .gregorian)
-                uuSharedFormatterCache[format] = df!
+                df!.timeZone = timeZone
+                uuSharedFormatterCache[key] = df!
             }
         }
         
@@ -80,27 +99,25 @@ extension DateFormatter
 
 public extension Date
 {
-    public func uuFormat(_ format : String, timeZone : TimeZone = TimeZone.current) -> String
+    public func uuFormat(_ format : String, timeZone : TimeZone = TimeZone.current, locale: Locale = Locale.current) -> String
     {
-        let df = DateFormatter.uuCachedFormatter(format)
-        df.timeZone = timeZone
-        
+        let df = DateFormatter.uuCachedFormatter(format, timeZone: timeZone, locale: locale)
         return df.string(from: self)
     }
     
-    public func uuRfc3339String(timeZone : TimeZone = TimeZone.current) -> String
+    public func uuRfc3339String(timeZone : TimeZone = TimeZone.current, locale: Locale = Locale.uuEnUSPosix) -> String
     {
-        return uuFormat(UUDate.Formats.rfc3339, timeZone: timeZone)
+        return uuFormat(UUDate.Formats.rfc3339, timeZone: timeZone, locale: locale)
     }
     
     public func uuRfc3339StringUtc() -> String
     {
-        return uuFormat(UUDate.Formats.rfc3339, timeZone: UUDate.TimeZones.utc)
+        return uuRfc3339String(timeZone: UUDate.TimeZones.utc)
     }
     
-    public func uuRfc3339WithMillisString(timeZone : TimeZone = TimeZone.current) -> String
+    public func uuRfc3339WithMillisString(timeZone : TimeZone = TimeZone.current, locale: Locale = Locale.uuEnUSPosix) -> String
     {
-        return uuFormat(UUDate.Formats.rfc3339WithMillis, timeZone: timeZone)
+        return uuFormat(UUDate.Formats.rfc3339WithMillis, timeZone: timeZone, locale: locale)
     }
     
     public func uuRfc3339WithMillisStringUtc() -> String
