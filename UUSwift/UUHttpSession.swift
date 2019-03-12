@@ -13,6 +13,8 @@
 	import UIKit
 #endif
 
+public typealias UUQueryStringArgs = [AnyHashable:Any]
+public typealias UUHttpHeaders = [AnyHashable:Any]
 
 public enum UUHttpMethod : String
 {
@@ -87,8 +89,8 @@ public class UUHttpRequest: NSObject
 {
     public var url : String = ""
     public var httpMethod : UUHttpMethod = .get
-    public var queryArguments : [String:String] = [:]
-    public var headerFields : [String:String] = [:]
+    public var queryArguments : UUQueryStringArgs = [:]
+    public var headerFields : UUHttpHeaders = [:]
     public var body : Data? = nil
     public var bodyContentType : String? = nil
     public var timeout : TimeInterval = kUUHttpDefaultTimeout
@@ -97,73 +99,24 @@ public class UUHttpRequest: NSObject
     public var startTime : TimeInterval = 0
     public var httpRequest : URLRequest? = nil
     public var responseHandler : UUHttpResponseHandler? = nil
+    public var form : UUHttpForm? = nil
     
-    public init(_ url : String)
+    public init(url : String, method: UUHttpMethod = .get, queryArguments: UUQueryStringArgs = [:], headers: UUHttpHeaders = [:], body : Data? = nil, contentType : String? = nil)
     {
         super.init()
         
         self.url = url
+        self.httpMethod = method
+        self.queryArguments = queryArguments
+        self.headerFields = headers
+        self.body = body
+        self.bodyContentType = contentType
     }
     
-    public static func getRequest(_ url : String, _ queryArguments : [String:String]) -> UUHttpRequest
+    public convenience init(url : String, method: UUHttpMethod = .post, queryArguments: UUQueryStringArgs = [:], headers: UUHttpHeaders = [:], form : UUHttpForm)
     {
-        let req = UUHttpRequest.init(url)
-        req.httpMethod = .get
-        req.queryArguments = queryArguments
-        return req
-    }
-    
-    public static func deleteRequest(_ url : String, _ queryArguments : [String:String]) -> UUHttpRequest
-    {
-        let req = UUHttpRequest.init(url)
-        req.httpMethod = .delete
-        req.queryArguments = queryArguments
-        return req
-    }
-    
-    public static func putRequest(_ url : String, _ queryArguments : [String:String], _ body : Data?, _ contentType : String?) -> UUHttpRequest
-    {
-        let req = UUHttpRequest.init(url)
-        req.httpMethod = .put
-        req.queryArguments = queryArguments
-        req.body = body
-        req.bodyContentType = contentType
-        return req
-    }
-    
-    public static func postRequest(_ url : String, _ queryArguments : [String:String], _ body : Data?, _ contentType : String?) -> UUHttpRequest
-    {
-        let req = UUHttpRequest.init(url)
-        req.httpMethod = .post
-        req.queryArguments = queryArguments
-        req.body = body
-        req.bodyContentType = contentType
-        return req
-    }
-    
-    public static func postFormRequest(_ url : String, _ queryArguments : [String:String], _ form : UUHttpForm) -> UUHttpRequest
-    {
-        let req = UUHttpRequest.init(url)
-        req.httpMethod = .post
-        req.queryArguments = queryArguments
-        req.setForm(form)
-        return req
-    }
-    
-    public static func patchRequest(_ url : String, _ queryArguments : [String:String], _ body : Data?, _ contentType : String?) -> UUHttpRequest
-    {
-        let req = UUHttpRequest.init(url)
-        req.httpMethod = .patch
-        req.queryArguments = queryArguments
-        req.body = body
-        req.bodyContentType = contentType
-        return req
-    }
-    
-    public func setForm(_ form: UUHttpForm)
-    {
-        body = form.formData()
-        bodyContentType = form.formContentType()
+        self.init(url: url, method: method, queryArguments: queryArguments, headers: headers, body: nil, contentType: nil)
+        self.form = form
     }
 }
 
@@ -269,14 +222,14 @@ public protocol UUHttpResponseHandler
     func parseResponse(_ data : Data, _ response: HTTPURLResponse, _ request: URLRequest) -> Any?
 }
 
-class UUTextResponseHandler : NSObject, UUHttpResponseHandler
+open class UUTextResponseHandler : NSObject, UUHttpResponseHandler
 {
     public var supportedMimeTypes: [String]
     {
         return [UUContentType.textHtml, UUContentType.textPlain]
     }
     
-    public func parseResponse(_ data: Data, _ response: HTTPURLResponse, _ request: URLRequest) -> Any?
+    open func parseResponse(_ data: Data, _ response: HTTPURLResponse, _ request: URLRequest) -> Any?
     {
         var parsed : Any? = nil
         
@@ -298,27 +251,27 @@ class UUTextResponseHandler : NSObject, UUHttpResponseHandler
     }
 }
 
-class UUBinaryResponseHandler : NSObject, UUHttpResponseHandler
+open class UUBinaryResponseHandler : NSObject, UUHttpResponseHandler
 {
-    public var supportedMimeTypes: [String]
+    open var supportedMimeTypes: [String]
     {
         return [UUContentType.binary]
     }
     
-    public func parseResponse(_ data: Data, _ response: HTTPURLResponse, _ request: URLRequest) -> Any?
+    open func parseResponse(_ data: Data, _ response: HTTPURLResponse, _ request: URLRequest) -> Any?
     {
         return data
     }
 }
 
-class UUJsonResponseHandler : NSObject, UUHttpResponseHandler
+open class UUJsonResponseHandler : NSObject, UUHttpResponseHandler
 {
-    public var supportedMimeTypes: [String]
+    open var supportedMimeTypes: [String]
     {
         return [UUContentType.applicationJson, UUContentType.textJson]
     }
     
-    public func parseResponse(_ data: Data, _ response: HTTPURLResponse, _ request: URLRequest) -> Any?
+    open func parseResponse(_ data: Data, _ response: HTTPURLResponse, _ request: URLRequest) -> Any?
     {
         do
         {
@@ -333,14 +286,14 @@ class UUJsonResponseHandler : NSObject, UUHttpResponseHandler
     }
 }
 
-class UUImageResponseHandler : NSObject, UUHttpResponseHandler
+open class UUImageResponseHandler : NSObject, UUHttpResponseHandler
 {
     public var supportedMimeTypes: [String]
     {
         return [UUContentType.imagePng, UUContentType.imageJpeg]
     }
     
-    public func parseResponse(_ data: Data, _ response: HTTPURLResponse, _ request: URLRequest) -> Any?
+    open func parseResponse(_ data: Data, _ response: HTTPURLResponse, _ request: URLRequest) -> Any?
     {
 		#if os(macOS)
 			return NSImage.init(data: data)
@@ -442,23 +395,30 @@ public class UUHttpSession: NSObject
             fullUrl = "\(request.url)\(request.queryArguments.uuBuildQueryString())"
         }
         
-        let url = URL.init(string: fullUrl)
-        if (url == nil)
+        guard let url = URL.init(string: fullUrl) else
         {
             return nil
         }
         
-        var req : URLRequest = URLRequest.init(url: url!)
+        var req : URLRequest = URLRequest(url: url)
         req.httpMethod = request.httpMethod.rawValue
         req.timeoutInterval = request.timeout
         
         for key in request.headerFields.keys
         {
-            let val = request.headerFields[key]
-            if (val != nil)
+            let strKey = (key as? String) ?? String(describing: key)
+            
+            if let val = request.headerFields[key]
             {
-                req.addValue(val!, forHTTPHeaderField: key)
+                let strVal = (val as? String) ?? String(describing: val)
+                req.addValue(strVal, forHTTPHeaderField: strKey)
             }
+        }
+        
+        if let form = request.form
+        {
+            request.body = form.formData()
+            request.bodyContentType = form.formContentType()
         }
         
         if (request.body != nil)
@@ -545,7 +505,9 @@ public class UUHttpSession: NSObject
                 }
             }
             
-            if (!isHttpSuccessResponseCode(httpResponseCode))
+            // By default, the standard response parsers won't emit an Error, but custom response handlers might.
+            // When callers parse response JSON and return Errors, we will honor that.
+            if (err == nil && !isHttpSuccessResponseCode(httpResponseCode))
             {
                 var d : [String:Any] = [:]
                 d[UUHttpSessionHttpErrorCodeKey] = NSNumber(value: httpResponseCode)
@@ -621,27 +583,27 @@ public class UUHttpSession: NSObject
         return shared.executeRequest(request, completion)
     }
     
-    public static func get(_ url : String, _ queryArguments : [String:String], _ completion: @escaping (UUHttpResponse) -> Void)
+    public static func get(url : String, queryArguments : UUQueryStringArgs = [:], headers: UUHttpHeaders = [:], completion: @escaping (UUHttpResponse) -> Void)
     {
-        let req = UUHttpRequest.getRequest(url, queryArguments)
+        let req = UUHttpRequest(url: url, method: .get, queryArguments: queryArguments)
         _ = executeRequest(req, completion)
     }
     
-    public static func delete(_ url : String, _ queryArguments : [String:String], _ completion: @escaping (UUHttpResponse) -> Void)
+    public static func delete(url : String, queryArguments : UUQueryStringArgs = [:], headers: UUHttpHeaders = [:], completion: @escaping (UUHttpResponse) -> Void)
     {
-        let req = UUHttpRequest.deleteRequest(url, queryArguments)
+        let req = UUHttpRequest(url: url, method: .delete, queryArguments: queryArguments)
         _ = executeRequest(req, completion)
     }
     
-    public static func put(_ url : String, _ queryArguments : [String:String], _ body: Data?, _ contentType : String?, _ completion: @escaping (UUHttpResponse) -> Void)
+    public static func put(url : String, queryArguments : UUQueryStringArgs = [:], headers: UUHttpHeaders = [:], body: Data?, contentType : String?, completion: @escaping (UUHttpResponse) -> Void)
     {
-        let req = UUHttpRequest.putRequest(url, queryArguments, body, contentType)
+        let req = UUHttpRequest(url: url, method: .put, queryArguments: queryArguments, body: body, contentType: contentType)
         _ = executeRequest(req, completion)
     }
     
-    public static func post(_ url : String, _ queryArguments : [String:String], _ body: Data?, _ contentType : String?, _ completion: @escaping (UUHttpResponse) -> Void)
+    public static func post(url : String, queryArguments : UUQueryStringArgs = [:], headers: UUHttpHeaders = [:], body: Data?, contentType : String?, completion: @escaping (UUHttpResponse) -> Void)
     {
-        let req = UUHttpRequest.postRequest(url, queryArguments, body, contentType)
+        let req = UUHttpRequest(url: url, method: .post, queryArguments: queryArguments)
         _ = executeRequest(req, completion)
     }
     

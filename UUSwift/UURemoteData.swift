@@ -88,7 +88,7 @@ public class UURemoteData: NSObject, UURemoteDataProtocol
             return nil
         }
         
-        let request = UUHttpRequest.getRequest(key, [:])
+        let request = UUHttpRequest(url: key)
         request.processMimeTypes  = false
         
         let client = UUHttpSession.executeRequest(request)
