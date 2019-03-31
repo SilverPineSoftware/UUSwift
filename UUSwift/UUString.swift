@@ -22,7 +22,7 @@ public extension String
     //
     // Out of bounds indices are clamped to fit within range of the string.
     //
-    public func uuSubString(_ from: Int, _ length: Int) -> String
+    func uuSubString(_ from: Int, _ length: Int) -> String
     {
         var adjustedFrom = from
         if (adjustedFrom < 0)
@@ -52,13 +52,13 @@ public extension String
     }
     
     // Returns the first N characters of the string
-    public func uuFirstNChars(_ count: Int) -> String
+    func uuFirstNChars(_ count: Int) -> String
     {
         return uuSubString(0, count)
     }
     
     // Returns the last N characters of the string
-    public func uuLastNChars(_ count: Int) -> String
+    func uuLastNChars(_ count: Int) -> String
     {
         return uuSubString(self.count - count, count)
     }
@@ -70,7 +70,7 @@ public extension String
     //
     // !*'();:@&=+$,/?%#[]
     //
-    public func uuUrlEncoded() -> String
+    func uuUrlEncoded() -> String
     {
         var encoded : String? = addingPercentEncoding(withAllowedCharacters: String.kUrlEncodingCharSet)
         if (encoded == nil)
@@ -82,20 +82,20 @@ public extension String
     }
     
     // Trim whitespace from beginning and end of string
-    public func uuTrimWhitespace() -> String
+    func uuTrimWhitespace() -> String
     {
         return trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
     
     // Parses this string as a decimal number
-    public func uuAsDecimalNumber() -> NSNumber?
+    func uuAsDecimalNumber() -> NSNumber?
     {
         let f = NumberFormatter()
         f.numberStyle = .decimal
         return f.number(from: self)
     }
     
-    public func uuToJsonObject(_ encoding : String.Encoding = .utf8) -> Any?
+    func uuToJsonObject(_ encoding : String.Encoding = .utf8) -> Any?
     {
         let encodedData = data(using: encoding)
         if (encodedData != nil)
@@ -108,7 +108,7 @@ public extension String
         }
     }
     
-    public func uuToHexData() -> NSData?
+    func uuToHexData() -> NSData?
     {
         let length:Int = self.count
         
@@ -139,7 +139,7 @@ public extension String
         return data
     }
     
-    public func uuBase64UrlDecode() -> Data?
+    func uuBase64UrlDecode() -> Data?
     {
         // Base64 URL mode swaps '-' with '+' and '_' with '/'
         var tmp = self

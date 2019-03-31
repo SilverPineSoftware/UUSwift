@@ -160,7 +160,7 @@ public class UURemoteData: NSObject, UURemoteDataProtocol
         UUDataCache.shared.set(metaData: md, for: key)
     }
     
-    public func save(data: Data, key: String)
+    func save(data: Data, key: String)
     {
         UUDataCache.shared.set(data: data, for: key)
         
@@ -180,12 +180,12 @@ public class UURemoteData: NSObject, UURemoteDataProtocol
 
 public extension Notification
 {
-    public var uuRemoteDataPath : String?
+    var uuRemoteDataPath : String?
     {
         return userInfo?[UURemoteData.NotificationKeys.RemotePath] as? String
     }
     
-    public var uuRemoteDataError : Error?
+    var uuRemoteDataError : Error?
     {
         return userInfo?[UURemoteData.NotificationKeys.Error] as? Error
     }

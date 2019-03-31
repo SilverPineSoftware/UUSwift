@@ -54,7 +54,7 @@ public struct UUDate
 
 public extension Locale
 {
-    public static var uuEnUSPosix : Locale
+    static var uuEnUSPosix : Locale
     {
         get
         {
@@ -99,73 +99,73 @@ extension DateFormatter
 
 public extension Date
 {
-    public func uuFormat(_ format : String, timeZone : TimeZone = TimeZone.current, locale: Locale = Locale.current) -> String
+	func uuFormat(_ format : String, timeZone : TimeZone = TimeZone.current, locale: Locale = Locale.current) -> String
     {
         let df = DateFormatter.uuCachedFormatter(format, timeZone: timeZone, locale: locale)
         return df.string(from: self)
     }
     
-    public func uuRfc3339String(timeZone : TimeZone = TimeZone.current, locale: Locale = Locale.uuEnUSPosix) -> String
+	func uuRfc3339String(timeZone : TimeZone = TimeZone.current, locale: Locale = Locale.uuEnUSPosix) -> String
     {
         return uuFormat(UUDate.Formats.rfc3339, timeZone: timeZone, locale: locale)
     }
     
-    public func uuRfc3339StringUtc() -> String
+    func uuRfc3339StringUtc() -> String
     {
         return uuRfc3339String(timeZone: UUDate.TimeZones.utc)
     }
     
-    public func uuRfc3339WithMillisString(timeZone : TimeZone = TimeZone.current, locale: Locale = Locale.uuEnUSPosix) -> String
+	func uuRfc3339WithMillisString(timeZone : TimeZone = TimeZone.current, locale: Locale = Locale.uuEnUSPosix) -> String
     {
         return uuFormat(UUDate.Formats.rfc3339WithMillis, timeZone: timeZone, locale: locale)
     }
     
-    public func uuRfc3339WithMillisStringUtc() -> String
+	func uuRfc3339WithMillisStringUtc() -> String
     {
         return uuRfc3339WithMillisString(timeZone: UUDate.TimeZones.utc)
     }
     
-    public var uuDayOfMonth : String
+	var uuDayOfMonth : String
     {
         return uuFormat(UUDate.Formats.dayOfMonth)
     }
     
-    public var uuNumericMonthOfYear : String
+	var uuNumericMonthOfYear : String
     {
         return uuFormat(UUDate.Formats.numericMonthOfYear)
     }
     
-    public var uuShortMonthOfYear : String
+	var uuShortMonthOfYear : String
     {
         return uuFormat(UUDate.Formats.shortMonthOfYear)
     }
     
-    public var uuLongMonthOfYear : String
+	var uuLongMonthOfYear : String
     {
         return uuFormat(UUDate.Formats.longMonthOfYear)
     }
     
-    public var uuShortDayOfWeek : String
+	var uuShortDayOfWeek : String
     {
         return uuFormat(UUDate.Formats.shortDayOfWeek)
     }
     
-    public var uuLongDayOfWeek : String
+	var uuLongDayOfWeek : String
     {
         return uuFormat(UUDate.Formats.longDayOfWeek)
     }
     
-    public var uuTwoDigitYear : String
+	var uuTwoDigitYear : String
     {
         return uuFormat(UUDate.Formats.twoDigitYear)
     }
     
-    public var uuFourDigitYear : String
+	var uuFourDigitYear : String
     {
         return uuFormat(UUDate.Formats.fourDigitYear)
     }
     
-    public func uuIsDatePartEqual(_ other: Date) -> Bool
+	func uuIsDatePartEqual(_ other: Date) -> Bool
     {
         let cal = Calendar(identifier: .gregorian)
         let parts: Set<Calendar.Component> = [.year, .month, .day]
@@ -182,7 +182,7 @@ public extension Date
         return (thisYear == otherYear) && (thisMonth == otherMonth) && (thisDay == otherDay)
     }
     
-    public func uuIsToday() -> Bool
+	func uuIsToday() -> Bool
     {
         return uuIsDatePartEqual(Date())
     }
@@ -264,7 +264,7 @@ public extension Date
 
 public extension String
 {
-    public func uuParseDate(format: String, timeZone: TimeZone = TimeZone.current) -> Date?
+	func uuParseDate(format: String, timeZone: TimeZone = TimeZone.current) -> Date?
     {
         let df = DateFormatter.uuCachedFormatter(format)
         df.timeZone = timeZone

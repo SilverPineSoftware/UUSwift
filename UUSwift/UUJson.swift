@@ -16,7 +16,7 @@
 
 public extension NSObject
 {
-    public func uuToJsonString(_ prettyPrinted: Bool = false) -> String
+    func uuToJsonString(_ prettyPrinted: Bool = false) -> String
     {
         let jsonData : Data? = uuToJson(prettyPrinted)
         var jsonStr : String? = nil
@@ -34,7 +34,7 @@ public extension NSObject
         return jsonStr!
     }
     
-    public func uuToJson(_ prettyPrinted: Bool = false) -> Data?
+    func uuToJson(_ prettyPrinted: Bool = false) -> Data?
     {
         var data : Data? = nil
         
@@ -56,12 +56,12 @@ public extension NSObject
 
 public extension Dictionary
 {
-    public func uuToJsonString(_ prettyPrinted: Bool = false) -> String
+    func uuToJsonString(_ prettyPrinted: Bool = false) -> String
     {
         return (self as NSObject).uuToJsonString(prettyPrinted)
     }
     
-    public func uuToJson(_ prettyPrinted: Bool = false) -> Data?
+    func uuToJson(_ prettyPrinted: Bool = false) -> Data?
     {
         return (self as NSObject).uuToJson(prettyPrinted)
     }
@@ -69,12 +69,12 @@ public extension Dictionary
 
 public extension Array
 {
-    public func uuToJsonString(_ prettyPrinted: Bool = false) -> String
+    func uuToJsonString(_ prettyPrinted: Bool = false) -> String
     {
         return (self as NSObject).uuToJsonString(prettyPrinted)
     }
     
-    public func uuToJson(_ prettyPrinted: Bool = false) -> Data?
+    func uuToJson(_ prettyPrinted: Bool = false) -> Data?
     {
         return (self as NSObject).uuToJson(prettyPrinted)
     }
