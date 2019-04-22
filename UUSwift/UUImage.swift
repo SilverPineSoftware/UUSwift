@@ -391,6 +391,51 @@ public extension UIImage {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// MARK: - Animated GIF support
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	public static func uuImageWithGIFData(_ data : Data) -> UIImage? {
+		var image : UIImage? = nil
+		if let imageRef = CGImageSourceCreateWithData(data as CFData, nil) {
+			let frameCount = CGImageSourceGetCount(imageRef)
+			let duration = UIImage.uuGIFDuration(imageRef, count: frameCount)
+			let frames = UIImage.uuCreateGIFFrames(imageRef, count: frameCount)
+			image = UIImage.animatedImage(with: frames, duration: duration)
+		}
+		
+		return image
+	}
+	
+	private static func uuCreateGIFFrames(_ source : CGImageSource, count : Int) -> [UIImage] {
+		var frames : [UIImage] = []
+		
+		for i in 0...count - 1 {
+			if let imageRef = CGImageSourceCreateImageAtIndex(source, i, nil) {
+				let image = UIImage(cgImage: imageRef)
+				frames.append(image)
+			}
+		}
+		
+		return frames
+	}
+	
+	private static func uuGIFDuration(_ source : CGImageSource, count : Int) -> TimeInterval {
+		var duration : TimeInterval = 0.0
+		
+		for i in 0...count - 1 {
+			if let dictionary = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as? Dictionary<String, Any> {
+				if let properties = dictionary[kCGImagePropertyGIFDictionary as String] as? Dictionary<String, Any> {
+					if let length = properties[kCGImagePropertyGIFDelayTime as String] as? NSNumber {
+						duration = duration + length.doubleValue
+					}
+				}
+			}
+		}
+		
+		return duration
+	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// MARK: - Misc
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
