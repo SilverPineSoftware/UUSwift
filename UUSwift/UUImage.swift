@@ -18,7 +18,7 @@ public extension UUImage
 	// MARK: - Resizing functions
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public func uuCropToSize(targetSize : CGSize) -> UUImage
+	func uuCropToSize(targetSize : CGSize) -> UUImage
 	{
 		var thumbnailRect : CGRect = .zero
 		thumbnailRect.origin = CGPoint(x: 0, y: 0)
@@ -28,7 +28,7 @@ public extension UUImage
 	}
 	
 	
-	public func uuScaleToSize(targetSize : CGSize) -> UUImage
+	func uuScaleToSize(targetSize : CGSize) -> UUImage
 	{
 		let imageSize = self.size
 		let width : CGFloat = imageSize.width
@@ -78,7 +78,7 @@ public extension UUImage
 		return self.uuPlatformDraw(targetSize : targetSize, thumbnailRect : thumbnailRect)
 	}
 	
-	public func uuScaleAndCropToSize(targetSize : CGSize) -> UUImage
+	func uuScaleAndCropToSize(targetSize : CGSize) -> UUImage
 	{
 		let deviceScale = UUImage.uuScreenScale()
 		let sourceImage = self
@@ -128,19 +128,19 @@ public extension UUImage
 	}
 	
 	
-	public func uuScaleToWidth(targetWidth: CGFloat) -> UUImage
+	func uuScaleToWidth(targetWidth: CGFloat) -> UUImage
 	{
 		let destSize = self.uuCalculateScaleToWidth(width: targetWidth)
 		return self.uuScaleToSize(targetSize: destSize)
 	}
 	
-	public func uuScaleToHeight(targetHeight : CGFloat) -> UUImage
+	func uuScaleToHeight(targetHeight : CGFloat) -> UUImage
 	{
 		let destSize = self.uuCalculateScaleToHeight(height: targetHeight)
 		return self.uuScaleToSize(targetSize: destSize)
 	}
 	
-	public func uuScaleSmallestDimensionToSize(size : CGFloat) -> UUImage
+	func uuScaleSmallestDimensionToSize(size : CGFloat) -> UUImage
 	{
 		if (self.size.width < self.size.height)
 		{
@@ -152,11 +152,11 @@ public extension UUImage
 		}
 	}
 	
-	public func uuPngData() -> Data? {
+	func uuPngData() -> Data? {
 		return self.uuPlatformPngData()
 	}
 	
-	public func uuJpegData(_ compressionQuality: CGFloat) -> Data? {
+	func uuJpegData(_ compressionQuality: CGFloat) -> Data? {
 		return self.uuPlatformJpegData(compressionQuality)
 	}
 
@@ -219,11 +219,11 @@ public extension UUImage
 	#if os(iOS) || os(tvOS)
 
 	private func uuPlatformPngData() -> Data? {
-		return UIImagePNGRepresentation(self)
+		return self.pngData()
 	}
 	
 	private func uuPlatformJpegData(_ compressionQuality: CGFloat) -> Data? {
-		return UIImageJPEGRepresentation(self, compressionQuality)
+		return self.jpegData(compressionQuality: compressionQuality)
 	}
 
 	private func uuPlatformDraw(targetSize : CGSize, thumbnailRect : CGRect) -> UUImage
@@ -353,7 +353,7 @@ public extension UIImage {
 	// MARK: - Solid color image functions
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public static func uuSolidColorImage(color : UIColor) -> UUImage?
+	static func uuSolidColorImage(color : UIColor) -> UUImage?
 	{
 		let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
 	
@@ -373,7 +373,7 @@ public extension UIImage {
 		return nil
 	}
 
-	public static func uuSolidColorImage(color : UUColor, cornerRadius : CGFloat, borderColor : UIColor, borderWidth : CGFloat) -> UUImage?
+	static func uuSolidColorImage(color : UUColor, cornerRadius : CGFloat, borderColor : UIColor, borderWidth : CGFloat) -> UUImage?
 	{
 		let rect = CGRect(x: 0.0, y: 0.0, width: 2.0 * ((cornerRadius * 2.0) + 1), height: 2.0 * ((cornerRadius * 2.0) + 1))
 		let view = UIView(frame: rect)
@@ -439,7 +439,7 @@ public extension UIImage {
 	// MARK: - Misc
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	public func uuRemoveOrientation() -> UUImage {
+	func uuRemoveOrientation() -> UUImage {
 		if self.imageOrientation == .up
 		{
 			return self
@@ -465,6 +465,9 @@ public extension UIImage {
 			case .right, .rightMirrored:
 				affineTransformation = affineTransformation.translatedBy(x: 0.0, y: self.size.height)
 				affineTransformation = affineTransformation.rotated(by: -2.0 * .pi)
+			break
+			
+			@unknown default:
 			break
 		}
 	
@@ -509,7 +512,7 @@ public extension UIImage {
 	}
 
 
-	public static func uuViewToImage(_ view : UIView) -> UIImage?
+	static func uuViewToImage(_ view : UIView) -> UIImage?
 	{
 		UIGraphicsBeginImageContextWithOptions(view.bounds.size, false, UIScreen.main.scale)
 		if let outputContext = UIGraphicsGetCurrentContext()
@@ -526,7 +529,7 @@ public extension UIImage {
 		return nil
 	}
 
-	public static func uuMakeStretchableImage(imageName : String, insets : UIEdgeInsets) -> UIImage?
+	static func uuMakeStretchableImage(imageName : String, insets : UIEdgeInsets) -> UIImage?
 	{
 		return UIImage(named: imageName)?.resizableImage(withCapInsets: insets)
 	}

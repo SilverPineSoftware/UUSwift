@@ -53,18 +53,18 @@ open class UUEditViewController : UIViewController
     
     func registerNotificationHandlers()
     {
-        NotificationCenter.default.addObserver(forName: Notification.Name.UIKeyboardWillShow, object: nil, queue: nil, using: handleKeyboardWillShowNotification)
-        NotificationCenter.default.addObserver(forName: Notification.Name.UIKeyboardWillHide, object: nil, queue: nil, using: handleKeyboardWillHideNotification)
-        NotificationCenter.default.addObserver(forName: Notification.Name.UITextViewTextDidBeginEditing, object: nil, queue: nil, using: handleEditingStarted)
-        NotificationCenter.default.addObserver(forName: Notification.Name.UITextFieldTextDidBeginEditing, object: nil, queue: nil, using: handleEditingStarted)
-        NotificationCenter.default.addObserver(forName: Notification.Name.UITextViewTextDidEndEditing, object: nil, queue: nil, using: handleEditingEnded)
-        NotificationCenter.default.addObserver(forName: Notification.Name.UITextFieldTextDidEndEditing, object: nil, queue: nil, using: handleEditingEnded)
+		NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil, using: handleKeyboardWillShowNotification)
+		NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil, using: handleKeyboardWillHideNotification)
+		NotificationCenter.default.addObserver(forName: UITextView.textDidBeginEditingNotification, object: nil, queue: nil, using: handleEditingStarted)
+		NotificationCenter.default.addObserver(forName: UITextField.textDidBeginEditingNotification, object: nil, queue: nil, using: handleEditingStarted)
+		NotificationCenter.default.addObserver(forName: UITextView.textDidEndEditingNotification, object: nil, queue: nil, using: handleEditingEnded)
+		NotificationCenter.default.addObserver(forName: UITextField.textDidEndEditingNotification, object: nil, queue: nil, using: handleEditingEnded)
     }
     
     func clearNotificationHandlers()
     {
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillHide, object: nil)
+		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+		NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func handleBackgroundTap()
@@ -74,7 +74,7 @@ open class UUEditViewController : UIViewController
     
     @objc func handleKeyboardWillShowNotification(_ notification: Notification)
     {
-        currentKeyboardFrame = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect
+		currentKeyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
         animateViewIfNeeded()
     }
     

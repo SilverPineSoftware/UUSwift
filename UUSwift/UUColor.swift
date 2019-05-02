@@ -21,7 +21,7 @@ public extension UUColor
     //
     // RRGGBB or RRGGBBAA
     //
-    public static func uuColorFromHex(_ color: String) -> UUColor
+    static func uuColorFromHex(_ color: String) -> UUColor
     {
         var rgba : [CGFloat] = [0, 0, 0, 1]
         
@@ -50,7 +50,7 @@ public extension UUColor
     }
     
     // Calculates the midpoint value of each color component between two colors
-    public static func uuCalculateMidColor(startColor: UUColor, endColor: UUColor) -> UUColor
+    static func uuCalculateMidColor(startColor: UUColor, endColor: UUColor) -> UUColor
     {
         var r : CGFloat = 0
         var g : CGFloat = 0

@@ -447,7 +447,7 @@ public class UUHttpSession: NSObject
         let uuResponse : UUHttpResponse = UUHttpResponse(request, httpResponse)
         uuResponse.rawResponse = data
         
-        var err : Error? = nil
+        var err : Error? = error
         var parsedResponse : Any? = nil
         
         var httpResponseCode : Int = 0
@@ -464,36 +464,7 @@ public class UUHttpSession: NSObject
             UUDebugLog("Response Headers: %@", responseHeaders)
         }
         
-        if (error != nil)
-        {
-            UUDebugLog("Got an error: %@", String(describing: error!))
-            
-            var errCode : UUHttpSessionError = UUHttpSessionError.httpFailure
-            
-            let nsError = error! as NSError
-            if (nsError.domain == NSURLErrorDomain as String)
-            {
-                switch (nsError.code)
-                {
-                    case NSURLErrorCannotFindHost:
-                        errCode = .cannotFindHost
-                    
-                    case NSURLErrorNotConnectedToInternet:
-                        errCode = .noInternet
-                    
-                    case NSURLErrorTimedOut:
-                        errCode = .timedOut
-                    
-                    default:
-                        errCode = UUHttpSessionError.httpFailure
-                }
-            }
-            
-            var userInfo : [String : Any]  = [:]
-            userInfo[NSUnderlyingErrorKey] = error
-            err = NSError.init(domain: UUHttpSessionErrorDomain, code: errCode.rawValue, userInfo: userInfo)
-        }
-        else
+        if (error == nil)
         {
             if (request.processMimeTypes)
             {

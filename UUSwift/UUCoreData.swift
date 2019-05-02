@@ -121,7 +121,7 @@ open class UUCoreData: NSObject
 
 public extension NSManagedObjectContext
 {
-    public func uuSubmitChanges() -> Error?
+    func uuSubmitChanges() -> Error?
     {
         var error: Error? = nil
         
@@ -144,7 +144,7 @@ public extension NSManagedObjectContext
         return error
     }
     
-    public func uuDeleteObjects(_ list: [Any])
+    func uuDeleteObjects(_ list: [Any])
     {
         performAndWait
         {
@@ -158,7 +158,7 @@ public extension NSManagedObjectContext
         }
     }
     
-    public func uuDeleteAllObjects()
+    func uuDeleteAllObjects()
     {
         performAndWait
         {
@@ -191,7 +191,7 @@ public extension NSManagedObjectContext
 
 public extension NSError
 {
-    public func uuLogDetailedErrors()
+    func uuLogDetailedErrors()
     {
         UUDebugLog("ERROR: %@", localizedDescription)
         
@@ -212,12 +212,12 @@ public extension NSError
 
 public extension NSManagedObject
 {
-    public static var uuEntityName : String
+    static var uuEntityName : String
     {
         return String(describing: self)
     }
     
-    public static func uuFetchRequest(
+    static func uuFetchRequest(
         predicate: NSPredicate? = nil,
         sortDescriptors: [NSSortDescriptor]? = nil,
         offset: Int? = nil,
@@ -242,7 +242,7 @@ public extension NSManagedObject
         return fr
     }
     
-    public static func uuFetchObjects(
+    static func uuFetchObjects(
         predicate: NSPredicate? = nil,
         sortDescriptors: [NSSortDescriptor]? = nil,
         offset: Int? = nil,
@@ -253,7 +253,7 @@ public extension NSManagedObject
         return uuExecuteFetch(fetchRequest: fr, context: context)
     }
     
-    public static func uuFetchDictionaries(
+    static func uuFetchDictionaries(
         predicate: NSPredicate? = nil,
         sortDescriptors: [NSSortDescriptor]? = nil,
         propertiesToFetch: [Any]? = nil,
@@ -279,7 +279,7 @@ public extension NSManagedObject
         return result
     }
     
-    public static func uuFetchSingleColumnString(
+    static func uuFetchSingleColumnString(
         predicate: NSPredicate? = nil,
         sortDescriptors: [NSSortDescriptor]? = nil,
         propertyToFetch: String,
@@ -302,7 +302,7 @@ public extension NSManagedObject
         return results
     }
     
-    public static func uuExecuteFetch(
+    static func uuExecuteFetch(
         fetchRequest: NSFetchRequest<NSFetchRequestResult>,
         context: NSManagedObjectContext) -> [Any]
     {
@@ -324,7 +324,7 @@ public extension NSManagedObject
         return results
     }
     
-    public class func uuFetchSingleObject(
+    class func uuFetchSingleObject(
         predicate: NSPredicate? = nil,
         sortDescriptors: [NSSortDescriptor]? = nil,
         context: NSManagedObjectContext) -> Self?
@@ -332,7 +332,7 @@ public extension NSManagedObject
         return uuFetchSingleObjectInternal(predicate: predicate,  sortDescriptors: sortDescriptors, context: context)
     }
     
-    public class func uuFetchSingleDictionary(
+    class func uuFetchSingleDictionary(
         predicate: NSPredicate? = nil,
         sortDescriptors: [NSSortDescriptor]? = nil,
         propertiesToFetch: [Any]? = nil,
@@ -367,7 +367,7 @@ public extension NSManagedObject
         return single as? T
     }
     
-    public static func uuFetchOrCreate(
+    static func uuFetchOrCreate(
         predicate: NSPredicate? = nil,
         sortDescriptors: [NSSortDescriptor]? = nil,
         context: NSManagedObjectContext) -> Self
@@ -385,7 +385,7 @@ public extension NSManagedObject
         return obj!
     }
     
-    public class func uuCreate(
+    class func uuCreate(
         context: NSManagedObjectContext) -> Self
     {
         return uuCreateInternal(context: context)
@@ -404,7 +404,7 @@ public extension NSManagedObject
         
     }
     
-    public static func uuDeleteObjects(
+    static func uuDeleteObjects(
         predicate: NSPredicate? = nil,
         context: NSManagedObjectContext)
     {
@@ -470,7 +470,7 @@ public extension NSManagedObject
         }
     }*/
     
-    public static func uuCountObjects(
+    static func uuCountObjects(
         predicate: NSPredicate? = nil,
         context: NSManagedObjectContext) -> Int
     {
@@ -493,7 +493,7 @@ public extension NSManagedObject
         return count
     }
     
-    public static func uuLogTable(
+    static func uuLogTable(
         predicate: NSPredicate? = nil,
         sortDescriptors: [NSSortDescriptor]? = nil,
         offset: Int? = nil,
@@ -531,27 +531,27 @@ public extension UUCoreData
 {
     private static var sharedStore : UUCoreData? = nil
     
-    public static func configure(url: URL, modelDefinitionBundle: Bundle = Bundle.main)
+    static func configure(url: URL, modelDefinitionBundle: Bundle = Bundle.main)
     {
         sharedStore = UUCoreData(url: url, modelDefinitionBundle: modelDefinitionBundle)
     }
     
-    public static var shared : UUCoreData?
+    static var shared : UUCoreData?
     {
         return sharedStore
     }
     
-    public static var mainThreadContext: NSManagedObjectContext?
+    static var mainThreadContext: NSManagedObjectContext?
     {
         return shared?.mainThreadContext
     }
     
-    public static func workerThreadContext() -> NSManagedObjectContext?
+    static func workerThreadContext() -> NSManagedObjectContext?
     {
         return shared?.workerThreadContext()
     }
     
-    public static func destroyStore(at url: URL)
+    static func destroyStore(at url: URL)
     {
         do
         {

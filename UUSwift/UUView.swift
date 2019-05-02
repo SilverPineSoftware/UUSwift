@@ -22,7 +22,7 @@ extension UIView
         let effectView = UIVisualEffectView.init(effect: effect)
         
         effectView.frame = self.bounds
-        effectView.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
+		effectView.autoresizingMask = [UIView.AutoresizingMask.flexibleWidth, UIView.AutoresizingMask.flexibleHeight]
         effectView.tag = UIView.blurEffectViewTag
         insertSubview(effectView, at: 0)
     }

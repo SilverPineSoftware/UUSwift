@@ -14,7 +14,7 @@ import MapKit
 
 public extension MKMapView
 {
-    public static func uuFindBoundingBox(annotations: [MKAnnotation]) -> MKCoordinateRegion?
+    static func uuFindBoundingBox(annotations: [MKAnnotation]) -> MKCoordinateRegion?
     {
         var minLat : CLLocationDegrees = CLLocationDegrees(Int.max)
         var maxLat : CLLocationDegrees = CLLocationDegrees(Int.min)
@@ -79,7 +79,7 @@ public extension MKMapView
         }
     }
     
-    public func uuZoomToAnnotations(animated: Bool, center: CLLocationCoordinate2D? = nil)
+    func uuZoomToAnnotations(animated: Bool, center: CLLocationCoordinate2D? = nil)
     {
         var region = MKMapView.uuFindBoundingBox(annotations: annotations)
         if (region != nil)

@@ -52,17 +52,17 @@ import UIKit
     
     override func textRect(forBounds bounds: CGRect) -> CGRect
     {
-        return UIEdgeInsetsInsetRect(bounds, paddingRect)
+        return bounds.inset(by: paddingRect)
     }
     
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect
     {
-        return UIEdgeInsetsInsetRect(bounds, paddingRect)
+        return bounds.inset(by: paddingRect)
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect
     {
-        return UIEdgeInsetsInsetRect(bounds, paddingRect)
+		return bounds.inset(by: paddingRect)
     }
 }
 

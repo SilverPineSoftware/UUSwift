@@ -16,7 +16,7 @@ public extension Data
 {
     // Return hex string representation of data
     //
-    public func uuToHexString() -> String
+    func uuToHexString() -> String
     {
         let sb : NSMutableString = NSMutableString()
         
@@ -33,7 +33,7 @@ public extension Data
     
     // Return JSON object of the data
     //
-    public func uuToJson() -> Any?
+    func uuToJson() -> Any?
     {
         do
         {
@@ -49,14 +49,14 @@ public extension Data
     
     // Returns JSON string representation of the data
     //
-    public func uuToJsonString() -> String
+    func uuToJsonString() -> String
     {
         let json = uuToJson()
         return String(format: "%@", (json as? CVarArg) ?? "")
     }
     
-    public func uuReversed() -> Data
+    func uuReversed() -> Data
     {
-        return Data.init(bytes: self.reversed())
+        return Data.init(self.reversed())
     }
 }

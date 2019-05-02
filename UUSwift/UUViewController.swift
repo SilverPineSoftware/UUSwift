@@ -13,7 +13,7 @@ import UIKit
 
 public extension UIViewController
 {
-    public func uuFindControllerOfType(_ clazz : AnyClass) -> UIViewController?
+    func uuFindControllerOfType(_ clazz : AnyClass) -> UIViewController?
     {
         var foundVc : UIViewController? = nil
         
@@ -38,7 +38,7 @@ public extension UIViewController
         return foundVc
     }
     
-    public func uuPopToControllerOfType(_ clazz : AnyClass, animated : Bool = true) -> Bool
+    func uuPopToControllerOfType(_ clazz : AnyClass, animated : Bool = true) -> Bool
     {
         let vcToPopTo = uuFindControllerOfType(clazz)
         
