@@ -315,7 +315,7 @@ public extension UUImage
 #if os(macOS)
 public extension UUImage {
 
-	public func pngData()->Data? {
+	func pngData()->Data? {
 		
 		if let tiff = self.tiffRepresentation,
 		   let tiffData = NSBitmapImageRep(data: tiff)
@@ -326,7 +326,7 @@ public extension UUImage {
 		return nil
 	}
 	
-	public func jpegData(compressionQuality : CGFloat)->Data? {
+	func jpegData(compressionQuality : CGFloat)->Data? {
 		
 		if let tiff = self.tiffRepresentation,
 			let tiffData = NSBitmapImageRep(data: tiff)
