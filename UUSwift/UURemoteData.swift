@@ -134,7 +134,7 @@ public class UURemoteData : NSObject
             
             let error = response.httpError
             
-            if let index = self.activeRequests.index(where: { $0 == path })
+            if let index = self.activeRequests.firstIndex(where: { $0 == path })
             {
                 self.activeRequests.remove(at: index)
             }
