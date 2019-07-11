@@ -27,7 +27,7 @@ class UUHttpSessionTests: XCTestCase
         
         let url = "http://www.silverpine.com"
         
-        UUHttpSession.get(url, [:])
+        UUHttpSession.get(url: url)
         { (response) in
             
             XCTAssertNil(response.httpError)
@@ -53,7 +53,7 @@ class UUHttpSessionTests: XCTestCase
         
         form.addFile(fieldName: "testFile", fileName: "myFile.txt", contentType: "text/plain", fileData: data!)
         
-        let request = UUHttpRequest.postFormRequest(url, [:], form)
+        let request = UUHttpRequest(url: url, form: form)
         
         _ = UUHttpSession.executeRequest(request)
         { (response) in
