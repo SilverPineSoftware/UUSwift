@@ -21,95 +21,73 @@
 	public typealias UUImage = UIImage
 #endif
 
+public typealias UUImageLoadedCompletionBlock = (UIImage?, Error?) -> Void
 
-public protocol UURemoteImageProtocol
-{
-    func image(for key: String, skipDownload: Bool) -> UUImage?
-    func isDownloadPending(for key: String) -> Bool
-    
-    func metaData(for key: String) -> [String:Any]
-    func set(metaData: [String:Any], for key: String)
-    
-    func imageSize(for key: String) -> CGSize?
-}
 
-public class UURemoteImage: NSObject, UURemoteImageProtocol
+public class UURemoteImage: NSObject
 {
-    public struct MetaData
-    {
-        public static let ImageSize = "ImageSize"
-    }
-    
     public static let shared = UURemoteImage()
-    
-    ////////////////////////////////////////////////////////////////////////////
-    // UURemoteImageProtocol Implementation
-    ////////////////////////////////////////////////////////////////////////////
-    
-    public func image(for key: String, skipDownload: Bool = false) -> UUImage?
+
+    public func imageSize(for path: String) -> CGSize?
     {
-        let url = URL(string: key)
-        if (url == nil)
+        let md = UUDataCache.shared.metaData(for: path)
+        return md[MetaData.ImageSize] as? CGSize
+    }    
+    
+    public func local(_ path : String) -> Bool
+    {
+        if let _ = self.systemImageCache.object(forKey: path as NSString)
         {
-            return nil
+            return true
+        }
+        if UUDataCache.shared.doesDataExist(for: path)
+        {
+            return true
         }
         
-        let cached = UUDataCache.shared.data(for: key)
-        if (cached != nil)
+        return false
+    }
+
+    public func image(_ path : String, completion : @escaping UUImageLoadedCompletionBlock)
+    {
+        // Check the local cache...
+        if let image = self.systemImageCache.object(forKey: path as NSString) as? UIImage
         {
-            return UUImage(data: cached!)
-        }
-        
-        var data : Data? = nil
-        
-        if (skipDownload)
-        {
-            data = UUDataCache.shared.data(for: key)
+            completion(image, nil)
+            return
         }
         else
         {
-            data = UURemoteData.shared.data(for: key)
-        }
-        
-        if (data != nil)
-        {
-            let img = UUImage(data: data!)
-            if (img != nil)
-            {
-                var md = metaData(for: key)
-                md[MetaData.ImageSize] = img!.size
-                set(metaData: md, for: key)
+            UURemoteData.shared.get(path)
+            { (data, error) in
+                var image : UIImage? = nil
                 
-                return img
+                if let imageData = data
+                {
+                    image = UIImage(data: imageData)
+                    if let img = image
+                    {
+                        self.systemImageCache.setObject(img, forKey: path as NSString)
+                        
+                        var md : [String : Any] =  UUDataCache.shared.metaData(for: path)
+                        md[MetaData.ImageSize] = img.size
+                        UUDataCache.shared.set(metaData: md, for: path)
+                    }
+                }
+                
+                completion(image, error)
             }
         }
-        
-        return nil
-    }
-    
-    public func isDownloadPending(for key: String) -> Bool
-    {
-        return UURemoteData.shared.isDownloadPending(for: key)
-    }
-    
-    public func metaData(for key: String) -> [String:Any]
-    {
-        return UURemoteData.shared.metaData(for: key)
-    }
-    
-    public func set(metaData: [String:Any], for key: String)
-    {
-        UURemoteData.shared.set(metaData: metaData, for: key)
-    }
-    
-    public func imageSize(for key: String) -> CGSize?
-    {
-        let md = UURemoteData.shared.metaData(for: key)
-        return md[MetaData.ImageSize] as? CGSize
     }
     
     ////////////////////////////////////////////////////////////////////////////
-    // Private methods
+    // Private implementation
     ////////////////////////////////////////////////////////////////////////////
+    private let systemImageCache = NSCache<AnyObject, AnyObject>()
     
+    private struct MetaData
+    {
+        static let ImageSize = "ImageSize"
+    }
+
 }
