@@ -21,7 +21,7 @@
 	public typealias UUImage = UIImage
 #endif
 
-public typealias UUImageLoadedCompletionBlock = (UIImage?, Error?) -> Void
+public typealias UUImageLoadedCompletionBlock = (UUImage?, Error?) -> Void
 
 
 public class UURemoteImage: NSObject
@@ -51,7 +51,7 @@ public class UURemoteImage: NSObject
     public func image(_ path : String, completion : @escaping UUImageLoadedCompletionBlock)
     {
         // Check the local cache...
-        if let image = self.systemImageCache.object(forKey: path as NSString) as? UIImage
+        if let image = self.systemImageCache.object(forKey: path as NSString) as? UUImage
         {
             completion(image, nil)
             return
@@ -60,11 +60,11 @@ public class UURemoteImage: NSObject
         {
             UURemoteData.shared.get(path)
             { (data, error) in
-                var image : UIImage? = nil
+                var image : UUImage? = nil
                 
                 if let imageData = data
                 {
-                    image = UIImage(data: imageData)
+                    image = UUImage(data: imageData)
                     if let img = image
                     {
                         self.systemImageCache.setObject(img, forKey: path as NSString)
