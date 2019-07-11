@@ -524,6 +524,140 @@ public extension NSManagedObject
         }
 #endif
     }
+    
+    func uuFill(from dictionary: [AnyHashable:Any], context: Any?)
+    {
+        guard let ctx = context as? NSManagedObjectContext else
+        {
+            return
+        }
+        
+        ctx.performAndWait
+        {
+            for attr in entity.attributesByName
+            {
+                //UUDebugLog("Attribute: \(attr.key) ==> \(attr.value)")
+                
+                switch (attr.value.attributeType)
+                {
+                    case .stringAttributeType:
+                        
+                        let strValue = dictionary.uuSafeGetString(attr.key)
+                        //UUDebugLog("Found String for \(attr.key): \(strValue ?? "null")")
+                        setValue(strValue, forKey: attr.key)
+                    
+                    case .integer16AttributeType,
+                         .integer32AttributeType,
+                         .integer64AttributeType,
+                         .floatAttributeType,
+                         .doubleAttributeType,
+                         .booleanAttributeType:
+                        
+                        let numValue = dictionary.uuSafeGetNumber(attr.key)
+                        //UUDebugLog("Found Number for \(attr.key): \(String(describing: numValue))")
+                        setValue(numValue, forKey: attr.key)
+                    
+                    case .dateAttributeType:
+                        
+                        var dateValue: Date? = nil
+                        let strValue = dictionary.uuSafeGetString(attr.key)
+                        
+                        if (strValue != nil)
+                        {
+                            let df = DateFormatter.uuCachedFormatter(UUDate.Formats.iso8601DateTime, timeZone: UUDate.TimeZones.utc, locale: Locale.uuEnUSPosix)
+                            dateValue = df.date(from: strValue!)
+                        }
+                        
+                        setValue(dateValue, forKey: attr.key)
+                        //UUDebugLog("Found Date for \(attr.key): \(strValue ?? "null")")
+                    
+                    default:
+                        UUDebugLog("Skipping \(attr.key)")
+                }
+                    
+                    
+                    /*
+                     case undefinedAttributeType
+                     
+                     case integer16AttributeType
+                     
+                     case integer32AttributeType
+                     
+                     case integer64AttributeType
+                     
+                     case decimalAttributeType
+                     
+                     case doubleAttributeType
+                     
+                     case floatAttributeType
+                     
+                     case stringAttributeType
+                     
+                     case booleanAttributeType
+                     
+                     case dateAttributeType
+                     
+                     case binaryDataAttributeType
+                     
+                     @available(iOS 11.0, *)
+                     case UUIDAttributeType
+                     
+                     @available(iOS 11.0, *)
+                     case URIAttributeType
+                     
+                     @available(iOS 3.0, *)
+                     case transformableAttributeType // If your attribute is of NSTransformableAttributeType, the attributeValueClassName must be set or attribute value class must implement NSCopying.
+                     
+                     @available(iOS 3.0, *)
+                     case objectIDAttributeType*/
+            }
+            
+            customFill(from: dictionary, context: context)
+            
+            for rel in entity.relationshipsByName
+            {
+                //UUDebugLog("Relationship: \(rel.key) ==> \(rel.value)")
+                
+                if let destEntity = rel.value.destinationEntity,
+                    let destEntityName = destEntity.name
+                {
+                    if (rel.value.isToMany)
+                    {
+                        if let dictionaryArray = dictionary.uuSafeGetDictionaryArray(rel.key)
+                        {
+                            var relSet : Set<NSManagedObject> = Set()
+                            
+                            for d in dictionaryArray
+                            {
+                                let relObj = NSEntityDescription.insertNewObject(forEntityName: destEntityName, into: ctx)
+                                relObj.uuFill(from: d, context: ctx)
+                                relSet.insert(relObj)
+                            }
+                            
+                            setValue(relSet, forKey: rel.key)
+                        }
+                    }
+                    else
+                    {
+                        if let d = dictionary.uuSafeGetDictionary(rel.key)
+                        {
+                            let relObj = NSEntityDescription.insertNewObject(forEntityName: destEntityName, into: ctx)
+                            relObj.uuFill(from: d, context: ctx)
+                            setValue(relObj, forKey: rel.key)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func customFill(from dictionary: [AnyHashable:Any], context: Any?)
+    {
+        if let mappableObject = self as? UUObjectMapping
+        {
+            mappableObject.uuMapFromDictionary(dictionary: dictionary, context: context)
+        }
+    }
 }
 
 
