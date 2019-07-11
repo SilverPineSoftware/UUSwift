@@ -162,5 +162,37 @@ public extension String
         return predicate.evaluate(with: self)
     }
     
+    // Converts a string assumed to be snake_case into camelCase
+    func uuToCamelCase() -> String
+    {
+        let parts = split(separator: "_")
+        var capitalizedParts = parts.map({ $0.capitalized })
+        
+        if (capitalizedParts.count > 0)
+        {
+            capitalizedParts[0] = capitalizedParts[0].lowercased()
+        }
+        
+        return capitalizedParts.joined()
+    }
+    
+    // Converts a string assumed to be camelCase into snake_case
+    func uuToSnakeCase() -> String
+    {
+        var working = ""
+        
+        for c in self
+        {
+            if (c.isUppercase)
+            {
+                working.append("_")
+            }
+            
+            working.append(c)
+        }
+        
+        return working.lowercased()
+    }
+    
 }
 
