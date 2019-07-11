@@ -18,3 +18,8 @@ public protocol UUObjectFactory
 {
     static func uuObjectFromDictionary(dictionary : [AnyHashable:Any], context: Any?) -> Self?
 }
+
+public protocol UUObjectMapping
+{
+    func uuMapFromDictionary(dictionary : [AnyHashable:Any], context: Any?)
+}
