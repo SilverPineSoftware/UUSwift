@@ -447,7 +447,7 @@ public class UUHttpSession: NSObject
         let uuResponse : UUHttpResponse = UUHttpResponse(request, httpResponse)
         uuResponse.rawResponse = data
         
-        var err : Error? = error
+        var err : Error? = nil
         var parsedResponse : Any? = nil
         
         var httpResponseCode : Int = 0
@@ -464,7 +464,36 @@ public class UUHttpSession: NSObject
             UUDebugLog("Response Headers: %@", responseHeaders)
         }
         
-        if (error == nil)
+        if (error != nil)
+        {
+            UUDebugLog("Got an error: %@", String(describing: error!))
+            
+            var errCode : UUHttpSessionError = UUHttpSessionError.httpFailure
+            
+            let nsError = error! as NSError
+            if (nsError.domain == NSURLErrorDomain as String)
+            {
+                switch (nsError.code)
+                {
+                    case NSURLErrorCannotFindHost:
+                        errCode = .cannotFindHost
+                    
+                    case NSURLErrorNotConnectedToInternet:
+                        errCode = .noInternet
+                    
+                    case NSURLErrorTimedOut:
+                        errCode = .timedOut
+                    
+                    default:
+                        errCode = UUHttpSessionError.httpFailure
+                }
+            }
+            
+            var userInfo : [String : Any]  = [:]
+            userInfo[NSUnderlyingErrorKey] = error
+            err = NSError.init(domain: UUHttpSessionErrorDomain, code: errCode.rawValue, userInfo: userInfo)
+        }
+        else
         {
             if (request.processMimeTypes)
             {
@@ -484,10 +513,7 @@ public class UUHttpSession: NSObject
                 d[UUHttpSessionHttpErrorCodeKey] = NSNumber(value: httpResponseCode)
                 d[UUHttpSessionHttpErrorMessageKey] = HTTPURLResponse.localizedString(forStatusCode: httpResponseCode)
                 d[UUHttpSessionAppResponseKey] = parsedResponse
-
-				if let validErrorResponse = parsedResponse {
-					d[NSLocalizedDescriptionKey] = validErrorResponse
-				}
+                d[NSLocalizedDescriptionKey] = HTTPURLResponse.localizedString(forStatusCode: httpResponseCode)
 
                 err = NSError.init(domain:UUHttpSessionErrorDomain, code:UUHttpSessionError.httpError.rawValue, userInfo:d)
             }
@@ -574,7 +600,7 @@ public class UUHttpSession: NSObject
     
     public static func post(url : String, queryArguments : UUQueryStringArgs = [:], headers: UUHttpHeaders = [:], body: Data?, contentType : String?, completion: @escaping (UUHttpResponse) -> Void)
     {
-        let req = UUHttpRequest(url: url, method: .post, queryArguments: queryArguments)
+        let req = UUHttpRequest(url: url, method: .post, queryArguments: queryArguments, body: body, contentType: contentType)
         _ = executeRequest(req, completion)
     }
     
