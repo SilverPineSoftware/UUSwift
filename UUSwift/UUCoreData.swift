@@ -391,6 +391,33 @@ public extension NSManagedObject
         return uuCreateInternal(context: context)
     }
     
+    class func uuCreateAndFill(
+        context: NSManagedObjectContext, dictionary: [AnyHashable:Any]? = nil) -> Self
+    {
+        let obj = uuCreate(context: context)
+        
+        if let d = dictionary
+        {
+            obj.uuFill(from: d, context: context)
+        }
+        
+        return obj
+    }
+    
+    class func uuCreateAndFillMultiple(
+        context: NSManagedObjectContext, dictionaryArray: [[AnyHashable:Any]]) -> [NSManagedObject]
+    {
+        var list: [NSManagedObject] = []
+        
+        for d in dictionaryArray
+        {
+            let obj = uuCreateAndFill(context: context, dictionary: d)
+            list.append(obj)
+        }
+        
+        return list
+    }
+    
     private class func uuCreateInternal<T>(context: NSManagedObjectContext) -> T
     {
         var obj : T? = nil
@@ -525,6 +552,31 @@ public extension NSManagedObject
 #endif
     }
     
+    private func getString(_ dictionary: [AnyHashable:Any], _ key: String) -> String?
+    {
+        var result = dictionary.uuSafeGetString(key)
+        
+        if (result == nil)
+        {
+            result = dictionary.uuSafeGetString(key.uuToSnakeCase())
+        }
+        
+        return result
+    }
+    
+    private func getNumber(_ dictionary: [AnyHashable:Any], _ key: String) -> NSNumber?
+    {
+        var result = dictionary.uuSafeGetNumber(key)
+        
+        if (result == nil)
+        {
+            result = dictionary.uuSafeGetNumber(key.uuToSnakeCase())
+        }
+        
+        return result
+    }
+    
+    
     func uuFill(from dictionary: [AnyHashable:Any], context: Any?)
     {
         guard let ctx = context as? NSManagedObjectContext else
@@ -542,7 +594,7 @@ public extension NSManagedObject
                 {
                     case .stringAttributeType:
                         
-                        let strValue = dictionary.uuSafeGetString(attr.key)
+                        let strValue = self.getString(dictionary, attr.key)
                         //UUDebugLog("Found String for \(attr.key): \(strValue ?? "null")")
                         setValue(strValue, forKey: attr.key)
                     
@@ -553,14 +605,14 @@ public extension NSManagedObject
                          .doubleAttributeType,
                          .booleanAttributeType:
                         
-                        let numValue = dictionary.uuSafeGetNumber(attr.key)
+                        let numValue = self.getNumber(dictionary, attr.key)
                         //UUDebugLog("Found Number for \(attr.key): \(String(describing: numValue))")
                         setValue(numValue, forKey: attr.key)
                     
                     case .dateAttributeType:
                         
                         var dateValue: Date? = nil
-                        let strValue = dictionary.uuSafeGetString(attr.key)
+                        let strValue = self.getString(dictionary, attr.key)
                         
                         if (strValue != nil)
                         {
