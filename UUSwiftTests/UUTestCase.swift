@@ -14,7 +14,7 @@ public extension XCTestCase
 {
     func UUExpectationForMethod(
         function : NSString = #function,
-        tag : NSString = "") -> XCTestExpectation
+        tag : String = "") -> XCTestExpectation
     {
         return expectation(description: "_\(function)_\(tag)_")
     }

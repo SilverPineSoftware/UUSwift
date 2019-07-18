@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		080769B92220738D0037BB52 /* UUSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CB4E9521B611F0002FE35E /* UUSwift.framework */; };
 		082A4B7622D7E41E00FD8DDF /* UUStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082A4B7522D7E41E00FD8DDF /* UUStringTests.swift */; };
+		085E84F722E02BD900BD217D /* UURemoteDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84F622E02BD900BD217D /* UURemoteDataTests.swift */; };
+		085E84F922E0306200BD217D /* UUTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84F822E0306200BD217D /* UUTestData.swift */; };
+		085E84FB22E0468700BD217D /* UUDataCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84FA22E0468700BD217D /* UUDataCacheTests.swift */; };
 		08883A232220783A00DF2D18 /* UUDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08883A222220783A00DF2D18 /* UUDictionaryTests.swift */; };
 		08883A252220784A00DF2D18 /* UUHttpSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08883A242220784A00DF2D18 /* UUHttpSessionTests.swift */; };
 		08883A2A22209F8300DF2D18 /* UUTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08883A2922209F8300DF2D18 /* UUTestCase.swift */; };
@@ -99,6 +102,9 @@
 		080769B42220738D0037BB52 /* UUSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UUSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		080769B82220738D0037BB52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		082A4B7522D7E41E00FD8DDF /* UUStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUStringTests.swift; sourceTree = "<group>"; };
+		085E84F622E02BD900BD217D /* UURemoteDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UURemoteDataTests.swift; sourceTree = "<group>"; };
+		085E84F822E0306200BD217D /* UUTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUTestData.swift; sourceTree = "<group>"; };
+		085E84FA22E0468700BD217D /* UUDataCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUDataCacheTests.swift; sourceTree = "<group>"; };
 		08883A222220783A00DF2D18 /* UUDictionaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUDictionaryTests.swift; sourceTree = "<group>"; };
 		08883A242220784A00DF2D18 /* UUHttpSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUHttpSessionTests.swift; sourceTree = "<group>"; };
 		08883A2922209F8300DF2D18 /* UUTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUTestCase.swift; sourceTree = "<group>"; };
@@ -176,6 +182,9 @@
 				08883A222220783A00DF2D18 /* UUDictionaryTests.swift */,
 				08883A242220784A00DF2D18 /* UUHttpSessionTests.swift */,
 				082A4B7522D7E41E00FD8DDF /* UUStringTests.swift */,
+				085E84F622E02BD900BD217D /* UURemoteDataTests.swift */,
+				085E84F822E0306200BD217D /* UUTestData.swift */,
+				085E84FA22E0468700BD217D /* UUDataCacheTests.swift */,
 			);
 			path = UUSwiftTests;
 			sourceTree = "<group>";
@@ -419,7 +428,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				085E84F722E02BD900BD217D /* UURemoteDataTests.swift in Sources */,
+				085E84F922E0306200BD217D /* UUTestData.swift in Sources */,
 				08883A252220784A00DF2D18 /* UUHttpSessionTests.swift in Sources */,
+				085E84FB22E0468700BD217D /* UUDataCacheTests.swift in Sources */,
 				08883A232220783A00DF2D18 /* UUDictionaryTests.swift in Sources */,
 				082A4B7622D7E41E00FD8DDF /* UUStringTests.swift in Sources */,
 				08883A2A22209F8300DF2D18 /* UUTestCase.swift in Sources */,
