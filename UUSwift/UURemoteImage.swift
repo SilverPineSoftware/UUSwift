@@ -26,13 +26,23 @@ public typealias UUImageLoadedCompletionBlock = (UUImage?, Error?) -> Void
 
 public class UURemoteImage: NSObject
 {
+    public struct Notifications
+    {
+        public static let ImageDownloaded = Notification.Name("UUImageDownloadedNotification")
+    }
+    
     public static let shared = UURemoteImage()
 
     public func imageSize(for path: String) -> CGSize?
     {
         let md = UUDataCache.shared.metaData(for: path)
         return md[MetaData.ImageSize] as? CGSize
-    }    
+    }
+    
+    public func clearCache()
+    {
+        systemImageCache.removeAllObjects()
+    }
     
     public func local(_ path : String) -> Bool
     {
@@ -48,7 +58,7 @@ public class UURemoteImage: NSObject
         return false
     }
 
-    public func image(_ path : String, remoteLoadCompletion : @escaping UUImageLoadedCompletionBlock) -> UUImage?
+    public func image(for path : String, remoteLoadCompletion : UUImageLoadedCompletionBlock? = nil) -> UUImage?
     {
         // Check the local cache...
         if let image = self.systemImageCache.object(forKey: path as NSString) as? UUImage
@@ -57,28 +67,52 @@ public class UURemoteImage: NSObject
         }
         else
         {
-            UURemoteData.shared.get(path)
+            let data = UURemoteData.shared.data(for: path)
             { (data, error) in
-                var image : UUImage? = nil
                 
-                if let imageData = data
+                let image = self.processData(path, data: data)
+                
+                if (image != nil)
                 {
-                    image = UUImage(data: imageData)
-                    if let img = image
-                    {
-                        self.systemImageCache.setObject(img, forKey: path as NSString)
-                        
-                        var md : [String : Any] =  UUDataCache.shared.metaData(for: path)
-                        md[MetaData.ImageSize] = img.size
-                        UUDataCache.shared.set(metaData: md, for: path)
-                    }
+                    var metaData : [String:Any] = [:]
+                    metaData[UURemoteData.NotificationKeys.RemotePath] = path
+                    self.notifyImageDownloaded(metaData: metaData)
                 }
                 
-                remoteLoadCompletion(image, error)
+                remoteLoadCompletion?(image, error)
+            }
+            
+            let image = processData(path, data: data)
+            return image
+        }
+    }
+    
+    private func processData(_ path: String, data: Data?) -> UIImage?
+    {
+        var image : UUImage? = nil
+        
+        if let imageData = data
+        {
+            image = UUImage(data: imageData)
+            if let img = image
+            {
+                self.systemImageCache.setObject(img, forKey: path as NSString)
+                
+                var md = UUDataCache.shared.metaData(for: path)
+                md[MetaData.ImageSize] = img.size
+                UUDataCache.shared.set(metaData: md, for: path)
             }
         }
         
-        return nil
+        return image
+    }
+    
+    private func notifyImageDownloaded(metaData: [String:Any])
+    {
+        DispatchQueue.main.async
+        {
+            NotificationCenter.default.post(name: Notifications.ImageDownloaded, object: nil, userInfo: metaData)
+        }
     }
     
     ////////////////////////////////////////////////////////////////////////////
