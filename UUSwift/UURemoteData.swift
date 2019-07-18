@@ -26,12 +26,19 @@
 	import UIKit
 #endif
 
+public protocol UURemoteDataProtocol
+{
+    func data(for key: String) -> Data?
+    func isDownloadPending(for key: String) -> Bool
+    
+    func metaData(for key: String) -> [String:Any]
+    func set(metaData: [String:Any], for key: String)
+}
 
 public typealias UUDataLoadedCompletionBlock = (Data?, Error?) -> Void
 
-public class UURemoteData : NSObject
+public class UURemoteData : NSObject, UURemoteDataProtocol
 {
-    
     public struct Notifications
     {
         public static let DataDownloaded = Notification.Name("UUDataDownloadedNotification")
@@ -49,6 +56,146 @@ public class UURemoteData : NSObject
         public static let RemotePath = "UUDataRemotePathKey"
         public static let Error = "UURemoteDataErrorKey"
     }
+    
+    private var pendingDownloads : [String:UUHttpRequest] = [:]
+    private var responseHandlers : [String: Any] = [:]
+    private var serialQueue: DispatchQueue = DispatchQueue(label: "serialQueue", attributes: .concurrent)
+
+    ////////////////////////////////////////////////////////////////////////////
+    // UURemoteDataProtocol Implementation
+    ////////////////////////////////////////////////////////////////////////////
+    public func data(for key: String) -> Data?
+    {
+        let url = URL(string: key)
+        if (url == nil)
+        {
+            return nil
+        }
+        
+        let data = UUDataCache.shared.data(for: key)
+        if (data != nil)
+        {
+            return data
+        }
+        
+        self.serialQueue.async(flags: .barrier)
+        {
+            if (self.isDownloadPending(for: key))
+            {
+                // An active UUHttpSession means a request is currently fetching the resource, so
+                // no need to re-fetch
+                UUDebugLog("Download pending for \(key)")
+                return
+            }
+            
+            let request = UUHttpRequest(url: key)
+            request.processMimeTypes  = false
+            
+            let client = UUHttpSession.executeRequest(request)
+            { (response: UUHttpResponse) in
+                
+                self.serialQueue.async(flags: .barrier)
+                {
+                    self.handleDownloadResponse(response, key)
+                }
+            }
+            
+            self.pendingDownloads[key] = client
+        }
+        
+        return nil
+    }
+    
+    public func isDownloadPending(for key: String) -> Bool
+    {
+        return (pendingDownloads[key] != nil)
+    }
+    
+    public func metaData(for key: String) -> [String:Any]
+    {
+        return UUDataCache.shared.metaData(for: key)
+    }
+    
+    public func set(metaData: [String:Any], for key: String)
+    {
+        UUDataCache.shared.set(metaData: metaData, for: key)
+    }
+    
+    
+    ////////////////////////////////////////////////////////////////////////////
+    // Private Implementation
+    ////////////////////////////////////////////////////////////////////////////
+    private func handleDownloadResponse(_ response: UUHttpResponse, _ key: String)
+    {
+        var md : [String:Any] = [:]
+        md[UURemoteData.NotificationKeys.RemotePath] = key
+        
+        if (response.httpError == nil && response.rawResponse != nil)
+        {
+            let responseData = response.rawResponse!
+            
+            UUDataCache.shared.set(data: responseData, for: key)
+            updateMetaDataFromResponse(response, for: key)
+            
+            DispatchQueue.main.async
+            {
+                NotificationCenter.default.post(name: Notifications.DataDownloaded, object: nil, userInfo: md)
+            }
+        }
+        else
+        {
+            UUDebugLog("Remote download failed!\n\nPath: %@\nStatusCode: %d\nError: %@\n", key, String(describing: response.httpResponse?.statusCode), String(describing: response.httpError))
+            
+            md[NotificationKeys.Error] = response.httpError
+            
+            DispatchQueue.main.async
+            {
+                NotificationCenter.default.post(name: Notifications.DataDownloadFailed, object: nil, userInfo: md)
+            }
+        }
+        
+        pendingDownloads.removeValue(forKey: key)
+    }
+    
+    private func updateMetaDataFromResponse(_ response: UUHttpResponse, for key: String)
+    {
+        var md = UUDataCache.shared.metaData(for: key)
+        md[MetaData.MimeType] = response.httpResponse!.mimeType!
+        md[MetaData.DownloadTimestamp] = Date()
+        
+        UUDataCache.shared.set(metaData: md, for: key)
+    }
+    
+    public func save(data: Data, key: String)
+    {
+        UUDataCache.shared.set(data: data, for: key)
+        
+        var md = UUDataCache.shared.metaData(for: key)
+        md[MetaData.MimeType] = "raw"
+        md[MetaData.DownloadTimestamp] = Date()
+        md[UURemoteData.NotificationKeys.RemotePath] = key
+        
+        UUDataCache.shared.set(metaData: md, for: key)
+        
+        DispatchQueue.main.async
+        {
+            NotificationCenter.default.post(name: Notifications.DataDownloaded, object: nil, userInfo: md)
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     // Default to 4 active requests at a time...
     var maxActiveRequests = 4
@@ -79,7 +226,6 @@ public class UURemoteData : NSObject
     
     private func executeLocalLoad(_ path : String) -> Bool
     {
-        
         if UUDataCache.shared.doesDataExist(for: path)
         {
             self.dataProcessingQueue.async
