@@ -12,14 +12,14 @@ import UUSwift
 
 public extension XCTestCase
 {
-    public func UUExpectationForMethod(
+    func UUExpectationForMethod(
         function : NSString = #function,
         tag : NSString = "") -> XCTestExpectation
     {
         return expectation(description: "_\(function)_\(tag)_")
     }
     
-    public func UUWaitForExpectations(_ timeout: TimeInterval = 60)
+    func UUWaitForExpectations(_ timeout: TimeInterval = 60)
     {
         waitForExpectations(timeout: timeout)
         { (err: Error?) in
@@ -30,12 +30,12 @@ public extension XCTestCase
         }
     }
     
-    public func UULogBeginTest(function : NSString = #function)
+    func UULogBeginTest(function : NSString = #function)
     {
         UUDebugLog("\n\n******************** BEGIN TEST \(function) ********************\n\n")
     }
     
-    public func UULogEndTest(function : NSString = #function)
+    func UULogEndTest(function : NSString = #function)
     {
         UUDebugLog("\n\n******************** END TEST \(function) ********************\n\n")
     }
