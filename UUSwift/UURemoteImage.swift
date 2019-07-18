@@ -48,13 +48,12 @@ public class UURemoteImage: NSObject
         return false
     }
 
-    public func image(_ path : String, completion : @escaping UUImageLoadedCompletionBlock)
+    public func image(_ path : String, remoteLoadCompletion : @escaping UUImageLoadedCompletionBlock) -> UUImage?
     {
         // Check the local cache...
         if let image = self.systemImageCache.object(forKey: path as NSString) as? UUImage
         {
-            completion(image, nil)
-            return
+            return image
         }
         else
         {
@@ -75,9 +74,11 @@ public class UURemoteImage: NSObject
                     }
                 }
                 
-                completion(image, error)
+                remoteLoadCompletion(image, error)
             }
         }
+        
+        return nil
     }
     
     ////////////////////////////////////////////////////////////////////////////
