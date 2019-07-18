@@ -60,11 +60,19 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
     private var pendingDownloads : [String:UUHttpRequest] = [:]
     private var responseHandlers : [String: Any] = [:]
     private var serialQueue: DispatchQueue = DispatchQueue(label: "serialQueue", attributes: .concurrent)
-
+    private var httpRequestLookups : [String : [UUDataLoadedCompletionBlock]] = [:]
+    
+    static public let shared : UURemoteData = UURemoteData()
+    
     ////////////////////////////////////////////////////////////////////////////
     // UURemoteDataProtocol Implementation
     ////////////////////////////////////////////////////////////////////////////
     public func data(for key: String) -> Data?
+    {
+        return data(for: key, remoteLoadCompletion: nil)
+    }
+    
+    public func data(for key: String, remoteLoadCompletion: UUDataLoadedCompletionBlock? = nil) -> Data?
     {
         let url = URL(string: key)
         if (url == nil)
@@ -101,6 +109,21 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
             }
             
             self.pendingDownloads[key] = client
+            
+            if let remoteHandler = remoteLoadCompletion
+            {
+                var handlers = self.httpRequestLookups[key]
+                if (handlers == nil)
+                {
+                    handlers = []
+                }
+                
+                if (handlers != nil)
+                {
+                    handlers!.append(remoteHandler)
+                    self.httpRequestLookups[key] = handlers!
+                }
+            }
         }
         
         return nil
@@ -136,10 +159,11 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
             
             UUDataCache.shared.set(data: responseData, for: key)
             updateMetaDataFromResponse(response, for: key)
+            notifyDataDownloaded(metaData: md)
             
-            DispatchQueue.main.async
+            if let handlers = httpRequestLookups[key]
             {
-                NotificationCenter.default.post(name: Notifications.DataDownloaded, object: nil, userInfo: md)
+                notifyRemoteDownloadHandlers(key: key, data: responseData, error: nil, handlers: handlers)
             }
         }
         else
@@ -152,9 +176,15 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
             {
                 NotificationCenter.default.post(name: Notifications.DataDownloadFailed, object: nil, userInfo: md)
             }
+            
+            if let handlers = httpRequestLookups[key]
+            {
+                notifyRemoteDownloadHandlers(key: key, data: nil, error: response.httpError, handlers: handlers)
+            }
         }
         
         pendingDownloads.removeValue(forKey: key)
+        httpRequestLookups.removeValue(forKey: key)
     }
     
     private func updateMetaDataFromResponse(_ response: UUHttpResponse, for key: String)
@@ -177,9 +207,25 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
         
         UUDataCache.shared.set(metaData: md, for: key)
         
+        notifyDataDownloaded(metaData: md)
+    }
+    
+    private func notifyDataDownloaded(metaData: [String:Any])
+    {
         DispatchQueue.main.async
         {
-            NotificationCenter.default.post(name: Notifications.DataDownloaded, object: nil, userInfo: md)
+            NotificationCenter.default.post(name: Notifications.DataDownloaded, object: nil, userInfo: metaData)
+        }
+    }
+    
+    private func notifyRemoteDownloadHandlers(key: String, data: Data?, error: Error?, handlers: [UUDataLoadedCompletionBlock])
+    {
+        for handler in handlers
+        {
+            DispatchQueue.main.async
+            {
+                handler(data, error)
+            }
         }
     }
     
@@ -197,6 +243,8 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
     
     
     
+    
+    /*
     // Default to 4 active requests at a time...
     var maxActiveRequests = 4
     
@@ -355,7 +403,8 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
     private var activeRequests : [String] = []
     private var queuedRequests : [String] = []
     
-    private let dataProcessingQueue : DispatchQueue = DispatchQueue(label: "UURemoteDataQueue", qos: .background)    
+    private let dataProcessingQueue : DispatchQueue = DispatchQueue(label: "UURemoteDataQueue", qos: .background)
+    */
 }
 
 extension Notification
