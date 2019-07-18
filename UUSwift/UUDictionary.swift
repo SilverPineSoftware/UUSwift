@@ -103,6 +103,27 @@ public extension Dictionary
         return val
     }
     
+    func uuSafeGetNumberArray(_ key: Key) -> [NSNumber]
+    {
+        guard let arr = self[key] as? [Any] else
+        {
+            return []
+        }
+        
+        var result: [NSNumber] = []
+        
+        for obj in arr
+        {
+            let d = ["val": obj ]
+            if let num = d.uuSafeGetNumber("val")
+            {
+                result.append(num)
+            }
+        }
+        
+        return result
+    }
+    
     func uuSafeGetBool(_ key: Key) -> Bool?
     {
         guard let num = uuSafeGetNumber(key) else
