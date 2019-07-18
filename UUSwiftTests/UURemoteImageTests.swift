@@ -1,5 +1,5 @@
 //
-//  UURemoteDataTests.swift
+//  UURemoteImageTests.swift
 //  UUSwiftTests
 //
 //  Created by Ryan DeVore on 7/17/19.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import UUSwift
 
-class UURemoteDataTests: XCTestCase
+class UURemoteImageTests: XCTestCase
 {
     func test_0000_fetchRemote_1()
     {
@@ -37,7 +37,7 @@ class UURemoteDataTests: XCTestCase
         
         let key = "http://this.is.a.fake.url/non_existent.jpg"
         
-        let data = UURemoteData.shared.data(for: key)
+        let data = UURemoteImage.shared.image(for: key)
         XCTAssertNil(data)
         
         UUWaitForExpectations(300)
@@ -86,12 +86,13 @@ class UURemoteDataTests: XCTestCase
     private func fetchMultipleBadUrl(count: Int) -> [String]
     {
         UUDataCache.shared.clearCache()
+        UURemoteImage.shared.clearCache()
         
         let exp = UUExpectationForMethod()
         
         var testData: [String] = []
         
-        UUTestData.getRandomPhotoUrls(page: 1, count: count, query: "person")
+        UUTestData.getRandomPhotoUrls(page: 1, count: count, query: "tree")
         { (list) in
             
             testData.append(contentsOf: list)
@@ -112,7 +113,7 @@ class UURemoteDataTests: XCTestCase
         
         for td in testData
         {
-            let data = UURemoteData.shared.data(for: td)
+            let data = UURemoteImage.shared.image(for: td)
             XCTAssertNil(data)
         }
         
@@ -120,7 +121,7 @@ class UURemoteDataTests: XCTestCase
         
         for td in testData
         {
-            let data = UURemoteData.shared.data(for: td)
+            let data = UURemoteImage.shared.image(for: td)
             XCTAssertNil(data)
         }
         
@@ -136,7 +137,7 @@ class UURemoteDataTests: XCTestCase
         
         for td in testData
         {
-            let data = UURemoteData.shared.data(for: td)
+            let data = UURemoteImage.shared.image(for: td)
             XCTAssertNotNil(data)
             
             let md = UURemoteData.shared.metaData(for: td)
@@ -147,12 +148,13 @@ class UURemoteDataTests: XCTestCase
     private func fetchMultipleRemote(count: Int) -> [String]
     {
         UUDataCache.shared.clearCache()
+        UURemoteImage.shared.clearCache()
         
         let exp = UUExpectationForMethod()
         
         var testData: [String] = []
         
-        UUTestData.getRandomPhotoUrls(page: 1, count: count, query: "forest")
+        UUTestData.getRandomPhotoUrls(page: 1, count: count, query: "ocean")
         { (list) in
             
             testData.append(contentsOf: list)
@@ -170,7 +172,7 @@ class UURemoteDataTests: XCTestCase
         
         for td in testData
         {
-            let data = UURemoteData.shared.data(for: td)
+            let data = UURemoteImage.shared.image(for: td)
             XCTAssertNil(data)
         }
         
@@ -179,7 +181,7 @@ class UURemoteDataTests: XCTestCase
         for td in testData
         {
             let md = UURemoteData.shared.metaData(for: td)
-            let data = UURemoteData.shared.data(for: td)
+            let data = UURemoteImage.shared.image(for: td)
             XCTAssertNotNil(data)
             XCTAssertNotNil(md)
         }
@@ -192,7 +194,7 @@ class UURemoteDataTests: XCTestCase
     
     private func expectationForRemoteData(_  key: String) -> XCTestExpectation
     {
-        return  expectation(forNotification: NSNotification.Name(rawValue: UURemoteData.Notifications.DataDownloaded.rawValue), object: nil)
+        return  expectation(forNotification: NSNotification.Name(rawValue: UURemoteImage.Notifications.ImageDownloaded.rawValue), object: nil)
         { (notification: Notification) -> Bool in
             
             guard let remoteKey = notification.uuRemoteDataPath else
@@ -208,7 +210,7 @@ class UURemoteDataTests: XCTestCase
             let md = UURemoteData.shared.metaData(for: key)
             XCTAssertNotNil(md)
             
-            let data = UURemoteData.shared.data(for: key)
+            let data = UURemoteImage.shared.image(for: key)
             XCTAssertNotNil(data)
             
             let nKey = notification.uuRemoteDataPath
@@ -236,7 +238,7 @@ class UURemoteDataTests: XCTestCase
                 return false
             }
             
-            let data = UURemoteData.shared.data(for: key)
+            let data = UURemoteImage.shared.image(for: key)
             XCTAssertNil(data)
             
             let nKey = notification.uuRemoteDataPath
@@ -248,4 +250,5 @@ class UURemoteDataTests: XCTestCase
             return true
         }
     }
+
 }

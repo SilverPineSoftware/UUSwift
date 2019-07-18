@@ -12,6 +12,7 @@
 		085E84F722E02BD900BD217D /* UURemoteDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84F622E02BD900BD217D /* UURemoteDataTests.swift */; };
 		085E84F922E0306200BD217D /* UUTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84F822E0306200BD217D /* UUTestData.swift */; };
 		085E84FB22E0468700BD217D /* UUDataCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84FA22E0468700BD217D /* UUDataCacheTests.swift */; };
+		085E84FD22E0583C00BD217D /* UURemoteImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84FC22E0583C00BD217D /* UURemoteImageTests.swift */; };
 		08883A232220783A00DF2D18 /* UUDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08883A222220783A00DF2D18 /* UUDictionaryTests.swift */; };
 		08883A252220784A00DF2D18 /* UUHttpSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08883A242220784A00DF2D18 /* UUHttpSessionTests.swift */; };
 		08883A2A22209F8300DF2D18 /* UUTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08883A2922209F8300DF2D18 /* UUTestCase.swift */; };
@@ -105,6 +106,7 @@
 		085E84F622E02BD900BD217D /* UURemoteDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UURemoteDataTests.swift; sourceTree = "<group>"; };
 		085E84F822E0306200BD217D /* UUTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUTestData.swift; sourceTree = "<group>"; };
 		085E84FA22E0468700BD217D /* UUDataCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUDataCacheTests.swift; sourceTree = "<group>"; };
+		085E84FC22E0583C00BD217D /* UURemoteImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UURemoteImageTests.swift; sourceTree = "<group>"; };
 		08883A222220783A00DF2D18 /* UUDictionaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUDictionaryTests.swift; sourceTree = "<group>"; };
 		08883A242220784A00DF2D18 /* UUHttpSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUHttpSessionTests.swift; sourceTree = "<group>"; };
 		08883A2922209F8300DF2D18 /* UUTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUTestCase.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				085E84F622E02BD900BD217D /* UURemoteDataTests.swift */,
 				085E84F822E0306200BD217D /* UUTestData.swift */,
 				085E84FA22E0468700BD217D /* UUDataCacheTests.swift */,
+				085E84FC22E0583C00BD217D /* UURemoteImageTests.swift */,
 			);
 			path = UUSwiftTests;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				08883A232220783A00DF2D18 /* UUDictionaryTests.swift in Sources */,
 				082A4B7622D7E41E00FD8DDF /* UUStringTests.swift in Sources */,
 				08883A2A22209F8300DF2D18 /* UUTestCase.swift in Sources */,
+				085E84FD22E0583C00BD217D /* UURemoteImageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
