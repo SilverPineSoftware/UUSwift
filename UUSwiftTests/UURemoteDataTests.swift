@@ -11,6 +11,13 @@ import XCTest
 
 class UURemoteDataTests: XCTestCase
 {
+    override func setUp()
+    {
+        super.setUp()
+        
+        //UURemoteData.shared.maxActiveRequests = 50
+    }
+    
     func test_0000_fetchRemote_1()
     {
         _ = fetchMultipleRemote(count: 1)
@@ -120,7 +127,7 @@ class UURemoteDataTests: XCTestCase
         
         for td in testData
         {
-            let data = UURemoteData.shared.data(for: td)
+            let data = UUDataCache.shared.data(for: td)
             XCTAssertNil(data)
         }
         
@@ -236,7 +243,7 @@ class UURemoteDataTests: XCTestCase
                 return false
             }
             
-            let data = UURemoteData.shared.data(for: key)
+            let data = UUDataCache.shared.data(for: key)
             XCTAssertNil(data)
             
             let nKey = notification.uuRemoteDataPath
