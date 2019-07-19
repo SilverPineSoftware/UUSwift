@@ -57,10 +57,12 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
         public static let Error = "UURemoteDataErrorKey"
     }
     
-    private var pendingDownloads : [String:UUHttpRequest] = [:]
-    private var responseHandlers : [String: Any] = [:]
-    private var serialQueue: DispatchQueue = DispatchQueue(label: "serialQueue", attributes: .concurrent)
-    private var httpRequestLookups : [String : [UUDataLoadedCompletionBlock]] = [:]
+    private var activeDownloads : UUThreadSafeDictionary<String, UUHttpRequest> = UUThreadSafeDictionary()
+    private var pendingDownloads : UUThreadSafeArray<String> = UUThreadSafeArray()
+    private var httpRequestLookups : UUThreadSafeDictionary<String, [UUDataLoadedCompletionBlock]> = UUThreadSafeDictionary()
+    
+    // Default to 4 active requests at a time...
+    public var maxActiveRequests: Int = 4
     
     static public let shared : UURemoteData = UURemoteData()
     
@@ -86,52 +88,91 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
             return data
         }
         
-        self.serialQueue.async(flags: .barrier)
+        if (self.isDownloadPending(for: key))
         {
-            if (self.isDownloadPending(for: key))
-            {
-                // An active UUHttpSession means a request is currently fetching the resource, so
-                // no need to re-fetch
-                UUDebugLog("Download pending for \(key)")
-                return
-            }
-            
-            let request = UUHttpRequest(url: key)
-            request.processMimeTypes  = false
-            
-            let client = UUHttpSession.executeRequest(request)
-            { (response: UUHttpResponse) in
-                
-                self.serialQueue.async(flags: .barrier)
-                {
-                    self.handleDownloadResponse(response, key)
-                }
-            }
-            
-            self.pendingDownloads[key] = client
-            
-            if let remoteHandler = remoteLoadCompletion
-            {
-                var handlers = self.httpRequestLookups[key]
-                if (handlers == nil)
-                {
-                    handlers = []
-                }
-                
-                if (handlers != nil)
-                {
-                    handlers!.append(remoteHandler)
-                    self.httpRequestLookups[key] = handlers!
-                }
-            }
+            // An active UUHttpSession means a request is currently fetching the resource, so
+            // no need to re-fetch
+            UUDebugLog("Download pending for \(key)")
+            return nil
         }
+        
+        if (self.activeDownloadCount() > self.maxActiveRequests)
+        {
+            UUDebugLog("Queueing download for later, key: \(key)")
+            self.queuePendingRequest(for: key)
+            return nil
+        }
+        
+        let request = UUHttpRequest(url: key)
+        request.processMimeTypes  = false
+        
+        let client = UUHttpSession.executeRequest(request)
+        { (response: UUHttpResponse) in
+            
+            self.handleDownloadResponse(response, key)
+            self.checkForPendingRequests()
+        }
+    
+        self.activeDownloads[key] = client
+        self.appendRemoteHandler(for: key, handler: remoteLoadCompletion)
         
         return nil
     }
     
+    private func checkForPendingRequests()
+    {
+        while (activeDownloadCount() < self.maxActiveRequests)
+        {
+            guard let next = self.dequeuePending() else
+            {
+                break
+            }
+            
+            _ = self.data(for: next)
+        }
+    }
+    
+    private func pendingDownloadCount() -> Int
+    {
+        return self.pendingDownloads.count
+    }
+    
+    private func activeDownloadCount() -> Int
+    {
+        return self.activeDownloads.count
+    }
+    
+    private func dequeuePending() -> String?
+    {
+        return self.pendingDownloads.popLast()
+    }
+    
+    private func queuePendingRequest(for key: String)
+    {
+        pendingDownloads.append(key)
+    }
+    
+    private func appendRemoteHandler(for key: String, handler: UUDataLoadedCompletionBlock?)
+    {
+        if let remoteHandler = handler
+        {
+            var handlers = self.httpRequestLookups[key]
+            if (handlers == nil)
+            {
+                handlers = []
+            }
+            
+            if (handlers != nil)
+            {
+                handlers!.append(remoteHandler)
+                self.httpRequestLookups[key] = handlers!
+            }
+        }
+    }
+    
     public func isDownloadPending(for key: String) -> Bool
     {
-        return (pendingDownloads[key] != nil)
+        return (activeDownloads[key] != nil)
     }
     
     public func metaData(for key: String) -> [String:Any]
@@ -144,6 +185,10 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
         UUDataCache.shared.set(metaData: metaData, for: key)
     }
     
+    private func getHandlers(for key: String) -> [UUDataLoadedCompletionBlock]?
+    {
+        return self.httpRequestLookups[key]
+    }
     
     ////////////////////////////////////////////////////////////////////////////
     // Private Implementation
@@ -161,7 +206,7 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
             updateMetaDataFromResponse(response, for: key)
             notifyDataDownloaded(metaData: md)
             
-            if let handlers = httpRequestLookups[key]
+            if let handlers = self.getHandlers(for: key)
             {
                 notifyRemoteDownloadHandlers(key: key, data: responseData, error: nil, handlers: handlers)
             }
@@ -177,14 +222,14 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
                 NotificationCenter.default.post(name: Notifications.DataDownloadFailed, object: nil, userInfo: md)
             }
             
-            if let handlers = httpRequestLookups[key]
+            if let handlers = self.getHandlers(for: key)
             {
                 notifyRemoteDownloadHandlers(key: key, data: nil, error: response.httpError, handlers: handlers)
             }
         }
         
-        pendingDownloads.removeValue(forKey: key)
-        httpRequestLookups.removeValue(forKey: key)
+        self.activeDownloads.removeValue(forKey: key)
+        self.httpRequestLookups.removeValue(forKey: key)
     }
     
     private func updateMetaDataFromResponse(_ response: UUHttpResponse, for key: String)
@@ -245,8 +290,7 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
     
     
     /*
-    // Default to 4 active requests at a time...
-    var maxActiveRequests = 4
+    
     
     public func get(_ path : String, completion : @escaping UUDataLoadedCompletionBlock)
     {
