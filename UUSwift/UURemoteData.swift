@@ -99,7 +99,7 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
         if (self.activeDownloadCount() > self.maxActiveRequests)
         {
             UUDebugLog("Queueing download for later, key: \(key)")
-            self.queuePendingRequest(for: key)
+            self.queuePendingRequest(for: key, remoteLoadCompletion: remoteLoadCompletion)
             return nil
         }
         
@@ -147,9 +147,10 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
         return self.pendingDownloads.popLast()
     }
     
-    private func queuePendingRequest(for key: String)
+    private func queuePendingRequest(for key: String, remoteLoadCompletion: UUDataLoadedCompletionBlock?)
     {
         pendingDownloads.append(key)
+        appendRemoteHandler(for: key, handler: remoteLoadCompletion)
     }
     
     private func appendRemoteHandler(for key: String, handler: UUDataLoadedCompletionBlock?)
