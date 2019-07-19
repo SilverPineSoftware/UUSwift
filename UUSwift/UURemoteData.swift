@@ -229,8 +229,8 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
             }
         }
         
-        self.activeDownloads.removeValue(forKey: key)
-        self.httpRequestLookups.removeValue(forKey: key)
+        _ = self.activeDownloads.removeValue(forKey: key)
+        _ = self.httpRequestLookups.removeValue(forKey: key)
     }
     
     private func updateMetaDataFromResponse(_ response: UUHttpResponse, for key: String)
