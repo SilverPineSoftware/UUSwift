@@ -73,6 +73,14 @@ public class UUThreadSafeArray<T>: NSObject
             self.nativeObject.removeLast()
         })
     }
+    
+    public func popLast() -> T?
+    {
+        return uuSynchronized(
+        {
+            self.nativeObject.popLast()
+        })
+    }
 }
 
 public class UUThreadSafeDictionary<KeyType, ValueType>: NSObject
