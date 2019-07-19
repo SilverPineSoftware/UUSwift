@@ -71,14 +71,6 @@ public class UURemoteImage: NSObject
             { (data, error) in
                 
                 let image = self.processData(path, data: data)
-                
-                if (image != nil)
-                {
-                    var metaData : [String:Any] = [:]
-                    metaData[UURemoteData.NotificationKeys.RemotePath] = path
-                    self.notifyImageDownloaded(metaData: metaData)
-                }
-                
                 remoteLoadCompletion?(image, error)
             }
             
@@ -101,6 +93,10 @@ public class UURemoteImage: NSObject
                 var md = UUDataCache.shared.metaData(for: path)
                 md[MetaData.ImageSize] = img.size
                 UUDataCache.shared.set(metaData: md, for: path)
+                
+                var metaData : [String:Any] = [:]
+                metaData[UURemoteData.NotificationKeys.RemotePath] = path
+                notifyImageDownloaded(metaData: metaData)
             }
         }
         
