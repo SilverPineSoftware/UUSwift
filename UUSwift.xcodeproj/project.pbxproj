@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		080769B92220738D0037BB52 /* UUSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CB4E9521B611F0002FE35E /* UUSwift.framework */; };
 		082A4B7622D7E41E00FD8DDF /* UUStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082A4B7522D7E41E00FD8DDF /* UUStringTests.swift */; };
+		083DFC7123A87F3800EC8D09 /* UULocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083DFC7023A87F3800EC8D09 /* UULocalization.swift */; };
+		083DFC7223A87F3800EC8D09 /* UULocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083DFC7023A87F3800EC8D09 /* UULocalization.swift */; };
+		083DFC7323A87F3800EC8D09 /* UULocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083DFC7023A87F3800EC8D09 /* UULocalization.swift */; };
 		085E84F722E02BD900BD217D /* UURemoteDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84F622E02BD900BD217D /* UURemoteDataTests.swift */; };
 		085E84F922E0306200BD217D /* UUTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84F822E0306200BD217D /* UUTestData.swift */; };
 		085E84FB22E0468700BD217D /* UUDataCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84FA22E0468700BD217D /* UUDataCacheTests.swift */; };
@@ -106,6 +109,7 @@
 		080769B42220738D0037BB52 /* UUSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UUSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		080769B82220738D0037BB52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		082A4B7522D7E41E00FD8DDF /* UUStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUStringTests.swift; sourceTree = "<group>"; };
+		083DFC7023A87F3800EC8D09 /* UULocalization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UULocalization.swift; sourceTree = "<group>"; };
 		085E84F622E02BD900BD217D /* UURemoteDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UURemoteDataTests.swift; sourceTree = "<group>"; };
 		085E84F822E0306200BD217D /* UUTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUTestData.swift; sourceTree = "<group>"; };
 		085E84FA22E0468700BD217D /* UUDataCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUDataCacheTests.swift; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 		C5CB4E9721B611F0002FE35E /* UUSwift */ = {
 			isa = PBXGroup;
 			children = (
+				083DFC7023A87F3800EC8D09 /* UULocalization.swift */,
 				C5CB4EC621B701B7002FE35E /* UUCircularImageView.swift */,
 				C5CB4ED121B701B7002FE35E /* UUCircularView.swift */,
 				C5CB4ECB21B701B7002FE35E /* UUColor.swift */,
@@ -474,6 +479,7 @@
 				C51B99FC21DF18C8007077E0 /* UUView.swift in Sources */,
 				C51B99EE21DEEC38007077E0 /* UUString.swift in Sources */,
 				C51B99EB21DEEAFE007077E0 /* UUDate.swift in Sources */,
+				083DFC7223A87F3800EC8D09 /* UULocalization.swift in Sources */,
 				C51B99FF21DF18D8007077E0 /* UUImage.swift in Sources */,
 				C51B99FD21DF18CB007077E0 /* UUTextField.swift in Sources */,
 				C51B9A0021DF18DD007077E0 /* UUGradientView.swift in Sources */,
@@ -510,6 +516,7 @@
 				C5CB4EEA21B701B8002FE35E /* UUDictionary.swift in Sources */,
 				C5CB4EDD21B701B8002FE35E /* UUCircularImageView.swift in Sources */,
 				C5EB4A4021C07B3000ADADD0 /* UUImage.swift in Sources */,
+				083DFC7123A87F3800EC8D09 /* UULocalization.swift in Sources */,
 				C5CB4EDC21B701B8002FE35E /* UURemoteData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -536,6 +543,7 @@
 				C5FE239821E56BC700A3BB23 /* UUDebugLog.swift in Sources */,
 				C5FE239921E56BCA00A3BB23 /* UUDate.swift in Sources */,
 				C5FE239121E56BAA00A3BB23 /* UURemoteImage.swift in Sources */,
+				083DFC7323A87F3800EC8D09 /* UULocalization.swift in Sources */,
 				C5FE239221E56BAF00A3BB23 /* UURandom.swift in Sources */,
 				C5FE23A521E56BEA00A3BB23 /* UUView.swift in Sources */,
 				C5FE23A221E56BEA00A3BB23 /* UUImage.swift in Sources */,
