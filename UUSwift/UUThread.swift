@@ -5,7 +5,6 @@
 //  Created by Ryan DeVore on 7/12/19.
 //
 
-import UIKit
 import Darwin
 
 public class UUThreadSafeArray<T>: NSObject
@@ -206,3 +205,5 @@ public class UUMutexWrapper: NSObject
         return try method()
     }
 }
+
+

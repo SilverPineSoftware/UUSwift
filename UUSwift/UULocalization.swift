@@ -4,6 +4,7 @@
 //
 //  Created by Ryan DeVore on 7/11/19.
 //
+#if os(iOS)
 
 import UIKit
 
@@ -117,5 +118,4 @@ public extension UISearchBar
     }
 }
 
-
-
+#endif

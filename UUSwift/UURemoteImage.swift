@@ -1,7 +1,7 @@
 //
 //  UURemoteImage.swift
 //  Useful Utilities - An extension to Useful Utilities
-//  UURemoteData that exposes the cached data as UIImage objects
+//  UURemoteData that exposes the cached data as UIImage/NSImage objects
 //
 //	License:
 //  You are free to use this code for whatever purposes you desire.
@@ -79,7 +79,7 @@ public class UURemoteImage: NSObject
         }
     }
     
-    private func processData(_ path: String, data: Data?) -> UIImage?
+    private func processData(_ path: String, data: Data?) -> UUImage?
     {
         var image : UUImage? = nil
         

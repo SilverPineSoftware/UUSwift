@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 	s.swift_version = "5.0"
 
 	s.subspec 'Core' do |ss|
-    	ss.source_files = 'UUSwift/**/*.{h,m,swift}'
+    	ss.source_files = 'UUSwift/*.{swift}'
     	ss.ios.frameworks = 'UIKit', 'Foundation'
 		ss.osx.frameworks = 'CoreFoundation'
 		ss.tvos.frameworks = 'UIKit', 'Foundation'
