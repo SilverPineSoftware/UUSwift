@@ -58,10 +58,10 @@ public extension UUColor
         var a : CGFloat = 0
         startColor.getRed(&r, green: &g, blue: &b, alpha: &a)
         
-        var startColors : [CGFloat] = [r, g, b, a]
+        let startColors : [CGFloat] = [r, g, b, a]
         
         endColor.getRed(&r, green: &g, blue: &b, alpha: &a)
-        var endColors : [CGFloat] = [r, g, b, a]
+        let endColors : [CGFloat] = [r, g, b, a]
         
         var midColors : [CGFloat] = [0, 0, 0, 0]
         
