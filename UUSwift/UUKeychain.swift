@@ -6,7 +6,10 @@
 // to the iOS keychain.
 //
 
-import UIKit
+#if os(iOS)
+
+import Foundation
+import Security
 
 public let UUKeychainErrorDomain = "UUKeychainErrorDomain"
 
@@ -161,5 +164,6 @@ public class UUKeychain: NSObject
         
         return d
     }
-
 }
+
+#endif
