@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		080769B92220738D0037BB52 /* UUSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5CB4E9521B611F0002FE35E /* UUSwift.framework */; };
 		082A4B7622D7E41E00FD8DDF /* UUStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082A4B7522D7E41E00FD8DDF /* UUStringTests.swift */; };
+		08301E8D23AB32B1009CBEE4 /* UUStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08301E8B23AB32B1009CBEE4 /* UUStyling.swift */; };
+		08301E8E23AB32B1009CBEE4 /* UUKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08301E8C23AB32B1009CBEE4 /* UUKeychain.swift */; };
+		08301E9023AB330E009CBEE4 /* UUKeychainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08301E8F23AB330E009CBEE4 /* UUKeychainTests.swift */; };
+		08301E9823AB35B1009CBEE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08301E9723AB35B1009CBEE4 /* AppDelegate.swift */; };
 		083DFC7123A87F3800EC8D09 /* UULocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083DFC7023A87F3800EC8D09 /* UULocalization.swift */; };
 		085E84F722E02BD900BD217D /* UURemoteDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84F622E02BD900BD217D /* UURemoteDataTests.swift */; };
 		085E84F922E0306200BD217D /* UUTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085E84F822E0306200BD217D /* UUTestData.swift */; };
@@ -55,12 +59,25 @@
 			remoteGlobalIDString = C5CB4E9421B611F0002FE35E;
 			remoteInfo = UUSwift;
 		};
+		08301EA923AB35C3009CBEE4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C5CB4E8C21B611F0002FE35E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08301E9423AB35B1009CBEE4;
+			remoteInfo = UUSwiftTestHostContainer;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		080769B42220738D0037BB52 /* UUSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UUSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		080769B82220738D0037BB52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		082A4B7522D7E41E00FD8DDF /* UUStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUStringTests.swift; sourceTree = "<group>"; };
+		08301E8B23AB32B1009CBEE4 /* UUStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUStyling.swift; sourceTree = "<group>"; };
+		08301E8C23AB32B1009CBEE4 /* UUKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UUKeychain.swift; sourceTree = "<group>"; };
+		08301E8F23AB330E009CBEE4 /* UUKeychainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUKeychainTests.swift; sourceTree = "<group>"; };
+		08301E9523AB35B1009CBEE4 /* UUSwiftTestHostContainer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UUSwiftTestHostContainer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		08301E9723AB35B1009CBEE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		08301EA523AB35B5009CBEE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		083DFC7023A87F3800EC8D09 /* UULocalization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UULocalization.swift; sourceTree = "<group>"; };
 		085E84F622E02BD900BD217D /* UURemoteDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UURemoteDataTests.swift; sourceTree = "<group>"; };
 		085E84F822E0306200BD217D /* UUTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUTestData.swift; sourceTree = "<group>"; };
@@ -112,6 +129,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		08301E9223AB35B1009CBEE4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C5CB4E9221B611F0002FE35E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -135,8 +159,18 @@
 				085E84FA22E0468700BD217D /* UUDataCacheTests.swift */,
 				085E84FC22E0583C00BD217D /* UURemoteImageTests.swift */,
 				085E850222E17DBA00BD217D /* UUThreadTests.swift */,
+				08301E8F23AB330E009CBEE4 /* UUKeychainTests.swift */,
 			);
 			path = UUSwiftTests;
+			sourceTree = "<group>";
+		};
+		08301E9623AB35B1009CBEE4 /* UUSwiftTestHostContainer */ = {
+			isa = PBXGroup;
+			children = (
+				08301E9723AB35B1009CBEE4 /* AppDelegate.swift */,
+				08301EA523AB35B5009CBEE4 /* Info.plist */,
+			);
+			path = UUSwiftTestHostContainer;
 			sourceTree = "<group>";
 		};
 		C5CB4E8B21B611F0002FE35E = {
@@ -144,6 +178,7 @@
 			children = (
 				C5CB4E9721B611F0002FE35E /* UUSwift */,
 				080769B52220738D0037BB52 /* UUSwiftTests */,
+				08301E9623AB35B1009CBEE4 /* UUSwiftTestHostContainer */,
 				C5CB4E9621B611F0002FE35E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -153,6 +188,7 @@
 			children = (
 				C5CB4E9521B611F0002FE35E /* UUSwift.framework */,
 				080769B42220738D0037BB52 /* UUSwiftTests.xctest */,
+				08301E9523AB35B1009CBEE4 /* UUSwiftTestHostContainer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,6 +222,8 @@
 				085E84FE22E16FF400BD217D /* UUThread.swift */,
 				C5CB4ED821B701B8002FE35E /* UUView.swift */,
 				C5CB4ED921B701B8002FE35E /* UUViewController.swift */,
+				08301E8C23AB32B1009CBEE4 /* UUKeychain.swift */,
+				08301E8B23AB32B1009CBEE4 /* UUStyling.swift */,
 				C5CB4E9821B611F0002FE35E /* UUSwift.h */,
 				C5FCB1C421DFD06A00102975 /* UUSwift-Info.plist */,
 				C5EB4A4221C0906700ADADD0 /* LICENSE.md */,
@@ -220,11 +258,29 @@
 			);
 			dependencies = (
 				080769BB2220738D0037BB52 /* PBXTargetDependency */,
+				08301EAA23AB35C3009CBEE4 /* PBXTargetDependency */,
 			);
 			name = UUSwiftTests;
 			productName = UUSwiftTests;
 			productReference = 080769B42220738D0037BB52 /* UUSwiftTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		08301E9423AB35B1009CBEE4 /* UUSwiftTestHostContainer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08301EA623AB35B5009CBEE4 /* Build configuration list for PBXNativeTarget "UUSwiftTestHostContainer" */;
+			buildPhases = (
+				08301E9123AB35B1009CBEE4 /* Sources */,
+				08301E9223AB35B1009CBEE4 /* Frameworks */,
+				08301E9323AB35B1009CBEE4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UUSwiftTestHostContainer;
+			productName = UUSwiftTestHostContainer;
+			productReference = 08301E9523AB35B1009CBEE4 /* UUSwiftTestHostContainer.app */;
+			productType = "com.apple.product-type.application";
 		};
 		C5CB4E9421B611F0002FE35E /* UUSwift */ = {
 			isa = PBXNativeTarget;
@@ -251,12 +307,16 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = UU;
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Silverpine Software";
 				TargetAttributes = {
 					080769B32220738D0037BB52 = {
 						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 08301E9423AB35B1009CBEE4;
+					};
+					08301E9423AB35B1009CBEE4 = {
+						CreatedOnToolsVersion = 11.2.1;
 					};
 					C5CB4E9421B611F0002FE35E = {
 						CreatedOnToolsVersion = 10.1;
@@ -279,12 +339,20 @@
 			targets = (
 				C5CB4E9421B611F0002FE35E /* UUSwift */,
 				080769B32220738D0037BB52 /* UUSwiftTests */,
+				08301E9423AB35B1009CBEE4 /* UUSwiftTestHostContainer */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		080769B22220738D0037BB52 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08301E9323AB35B1009CBEE4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -308,6 +376,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				085E84F722E02BD900BD217D /* UURemoteDataTests.swift in Sources */,
+				08301E9023AB330E009CBEE4 /* UUKeychainTests.swift in Sources */,
 				085E84F922E0306200BD217D /* UUTestData.swift in Sources */,
 				08883A252220784A00DF2D18 /* UUHttpSessionTests.swift in Sources */,
 				085E850322E17DBA00BD217D /* UUThreadTests.swift in Sources */,
@@ -316,6 +385,14 @@
 				082A4B7622D7E41E00FD8DDF /* UUStringTests.swift in Sources */,
 				08883A2A22209F8300DF2D18 /* UUTestCase.swift in Sources */,
 				085E84FD22E0583C00BD217D /* UURemoteImageTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08301E9123AB35B1009CBEE4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08301E9823AB35B1009CBEE4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,11 +407,13 @@
 				C5CB4EE421B701B8002FE35E /* UUTextField.swift in Sources */,
 				C5CB4EE621B701B8002FE35E /* UUGradientView.swift in Sources */,
 				C5CB4EE221B701B8002FE35E /* UUColor.swift in Sources */,
+				08301E8D23AB32B1009CBEE4 /* UUStyling.swift in Sources */,
 				C5CB4EEC21B701B8002FE35E /* UUEditViewController.swift in Sources */,
 				C5CB4EE321B701B8002FE35E /* UUMapView.swift in Sources */,
 				085E850122E17A1A00BD217D /* UUObject.swift in Sources */,
 				C5CB4EED21B701B8002FE35E /* UUString.swift in Sources */,
 				C5CB4EDE21B701B8002FE35E /* UUDataCache.swift in Sources */,
+				08301E8E23AB32B1009CBEE4 /* UUKeychain.swift in Sources */,
 				085E84FF22E16FF400BD217D /* UUThread.swift in Sources */,
 				C5CB4EEB21B701B8002FE35E /* UUDebugLog.swift in Sources */,
 				C5CB4EE721B701B8002FE35E /* UUHttpSession.swift in Sources */,
@@ -360,6 +439,11 @@
 			target = C5CB4E9421B611F0002FE35E /* UUSwift */;
 			targetProxy = 080769BA2220738D0037BB52 /* PBXContainerItemProxy */;
 		};
+		08301EAA23AB35C3009CBEE4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08301E9423AB35B1009CBEE4 /* UUSwiftTestHostContainer */;
+			targetProxy = 08301EA923AB35C3009CBEE4 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -379,6 +463,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UUSwiftTestHostContainer.app/UUSwiftTestHostContainer";
 			};
 			name = Debug;
 		};
@@ -398,6 +483,45 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UUSwiftTestHostContainer.app/UUSwiftTestHostContainer";
+			};
+			name = Release;
+		};
+		08301EA723AB35B5009CBEE4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = UUSwiftTestHostContainer/UUSwiftTestHostContainer.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6T8KQ7345Y;
+				INFOPLIST_FILE = UUSwiftTestHostContainer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.silverpine.inhouse.UUSwiftTestHostContainer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		08301EA823AB35B5009CBEE4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = UUSwiftTestHostContainer/UUSwiftTestHostContainer.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6T8KQ7345Y;
+				INFOPLIST_FILE = UUSwiftTestHostContainer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.silverpine.inhouse.UUSwiftTestHostContainer;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -593,6 +717,15 @@
 			buildConfigurations = (
 				080769BC2220738D0037BB52 /* Debug */,
 				080769BD2220738D0037BB52 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08301EA623AB35B5009CBEE4 /* Build configuration list for PBXNativeTarget "UUSwiftTestHostContainer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08301EA723AB35B5009CBEE4 /* Debug */,
+				08301EA823AB35B5009CBEE4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
