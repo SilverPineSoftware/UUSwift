@@ -11,6 +11,8 @@
 //  appearance customization
 //
 
+#if os(iOS)
+
 import UIKit
 
 public extension UINavigationController
@@ -24,3 +26,4 @@ public extension UINavigationController
     }
 }
 
+#endif
