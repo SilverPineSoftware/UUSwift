@@ -394,7 +394,7 @@ public extension UIImage {
 	// MARK: - Animated GIF support
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public static func uuImageWithGIFData(_ data : Data) -> UIImage? {
+	static func uuImageWithGIFData(_ data : Data) -> UIImage? {
 		var image : UIImage? = nil
 		if let imageRef = CGImageSourceCreateWithData(data as CFData, nil) {
 			let frameCount = CGImageSourceGetCount(imageRef)
