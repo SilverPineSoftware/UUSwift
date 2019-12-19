@@ -6,6 +6,7 @@
 //
 
 import Darwin
+import Foundation
 
 public class UUThreadSafeArray<T>: NSObject
 {
