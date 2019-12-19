@@ -347,7 +347,7 @@ extension UUImage {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #if os(iOS)
 
-extension UIImage {
+public extension UIImage {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// MARK: - Solid color image functions
@@ -394,7 +394,7 @@ extension UIImage {
 	// MARK: - Animated GIF support
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public static func uuImageWithGIFData(_ data : Data) -> UIImage? {
+	static func uuImageWithGIFData(_ data : Data) -> UIImage? {
 		var image : UIImage? = nil
 		if let imageRef = CGImageSourceCreateWithData(data as CFData, nil) {
 			let frameCount = CGImageSourceGetCount(imageRef)
