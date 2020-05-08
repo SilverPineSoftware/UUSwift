@@ -112,6 +112,25 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
         set(metaData: md, for: key)
     }
     
+    public func moveIntoCache(localData: URL, for key: String)
+    {
+        let pathUrl = diskCacheURL(for: key)
+        
+        do
+        {
+            let fm = FileManager.default
+            try fm.moveItem(at: localData, to: pathUrl)
+            
+            var md = metaData(for: key)
+            md[MetaDataKeys.timestamp] = Date()
+            set(metaData: md, for: key)
+        }
+        catch (let err)
+        {
+            UUDebugLog("Error moving URL into cache: %@", String(describing: err))
+        }
+    }
+    
     public func metaData(for key: String) -> [String:Any]
     {
         return UUDataCacheDb.shared.metaData(for: key)
