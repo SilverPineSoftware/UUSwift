@@ -124,8 +124,8 @@ public extension String
         {
             let sc:Scanner = Scanner(string: self.uuSubString(i, 2)) //Substring was deprecated, so using uu
             
-            var hex:UInt32 = 0
-            if (sc.scanHexInt32(&hex))
+            var hex:UInt64 = 0
+            if (sc.scanHexInt64(&hex))
             {
                 var tmp:UInt8 = UInt8(hex)
                 data.append(&tmp, length: MemoryLayout<UInt8>.size) //sizeof deprecated

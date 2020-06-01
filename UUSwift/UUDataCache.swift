@@ -257,7 +257,6 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
         let fileName = UUDataCacheDb.shared.fileName(for: key)
         let path = (cacheFolder as NSString).appendingPathComponent(fileName)
         let pathUrl = URL(fileURLWithPath: path)
-        UUDebugLog("Key: \(key), DiskCacheURL: \(pathUrl)")
         return pathUrl
     }
     
@@ -356,21 +355,18 @@ private class UUDataCacheDb : NSObject
         attr.name = "name"
         attr.attributeType = .stringAttributeType
         attr.isOptional = false
-        attr.isIndexed = true
         properties.append(attr)
         
         attr = NSAttributeDescription()
         attr.name = "fileName"
         attr.attributeType = .stringAttributeType
         attr.isOptional = false
-        attr.isIndexed = false
         properties.append(attr)
         
         attr = NSAttributeDescription()
         attr.name = "timestamp"
         attr.attributeType = .dateAttributeType
         attr.isOptional = false
-        attr.isIndexed = false
         properties.append(attr)
         
         attr = NSAttributeDescription()
@@ -378,7 +374,6 @@ private class UUDataCacheDb : NSObject
         attr.attributeType = .transformableAttributeType
         attr.valueTransformerName = "NSSecureUnarchiveFromData"
         attr.isOptional = false
-        attr.isIndexed = false
         properties.append(attr)
         
         entity.properties = properties
@@ -466,7 +461,7 @@ private class UUDataCacheDb : NSObject
         ctx.performAndWait
         {
             let predicate = NSPredicate(format: "name = %@", key)
-            obj = UUDataCacheMetaData.uuFetchSingleEntity(predicate: predicate, context: ctx)
+            obj = UUDataCacheMetaData.uuFetchSingleObject(predicate: predicate, context: ctx)
             if (obj == nil)
             {
                 obj = UUDataCacheMetaData.uuCreate(context: ctx)
