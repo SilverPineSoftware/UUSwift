@@ -66,8 +66,6 @@ public let UUHttpSessionHttpErrorCodeKey      = "UUHttpSessionHttpErrorCodeKey"
 public let UUHttpSessionHttpErrorMessageKey   = "UUHttpSessionHttpErrorMessageKey"
 public let UUHttpSessionAppResponseKey        = "UUHttpSessionAppResponseKey"
 
-public let kUUHttpDefaultTimeout : TimeInterval = 60.0
-
 public struct UUContentType
 {
     public static let applicationJson  = "application/json"
@@ -88,17 +86,22 @@ public struct UUHeader
 
 public class UUHttpRequest: NSObject
 {
+	public static var defaultTimeout : TimeInterval = 60.0
+	public static var defaultCachePolicy : URLRequest.CachePolicy = .useProtocolCachePolicy
+	
     public var url : String = ""
     public var httpMethod : UUHttpMethod = .get
     public var queryArguments : UUQueryStringArgs = [:]
     public var headerFields : UUHttpHeaders = [:]
     public var body : Data? = nil
     public var bodyContentType : String? = nil
-    public var timeout : TimeInterval = kUUHttpDefaultTimeout
+	public var timeout : TimeInterval = UUHttpRequest.defaultTimeout
+	public var cachePolicy : URLRequest.CachePolicy = UUHttpRequest.defaultCachePolicy
     public var credentials : URLCredential? = nil
     public var processMimeTypes : Bool = true
     public var startTime : TimeInterval = 0
     public var httpRequest : URLRequest? = nil
+	public var httpTask : URLSessionTask? = nil
     public var responseHandler : UUHttpResponseHandler? = nil
     public var form : UUHttpForm? = nil
     
@@ -119,6 +122,10 @@ public class UUHttpRequest: NSObject
         self.init(url: url, method: method, queryArguments: queryArguments, headers: headers, body: nil, contentType: nil)
         self.form = form
     }
+	
+	public func cancel() {
+		self.httpTask?.cancel()
+	}
 }
 
 public class UUHttpResponse : NSObject
@@ -338,7 +345,7 @@ public class UUHttpSession: NSObject
 {
     private var urlSession : URLSession? = nil
     private var sessionConfiguration : URLSessionConfiguration? = nil
-    private var activeTasks : [URLSessionTask] = []
+    private var activeTasks : UUThreadSafeArray<URLSessionTask> = UUThreadSafeArray()
     private var responseHandlers : [String:UUHttpResponseHandler] = [:]
     
     public static let shared = UUHttpSession()
@@ -348,7 +355,7 @@ public class UUHttpSession: NSObject
         super.init()
         
         sessionConfiguration = URLSessionConfiguration.default
-        sessionConfiguration?.timeoutIntervalForRequest = kUUHttpDefaultTimeout
+		sessionConfiguration?.timeoutIntervalForRequest = UUHttpRequest.defaultTimeout
         
         urlSession = URLSession.init(configuration: sessionConfiguration!)
         
@@ -387,7 +394,7 @@ public class UUHttpSession: NSObject
         
         request.startTime = Date.timeIntervalSinceReferenceDate
         
-        UUDebugLog("Begin Request\n\nMethod: %@\nURL: %@\nHeaders: %@)",
+        /*UUDebugLog("Begin Request\n\nMethod: %@\nURL: %@\nHeaders: %@)",
             String(describing: request.httpRequest?.httpMethod),
             String(describing: request.httpRequest?.url),
             String(describing: request.httpRequest?.allHTTPHeaderFields))
@@ -406,13 +413,14 @@ public class UUHttpSession: NSObject
                 }
             }
         }
-        
+        */
         let task = urlSession!.dataTask(with: request.httpRequest!)
         { (data : Data?, response: URLResponse?, error : Error?) in
             
             self.handleResponse(request, data, response, error, completion)
         }
-        
+		request.httpTask = task
+		
         activeTasks.append(task)
         task.resume()
         return request
@@ -434,6 +442,7 @@ public class UUHttpSession: NSObject
         var req : URLRequest = URLRequest(url: url)
         req.httpMethod = request.httpMethod.rawValue
         req.timeoutInterval = request.timeout
+		req.cachePolicy = request.cachePolicy
         
         for key in request.headerFields.keys
         {
@@ -488,12 +497,14 @@ public class UUHttpSession: NSObject
             httpResponseCode = httpResponse!.statusCode
         }
         
+		/*
         UUDebugLog("Http Response Code: %d", httpResponseCode)
         
         if let responseHeaders = httpResponse?.allHeaderFields
         {
             UUDebugLog("Response Headers: %@", responseHeaders)
         }
+		*/
         
         if (error != nil)
         {
@@ -540,7 +551,7 @@ public class UUHttpSession: NSObject
             
             let mimeType = httpResponse!.mimeType
             
-            UUDebugLog("Parsing response,\n%@ %@", String(describing: httpRequest?.httpMethod), String(describing: httpRequest?.url))
+            /*UUDebugLog("Parsing response,\n%@ %@", String(describing: httpRequest?.httpMethod), String(describing: httpRequest?.url))
             UUDebugLog("Response Mime: %@", String(describing: mimeType))
             
             if let responseData = data
@@ -556,9 +567,9 @@ public class UUHttpSession: NSObject
                     responseStr = String(data: responseData, encoding: .utf8)
                 }
                 
-                UUDebugLog("Raw Response: %@", String(describing: responseStr))
+                //UUDebugLog("Raw Response: %@", String(describing: responseStr))
             }
-            
+            */
             var handler = request.responseHandler
             
             if (handler == nil && mimeType != nil)
