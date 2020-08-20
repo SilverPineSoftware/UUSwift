@@ -41,13 +41,20 @@ public class UUThreadSafeArray<T:Equatable>: NSObject
             })
         }
     }
+	
+	public func contains(_ element: T) -> Bool
+	{
+		uuSynchronized({
+			return self.nativeObject.firstIndex(of: element) != nil
+		})
+	}
     
     public func remove(_ element: T)
     {
         uuSynchronized({
-            self.nativeObject.removeAll { (object) -> Bool in
-                object == element
-            }
+			while let index = self.nativeObject.firstIndex(of: element) {
+				self.nativeObject.remove(at: index)
+			}
         })
     }
     
@@ -175,53 +182,53 @@ public extension NSObject
 
 public class UUMutexWrapper: NSObject
 {
-    private var mutex: pthread_mutex_t = pthread_mutex_t()
-    
-    public override init()
-    {
-        super.init()
-        setupMutex()
-    }
-    
-    private func setupMutex()
-    {
-        var attr = pthread_mutexattr_t()
-        
-        var result = pthread_mutexattr_init(&attr)
-        guard result == 0 else
-        {
-            UUDebugLog("pthread_mutexattr_init failed!")
-            return
-        }
-        
-        pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE)
-        
-        result = pthread_mutex_init(&mutex, &attr)
-        guard result == 0 else
-        {
-            UUDebugLog("pthread_mutex_init failed!")
-            return
-        }
-        
-        pthread_mutexattr_destroy(&attr)
-    }
-    
-    deinit
-    {
-        pthread_mutex_destroy(&mutex)
-    }
-    
-    public func synchronized<ReturnType>(_ method: () throws -> ReturnType) rethrows -> ReturnType
-    {
-        pthread_mutex_lock(&mutex)
-        
-        defer
-        {
-            pthread_mutex_unlock(&mutex)
-        }
-        
-        return try method()
-    }
+	private var mutex: pthread_mutex_t = pthread_mutex_t()
+	
+	public override init()
+	{
+		super.init()
+		setupMutex()
+	}
+	
+	private func setupMutex()
+	{
+		var attr = pthread_mutexattr_t()
+		
+		var result = pthread_mutexattr_init(&attr)
+		guard result == 0 else
+		{
+			UUDebugLog("pthread_mutexattr_init failed!")
+			return
+		}
+		
+		pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE)
+		
+		result = pthread_mutex_init(&mutex, &attr)
+		guard result == 0 else
+		{
+			UUDebugLog("pthread_mutex_init failed!")
+			return
+		}
+		
+		pthread_mutexattr_destroy(&attr)
+	}
+	
+	deinit
+	{
+		pthread_mutex_destroy(&mutex)
+	}
+	
+	public func synchronized<ReturnType>(_ method: () throws -> ReturnType) rethrows -> ReturnType
+	{
+		pthread_mutex_lock(&mutex)
+		
+		defer
+		{
+			pthread_mutex_unlock(&mutex)
+		}
+		
+		return try method()
+	}
 }
 
 
