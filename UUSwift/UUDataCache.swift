@@ -125,12 +125,12 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
     
     public func metaData(for key: String) -> [String:Any]
     {
-        return UUDataCacheDb.shared.metaData(for: key)
+        return UUDataCacheDb.shared.metaData(for: sanitizeKey(key))
     }
     
     public func set(metaData: [String:Any], for key: String)
     {
-        UUDataCacheDb.shared.setMetaData(metaData, for: key)
+        UUDataCacheDb.shared.setMetaData(metaData, for: sanitizeKey(key))
     }
     
     public func dataExists(for key: String) -> Bool
@@ -153,8 +153,9 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
     
     public func removeData(for key: String)
     {
-        UUDataCacheDb.shared.clearMetaData(for: key)
-        removeFile(for: key)
+        let sanitizedKey = sanitizeKey(key)
+        UUDataCacheDb.shared.clearMetaData(for: sanitizedKey)
+        removeFile(for: sanitizedKey)
     }
     
     public func clearCache()
@@ -242,7 +243,7 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
     
     public func diskCacheURL(for key: String) -> URL?
     {
-        if let fileName = UUDataCacheDb.shared.fileName(for: key) {
+        if let fileName = UUDataCacheDb.shared.fileName(for: sanitizeKey(key)) {
             let path = (cacheFolder as NSString).appendingPathComponent(fileName)
             let pathUrl = URL(fileURLWithPath: path)
             return pathUrl
@@ -312,13 +313,17 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
     }
         
     private func dataExistsOnDisk(key: String) -> Bool {
-        guard let pathUrl = diskCacheURL(for: key) else {
+        guard let pathUrl = diskCacheURL(for: sanitizeKey(key)) else {
             return false
         }
         
         return FileManager.default.fileExists(atPath:pathUrl.path)
     }
     
+    private func sanitizeKey(_ input: String) -> String
+    {
+        return input.uuRemoveQueryString()
+    }
 }
 
 
