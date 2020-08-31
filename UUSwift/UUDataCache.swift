@@ -104,7 +104,9 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
     
     public func moveIntoCache(localData: URL, for key: String)
     {
-        let pathUrl = diskCacheURL(for: key)
+        guard let pathUrl = diskCacheURL(for: key) else {
+            return
+        }
         
         do
         {
@@ -238,12 +240,15 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
         }
     }
     
-    public func diskCacheURL(for key: String) -> URL
+    public func diskCacheURL(for key: String) -> URL?
     {
-        let fileName = UUDataCacheDb.shared.fileName(for: key)
-        let path = (cacheFolder as NSString).appendingPathComponent(fileName)
-        let pathUrl = URL(fileURLWithPath: path)
-        return pathUrl
+        if let fileName = UUDataCacheDb.shared.fileName(for: key) {
+            let path = (cacheFolder as NSString).appendingPathComponent(fileName)
+            let pathUrl = URL(fileURLWithPath: path)
+            return pathUrl
+        }
+        
+        return nil
     }
     
     private func removeIfExpired(for key: String)
@@ -258,7 +263,9 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
     {
         var data : Data? = nil
         
-        let pathUrl = diskCacheURL(for: key)
+        guard let pathUrl = diskCacheURL(for: key) else {
+            return nil
+        }
         
         do
         {
@@ -274,7 +281,9 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
         
     private func removeFile(for key: String)
     {
-        let pathUrl = diskCacheURL(for: key)
+        guard let pathUrl = diskCacheURL(for: key) else {
+            return
+        }
         
         do
         {
@@ -288,7 +297,9 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
     
     private func saveToDisk(data: Data, for key: String)
     {
-        let pathUrl = diskCacheURL(for: key)
+        guard let pathUrl = diskCacheURL(for: key) else {
+            return
+        }
         
         do
         {
@@ -301,169 +312,112 @@ public class UUDataCache : NSObject, UUDataCacheProtocol
     }
         
     private func dataExistsOnDisk(key: String) -> Bool {
-        let pathUrl = diskCacheURL(for: key)
+        guard let pathUrl = diskCacheURL(for: key) else {
+            return false
+        }
+        
         return FileManager.default.fileExists(atPath:pathUrl.path)
     }
     
 }
 
 
-private class UUDataCacheDb : NSObject
+private class UUDataCacheDb
 {
+	private static let cacheKeyName = "UUDataCacheDb"
     static let shared = UUDataCacheDb()
-    
-    private var coreDataStack : UUCoreData!
-    private let storeUrl : URL = URL(fileURLWithPath: NSHomeDirectory()).appendingPathComponent("Library").appendingPathComponent("UUDataCacheMetaDataDb.sqlite")
-    private let storeModel : NSManagedObjectModel = UUDataCacheDb.objectModel()
-    
-    required public override init()
-    {
-        super.init()
-        
-        coreDataStack = UUCoreData(url: storeUrl, model: storeModel)
-    }
-    
-    private class func objectModel() -> NSManagedObjectModel
-    {
-        let model = NSManagedObjectModel()
-        
-        let entity = NSEntityDescription()
-        entity.name = "UUDataCacheMetaData"
-        entity.managedObjectClassName = "UUDataCacheMetaData"
-        
-        var properties : [NSAttributeDescription] = []
-        
-        var attr = NSAttributeDescription()
-        attr.name = "name"
-        attr.attributeType = .stringAttributeType
-        attr.isOptional = false
-        properties.append(attr)
-        
-        attr = NSAttributeDescription()
-        attr.name = "fileName"
-        attr.attributeType = .stringAttributeType
-        attr.isOptional = false
-        properties.append(attr)
-        
-        attr = NSAttributeDescription()
-        attr.name = "timestamp"
-        attr.attributeType = .dateAttributeType
-        attr.isOptional = false
-        properties.append(attr)
-        
-        attr = NSAttributeDescription()
-        attr.name = "metaData"
-        attr.attributeType = .transformableAttributeType
-        attr.valueTransformerName = "NSSecureUnarchiveFromData"
-        attr.isOptional = false
-        properties.append(attr)
-        
-        entity.properties = properties
-        
-        model.entities = [entity]
-     
-        return model
-    }
+	
+    let mutex = NSRecursiveLock()
+	var metaData : [String : Any] = [:]
+	
+	init() {
+		if let data = UserDefaults.standard.object(forKey: UUDataCacheDb.cacheKeyName) as? [String : Any] {
+            mutex.lock()
+            defer {
+                mutex.unlock()
+            }
+
+            self.metaData = data
+		}
+	}
     
     public func metaData(for key: String) -> [String:Any]
     {
-        var md : [String:Any]? = nil
-        
-        let ctx = coreDataStack.mainThreadContext!
-        ctx.performAndWait
-        {
-            let obj = self.underlyingMetaData(for: key)
-            md = obj.metaData as? [String:Any]
+        mutex.lock()
+        defer {
+            mutex.unlock()
+        }
+
+        if let dictionary = self.metaData[key] as? [String:Any] {
+            let copy = dictionary
+            return copy
+        }
+        else {
+            var metaData : [String : Any] = [:]
+            metaData["fileName"] = UUID().uuidString
+            metaData["timestamp"] = Date()
+            self.metaData[key] = metaData
+                
+            let copy = self.metaData
+            return copy
         }
         
-        if (md == nil)
-        {
-            md = [:]
-        }
-        
-        return md!
     }
     
-    public func fileName(for key: String) -> String
+    public func fileName(for key: String) -> String?
     {
-        var result: String? = nil
-        
-        let ctx = coreDataStack.mainThreadContext!
-        ctx.performAndWait
-        {
-            let obj = self.underlyingMetaData(for: key)
-            result = obj.fileName
+        mutex.lock()
+        defer {
+            mutex.unlock()
         }
-        
-        assert(result != nil, "Expect that fileName is always non nil")
-        return result ?? ""
+
+        let metaData = self.metaData(for: key)
+        return metaData["fileName"] as? String
     }
     
     public func setMetaData(_ metaData: [String:Any], for key: String)
     {
-        let ctx = coreDataStack.mainThreadContext!
-        ctx.performAndWait
-        {
-            let obj = self.underlyingMetaData(for: key)
-            obj.timestamp = Date()
-            
-            let d = NSDictionary(dictionary: metaData)
-            
-            obj.metaData = d
-            
-            _ = ctx.uuSubmitChanges()
+        mutex.lock()
+        defer {
+            mutex.unlock()
         }
+
+        
+        self.metaData[key] = metaData
+        self.saveCurrentMetaData()
     }
     
     public func clearMetaData(for key: String)
     {
-        let ctx = coreDataStack.mainThreadContext!
-        ctx.performAndWait
-        {
-            let predicate = NSPredicate(format: "name = %@", key)
-            UUDataCacheMetaData.uuDeleteObjects(predicate: predicate, context: ctx)
+        mutex.lock()
+        defer {
+            mutex.unlock()
         }
+
+        self.metaData.removeValue(forKey: key)
+        self.saveCurrentMetaData()
     }
     
     public func clearAllMetaData()
     {
-        let ctx = coreDataStack.mainThreadContext!
-        ctx.performAndWait
-        {
-            ctx.uuDeleteAllObjects()
-            _ = ctx.uuSubmitChanges()
+        mutex.lock()
+        defer {
+            mutex.unlock()
         }
+
+		UserDefaults.standard.removeObject(forKey: UUDataCacheDb.cacheKeyName)
+        self.metaData = [:]
     }
-    
-    private func underlyingMetaData(for key: String) -> UUDataCacheMetaData
-    {
-        var obj : UUDataCacheMetaData? = nil
-        
-        let ctx = coreDataStack.mainThreadContext!
-        ctx.performAndWait
-        {
-            let predicate = NSPredicate(format: "name = %@", key)
-            obj = UUDataCacheMetaData.uuFetchSingleObject(predicate: predicate, context: ctx)
-            if (obj == nil)
-            {
-                obj = UUDataCacheMetaData.uuCreate(context: ctx)
-                obj!.name = key
-                obj!.fileName = UUID().uuidString
-                obj!.timestamp = Date()
-                obj!.metaData = NSDictionary()
-                _ = ctx.uuSubmitChanges()
-            }
+
+	private func saveCurrentMetaData() {
+        mutex.lock()
+        defer {
+            mutex.unlock()
         }
-        
-        return obj!
-    }
+
+        UserDefaults.standard.setValue(self.metaData, forKey: UUDataCacheDb.cacheKeyName)
+	}
 }
 
-@objc(UUDataCacheMetaData)
-public class UUDataCacheMetaData : NSManagedObject
-{
-    @NSManaged var name : String?
-    @NSManaged var fileName : String?
-    @NSManaged var timestamp : Date?
-    @NSManaged var metaData : NSDictionary?
-}
+
+
