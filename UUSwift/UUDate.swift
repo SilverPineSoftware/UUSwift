@@ -13,6 +13,8 @@
 	import UIKit
 #endif
 
+fileprivate let kUUSecondsPerDay: TimeInterval = (60 * 60 * 24)
+
 public struct UUDate
 {
     public struct Constants
@@ -259,7 +261,92 @@ public extension Date
 		let newDate = Calendar.current.date(byAdding: dateComponents, to: self)
 		return newDate!
 	}
+}
 
+public extension Date // Delta formatters
+{
+    private static let kUUTimeDeltaJustNowFormat              = "Just now"
+    private static let kUUTimeDeltaSecondsSingularFormat      = "%@ second ago"
+    private static let kUUTimeDeltaSecondsPluralFormat        = "%@ seconds ago"
+    private static let kUUTimeDeltaMinutesSingularFormat      = "%@ minute ago"
+    private static let kUUTimeDeltaMinutesPluralFormat        = "%@ minutes ago"
+    private static let kUUTimeDeltaHoursSingularFormat        = "%@ hour ago"
+    private static let kUUTimeDeltaHoursPluralFormat          = "%@ hours ago"
+    private static let kUUTimeDeltaDaysSingularFormat         = "%@ day ago"
+    private static let kUUTimeDeltaDaysPluralFormat           = "%@ days ago"
+
+    private static let kUUTimeDeltaJustNowFormatKey           = "UUTimeDeltaJustNowFormatKey"
+    private static let kUUTimeDeltaSecondsSingularFormatKey   = "UUTimeDeltaSecondsSingularFormatKey"
+    private static let kUUTimeDeltaSecondsPluralFormatKey     = "UUTimeDeltaSecondsPluralFormatKey"
+    private static let kUUTimeDeltaMinutesSingularFormatKey   = "UUTimeDeltaMinutesSingularFormatKey"
+    private static let kUUTimeDeltaMinutesPluralFormatKey     = "UUTimeDeltaMinutesPluralFormatKey"
+    private static let kUUTimeDeltaHoursSingularFormatKey     = "UUTimeDeltaHoursSingularFormatKey"
+    private static let kUUTimeDeltaHoursPluralFormatKey       = "UUTimeDeltaHoursPluralFormatKey"
+    private static let kUUTimeDeltaDaysSingularFormatKey      = "UUTimeDeltaDaysSingularFormatKey"
+    private static let kUUTimeDeltaDaysPluralFormatKey        = "UUTimeDeltaDaysPluralFormatKey"
+
+    static func uuFormatTimeDelta(_ interval: TimeInterval) -> String
+    {
+        let days = (interval / kUUSecondsPerDay)
+        
+        if (days < 1)
+        {
+            let hours = days * 24
+            
+            if (hours < 1)
+            {
+                let minutes = hours * 60
+                
+                if (minutes < 1)
+                {
+                    let seconds = minutes * 60
+                    
+                    if (seconds >= 1 && seconds < 2)
+                    {
+                        return uuFormatDelta(kUUTimeDeltaSecondsSingularFormatKey, kUUTimeDeltaSecondsSingularFormat, seconds)
+                    }
+                    else if (seconds <= 0)
+                    {
+                        return Bundle.main.localizedString(forKey: kUUTimeDeltaJustNowFormatKey, value:kUUTimeDeltaJustNowFormat, table: nil)
+                    }
+                    else
+                    {
+                        return uuFormatDelta(kUUTimeDeltaSecondsPluralFormatKey, kUUTimeDeltaSecondsPluralFormat, seconds)
+                    }
+                }
+                else if (minutes >= 1 && minutes < 2)
+                {
+                    return uuFormatDelta(kUUTimeDeltaMinutesSingularFormatKey, kUUTimeDeltaMinutesSingularFormat, minutes)
+                }
+                else
+                {
+                    return uuFormatDelta(kUUTimeDeltaMinutesPluralFormatKey, kUUTimeDeltaMinutesPluralFormat, minutes)
+                }
+            }
+            else if (hours >= 1 && hours < 2)
+            {
+                return uuFormatDelta(kUUTimeDeltaHoursSingularFormatKey, kUUTimeDeltaHoursSingularFormat, hours)
+            }
+            else
+            {
+                return uuFormatDelta(kUUTimeDeltaHoursPluralFormatKey, kUUTimeDeltaHoursPluralFormat, hours)
+            }
+        }
+        else if (days >= 1 && days < 2)
+        {
+            return uuFormatDelta(kUUTimeDeltaDaysSingularFormatKey, kUUTimeDeltaDaysSingularFormat, days)
+        }
+        else
+        {
+            return uuFormatDelta(kUUTimeDeltaDaysPluralFormatKey, kUUTimeDeltaDaysPluralFormat, days)
+        }
+    }
+
+    static func uuFormatDelta(_ key: String, _ defaultFormatter: String, _ value: TimeInterval) -> String
+    {
+        let formatter = Bundle.main.localizedString(forKey: key, value: defaultFormatter, table: nil)
+        return String(format: formatter, "\(Int(value))")
+    }
 }
 
 public extension String
@@ -269,5 +356,18 @@ public extension String
         let df = DateFormatter.uuCachedFormatter(format)
         df.timeZone = timeZone
         return df.date(from: self)
+    }
+    
+    // Formats a time duration string from a quantity of seconds --> HH:MM:SS
+    static func uuFormatTimeDuration(_ seconds: Int) -> String
+    {
+        var workingSeconds = seconds
+        let hours = workingSeconds / 3600;
+        workingSeconds = workingSeconds % 3600
+        
+        let minutes = workingSeconds / 60
+        workingSeconds = workingSeconds % 60
+        
+        return String(format: "%02d:%02d:%02d", hours, minutes, workingSeconds)
     }
 }
