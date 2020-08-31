@@ -353,8 +353,11 @@ private class UUDataCacheDb
             return copy
         }
         else {
+            
+            let fileExtension = key.uuGetFileExtension()
+            
             var metaData : [String : Any] = [:]
-            metaData["fileName"] = UUID().uuidString
+            metaData["fileName"] = "\(UUID().uuidString).\(fileExtension)"
             metaData["timestamp"] = Date()
             self.metaData[key] = metaData
                 
