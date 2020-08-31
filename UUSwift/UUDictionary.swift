@@ -89,7 +89,7 @@ public extension Dictionary
     // the time since 1/1/1970
     func uuSafeGetUnixDateFromMilliseconds(_ key: Key, _ defaultValue: Date = Date(timeIntervalSince1970: 0)) -> Date
     {
-        return uuSafeGetUnixDateFromMillisecondsOpt(key) ?? defaultValue
+        return uuGetUnixDateFromMilliseconds(key) ?? defaultValue
     }
     
     // Unix timestamps are number of seconds since 01/01/1970 UTC.
@@ -97,15 +97,15 @@ public extension Dictionary
     // the time since 1/1/1970
     func uuSafeGetUnixDateFromSeconds(_ key: Key, _ defaultValue: Date = Date(timeIntervalSince1970: 0)) -> Date
     {
-        return uuSafeGetUnixDateFromSecondsOpt(key) ?? defaultValue
+        return uuGetUnixDateFromSeconds(key) ?? defaultValue
     }
     
     // Unix timestamps are number of seconds since 01/01/1970 UTC.
     // This method assumes the value at the key is a double in milliseconds representing
     // the time since 1/1/1970
-    func uuSafeGetUnixDateFromMillisecondsOpt(_ key: Key) -> Date?
+    func uuGetUnixDateFromMilliseconds(_ key: Key) -> Date?
     {
-        guard let doubleVal = uuSafeGetDoubleOpt(key) else
+        guard let doubleVal = uuGetDouble(key) else
         {
             return nil
         }
@@ -116,9 +116,9 @@ public extension Dictionary
     // Unix timestamps are number of seconds since 01/01/1970 UTC.
     // This method assumes the value at the key is a double in seconds representing
     // the time since 1/1/1970
-    func uuSafeGetUnixDateFromSecondsOpt(_ key: Key) -> Date?
+    func uuGetUnixDateFromSeconds(_ key: Key) -> Date?
     {
-        guard let doubleVal = uuSafeGetDoubleOpt(key) else
+        guard let doubleVal = uuGetDouble(key) else
         {
             return nil
         }
@@ -128,36 +128,36 @@ public extension Dictionary
     
     func uuSafeGetString(_ key: Key, _ defaultValue: String = "") -> String
     {
-        return uuSafeGetStringOpt(key) ?? defaultValue
+        return uuGetString(key) ?? defaultValue
     }
     
-    func uuSafeGetStringOpt(_ key: Key) -> String?
+    func uuGetString(_ key: Key) -> String?
     {
         return self[key] as? String
     }
     
     func uuSafeGetStringArray(_ key: Key) -> [String]
     {
-        return uuSafeGetStringArrayOpt(key) ?? []
+        return uuGetStringArray(key) ?? []
     }
     
-    func uuSafeGetStringArrayOpt(_ key: Key) -> [String]?
+    func uuGetStringArray(_ key: Key) -> [String]?
     {
         return self[key] as? [String]
     }
     
     func uuSafeGetNumber(_ key: Key, _ defaultValue: NSNumber = NSNumber(value: 0)) -> NSNumber
     {
-        return uuSafeGetNumberOpt(key) ?? defaultValue
+        return uuGetNumber(key) ?? defaultValue
     }
     
-    func uuSafeGetNumberOpt(_ key: Key) -> NSNumber?
+    func uuGetNumber(_ key: Key) -> NSNumber?
     {
         var val = self[key] as? NSNumber
         
         if (val == nil)
         {
-            if let str = uuSafeGetStringOpt(key)
+            if let str = uuGetString(key)
             {
                 let nf = NumberFormatter()
                 nf.numberStyle = .decimal
@@ -180,7 +180,7 @@ public extension Dictionary
         for obj in arr
         {
             let d = ["val": obj ]
-            if let num = d.uuSafeGetNumberOpt("val")
+            if let num = d.uuGetNumber("val")
             {
                 result.append(num)
             }
@@ -191,12 +191,12 @@ public extension Dictionary
     
     func uuSafeGetBool(_ key: Key, _ defaultValue: Bool = false) -> Bool
     {
-        return uuSafeGetBoolOpt(key) ?? defaultValue
+        return uuGetBool(key) ?? defaultValue
     }
     
-    func uuSafeGetBoolOpt(_ key: Key) -> Bool?
+    func uuGetBool(_ key: Key) -> Bool?
     {
-        if let str = uuSafeGetStringOpt(key)?.lowercased()
+        if let str = uuGetString(key)?.lowercased()
         {
             if "true" == str
             {
@@ -208,7 +208,7 @@ public extension Dictionary
             }
         }
         
-        if let num = uuSafeGetNumberOpt(key)
+        if let num = uuGetNumber(key)
         {
             return num.boolValue
         }
@@ -218,12 +218,12 @@ public extension Dictionary
     
     func uuSafeGetBoolNumber(_ key: Key, _ defaultValue: Bool) -> NSNumber
     {
-        return uuSafeGetNumberOpt(key) ?? NSNumber(value: defaultValue)
+        return uuGetNumber(key) ?? NSNumber(value: defaultValue)
     }
     
-    func uuSafeGetBoolNumberOpt(_ key: Key) -> NSNumber?
+    func uuGetBoolNumber(_ key: Key) -> NSNumber?
     {
-        if let bool = uuSafeGetBoolOpt(key)
+        if let bool = uuGetBool(key)
         {
             return NSNumber(value: bool)
         }
@@ -231,9 +231,9 @@ public extension Dictionary
         return nil
     }
     
-    func uuSafeGetIntOpt(_ key: Key) -> Int?
+    func uuGetInt(_ key: Key) -> Int?
     {
-        guard let num = uuSafeGetNumberOpt(key) else
+        guard let num = uuGetNumber(key) else
         {
             return nil
         }
@@ -241,9 +241,9 @@ public extension Dictionary
         return num.intValue
     }
     
-    func uuSafeGetUInt8Opt(_ key: Key) -> UInt8?
+    func uuGetUInt8(_ key: Key) -> UInt8?
     {
-        guard let num = uuSafeGetNumberOpt(key) else
+        guard let num = uuGetNumber(key) else
         {
             return nil
         }
@@ -251,9 +251,9 @@ public extension Dictionary
         return num.uint8Value
     }
     
-    func uuSafeGetUInt16Opt(_ key: Key) -> UInt16?
+    func uuGetUInt16(_ key: Key) -> UInt16?
     {
-        guard let num = uuSafeGetNumberOpt(key) else
+        guard let num = uuGetNumber(key) else
         {
             return nil
         }
@@ -261,9 +261,9 @@ public extension Dictionary
         return num.uint16Value
     }
     
-    func uuSafeGetUInt32Opt(_ key: Key) -> UInt32?
+    func uuGetUInt32(_ key: Key) -> UInt32?
     {
-        guard let num = uuSafeGetNumberOpt(key) else
+        guard let num = uuGetNumber(key) else
         {
             return nil
         }
@@ -271,9 +271,9 @@ public extension Dictionary
         return num.uint32Value
     }
     
-    func uuSafeGetUInt64Opt(_ key: Key) -> UInt64?
+    func uuGetUInt64(_ key: Key) -> UInt64?
     {
-        guard let num = uuSafeGetNumberOpt(key) else
+        guard let num = uuGetNumber(key) else
         {
             return nil
         }
@@ -281,9 +281,9 @@ public extension Dictionary
         return num.uint64Value
     }
     
-    func uuSafeGetInt8Opt(_ key: Key) -> Int8?
+    func uuGetInt8(_ key: Key) -> Int8?
     {
-        guard let num = uuSafeGetNumberOpt(key) else
+        guard let num = uuGetNumber(key) else
         {
             return nil
         }
@@ -291,9 +291,9 @@ public extension Dictionary
         return num.int8Value
     }
     
-    func uuSafeGetInt16Opt(_ key: Key) -> Int16?
+    func uuGetInt16(_ key: Key) -> Int16?
     {
-        guard let num = uuSafeGetNumberOpt(key) else
+        guard let num = uuGetNumber(key) else
         {
             return nil
         }
@@ -301,9 +301,9 @@ public extension Dictionary
         return num.int16Value
     }
     
-    func uuSafeGetInt32Opt(_ key: Key) -> Int32?
+    func uuGetInt32(_ key: Key) -> Int32?
     {
-        guard let num = uuSafeGetNumberOpt(key) else
+        guard let num = uuGetNumber(key) else
         {
             return nil
         }
@@ -311,9 +311,9 @@ public extension Dictionary
         return num.int32Value
     }
     
-    func uuSafeGetInt64Opt(_ key: Key) -> Int64?
+    func uuGetInt64(_ key: Key) -> Int64?
     {
-        guard let num = uuSafeGetNumberOpt(key) else
+        guard let num = uuGetNumber(key) else
         {
             return nil
         }
@@ -321,9 +321,9 @@ public extension Dictionary
         return num.int64Value
     }
     
-    func uuSafeGetFloatOpt(_ key: Key) -> Float?
+    func uuGetFloat(_ key: Key) -> Float?
     {
-        guard let num = uuSafeGetNumberOpt(key) else
+        guard let num = uuGetNumber(key) else
         {
             return nil
         }
@@ -331,9 +331,9 @@ public extension Dictionary
         return num.floatValue
     }
     
-    func uuSafeGetDoubleOpt(_ key: Key) -> Double?
+    func uuGetDouble(_ key: Key) -> Double?
     {
-        guard let num = uuSafeGetNumberOpt(key) else
+        guard let num = uuGetNumber(key) else
         {
             return nil
         }
@@ -343,7 +343,7 @@ public extension Dictionary
     
     func uuSafeGetInt(_ key: Key, _ defaultValue: Int = 0) -> Int
     {
-        if let val = uuSafeGetIntOpt(key)
+        if let val = uuGetInt(key)
         {
             return val
         }
@@ -353,7 +353,7 @@ public extension Dictionary
     
     func uuSafeGetUInt8(_ key: Key, _ defaultValue: UInt8 = 0) -> UInt8
     {
-        if let val = uuSafeGetUInt8Opt(key)
+        if let val = uuGetUInt8(key)
         {
             return val
         }
@@ -363,7 +363,7 @@ public extension Dictionary
     
     func uuSafeGetUInt16(_ key: Key, _ defaultValue: UInt16 = 0) -> UInt16
     {
-        if let val = uuSafeGetUInt16Opt(key)
+        if let val = uuGetUInt16(key)
         {
             return val
         }
@@ -373,7 +373,7 @@ public extension Dictionary
     
     func uuSafeGetUInt32(_ key: Key, _ defaultValue: UInt32 = 0) -> UInt32
     {
-        if let val = uuSafeGetUInt32Opt(key)
+        if let val = uuGetUInt32(key)
         {
             return val
         }
@@ -383,7 +383,7 @@ public extension Dictionary
     
     func uuSafeGetUInt64(_ key: Key, _ defaultValue: UInt64 = 0) -> UInt64
     {
-        if let val = uuSafeGetUInt64Opt(key)
+        if let val = uuGetUInt64(key)
         {
             return val
         }
@@ -393,7 +393,7 @@ public extension Dictionary
     
     func uuSafeGetInt8(_ key: Key, _ defaultValue: Int8 = 0) -> Int8
     {
-        if let val = uuSafeGetInt8Opt(key)
+        if let val = uuGetInt8(key)
         {
             return val
         }
@@ -403,7 +403,7 @@ public extension Dictionary
     
     func uuSafeGetInt16(_ key: Key, _ defaultValue: Int16 = 0) -> Int16
     {
-        if let val = uuSafeGetInt16Opt(key)
+        if let val = uuGetInt16(key)
         {
             return val
         }
@@ -413,7 +413,7 @@ public extension Dictionary
     
     func uuSafeGetInt32(_ key: Key, _ defaultValue: Int32 = 0) -> Int32
     {
-        if let val = uuSafeGetInt32Opt(key)
+        if let val = uuGetInt32(key)
         {
             return val
         }
@@ -423,7 +423,7 @@ public extension Dictionary
     
     func uuSafeGetInt64(_ key: Key, _ defaultValue: Int64 = 0) -> Int64
     {
-        if let val = uuSafeGetInt64Opt(key)
+        if let val = uuGetInt64(key)
         {
             return val
         }
@@ -433,7 +433,7 @@ public extension Dictionary
     
     func uuSafeGetFloat(_ key: Key, _ defaultValue: Float = 0) -> Float
     {
-        if let val = uuSafeGetFloatOpt(key)
+        if let val = uuGetFloat(key)
         {
             return val
         }
@@ -443,7 +443,7 @@ public extension Dictionary
     
     func uuSafeGetDouble(_ key: Key, _ defaultValue: Double = 0) -> Double
     {
-        if let val = uuSafeGetDoubleOpt(key)
+        if let val = uuGetDouble(key)
         {
             return val
         }
@@ -451,14 +451,14 @@ public extension Dictionary
         return defaultValue
     }
     
-    func uuSafeGetDictionary(_ key: Key) -> [AnyHashable:Any]?
+    func uuGetDictionary(_ key: Key) -> [AnyHashable:Any]?
     {
         return self[key] as? [AnyHashable:Any]
     }
     
-    func uuSafeGetObject<T: UUDictionaryConvertible>(type: T.Type, key: Key) -> T?
+    func uuGetObject<T: UUDictionaryConvertible>(type: T.Type, key: Key) -> T?
     {
-        guard let d = uuSafeGetDictionary(key) else
+        guard let d = uuGetDictionary(key) else
         {
             return nil
         }
@@ -466,9 +466,9 @@ public extension Dictionary
         return T.create(from: d)
     }
     
-    func uuSafeGetEnumOpt<T: RawRepresentable>(_ key: Key) -> T? where T.RawValue == String
+    func uuGetEnum<T: RawRepresentable>(_ key: Key) -> T? where T.RawValue == String
     {
-        guard let string = uuSafeGetStringOpt(key) else
+        guard let string = uuGetString(key) else
         {
             return nil
         }
@@ -478,17 +478,17 @@ public extension Dictionary
     
     func uuSafeGetEnum<T: RawRepresentable>(_ key: Key, _ defaultValue: T) -> T where T.RawValue == String
     {
-        return uuSafeGetEnumOpt(key) ?? defaultValue
+        return uuGetEnum(key) ?? defaultValue
     }
     
-    func uuSafeGetDictionaryArrayOpt(_ key: Key) -> [[AnyHashable:Any]]?
+    func uuGetDictionaryArray(_ key: Key) -> [[AnyHashable:Any]]?
     {
         return self[key] as? [[AnyHashable:Any]]
     }
     
-    func uuSafeGetObjectArrayOpt<T: UUDictionaryConvertible>(type: T.Type, key: Key) -> [T]?
+    func uuGetObjectArray<T: UUDictionaryConvertible>(type: T.Type, key: Key) -> [T]?
     {
-        guard let array = uuSafeGetDictionaryArrayOpt(key) else
+        guard let array = uuGetDictionaryArray(key) else
         {
             return nil
         }
@@ -504,7 +504,7 @@ public extension Dictionary
     
     func uuSafeGetObjectArray<T: UUDictionaryConvertible>(type: T.Type, key: Key) -> [T]
     {
-        guard let array = uuSafeGetDictionaryArrayOpt(key) else
+        guard let array = uuGetDictionaryArray(key) else
         {
             return []
         }
