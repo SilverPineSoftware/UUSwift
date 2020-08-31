@@ -52,9 +52,11 @@ public extension Dictionary
                 
                 for strVal in arrayVal
                 {
-                    let formattedVal = strVal.uuUrlEncoded()
-                    sb.appendFormat("%@%@=%@", prefix, arrayKey, formattedVal)
-                    prefix = "&"
+                    if let formattedVal = strVal.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                    {
+                        sb.appendFormat("%@%@=%@", prefix, arrayKey, formattedVal)
+                        prefix = "&"
+                    }
                 }
                 
                 continue
@@ -62,9 +64,10 @@ public extension Dictionary
             
             if (val != nil)
             {
-                let formattedVal = val!.uuUrlEncoded()
-                
-                sb.appendFormat("%@%@=%@", prefix, formattedKey, formattedVal)
+                if let formattedVal = val!.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                {
+                    sb.appendFormat("%@%@=%@", prefix, formattedKey, formattedVal)
+                }
             }
         }
         
