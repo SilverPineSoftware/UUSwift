@@ -629,3 +629,35 @@ public class UUHttpSession: NSObject
         shared.registerResponseHandler(handler)
     }
 }
+
+public extension NSError
+{
+    var uuHttpResponseCode: Int?
+    {
+        get
+        {
+            guard domain == UUHttpSessionErrorDomain else
+            {
+                return nil
+            }
+            
+            guard code == UUHttpSessionError.httpError.rawValue else
+            {
+                return nil
+            }
+            
+            return userInfo[UUHttpSessionHttpErrorCodeKey] as? Int
+        }
+    }
+}
+
+public extension Error
+{
+    var uuHttpResponseCode: Int?
+    {
+        get
+        {
+            return (self as NSError).uuHttpResponseCode
+        }
+    }
+}
