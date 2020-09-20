@@ -1,3 +1,5 @@
+<img src = "https://jonhays.me/uploads/2020/86a3741f4b.jpg" alt="" />
+
 # UUSwift
 [![Platform](http://cocoapod-badges.herokuapp.com/p/UUSwift/badge.png)](http://cocoadocs.org/docsets/UUSwift)
 [![Version](http://cocoapod-badges.herokuapp.com/v/UUSwift/badge.png)](http://cocoadocs.org/docsets/UUSwift)
@@ -6,6 +8,10 @@
 Useful Utilities is a collection of helper classes that extend or complement existing UIKit framework classes.
 
 ## Installation
+
+### - Swift Package Manager
+
+UUSwift has native SPM supports.
 
 ### - Cocoapods
 
