@@ -32,7 +32,7 @@ Then, following the instructions for [integrating Carthage frameworks into your 
 
 ## Requirements
 
-This library requires a deployment target of iOS 8.0 or greater or OSX 10.10 or greater.
+This library requires a deployment target of iOS 10.0 or greater or OSX 10.10 or greater.
 UUSwift currently supports Swift version 4.0 
 
 ## Contributing
