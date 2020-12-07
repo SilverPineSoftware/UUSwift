@@ -11,7 +11,7 @@
 
 import UIKit
 
-@IBDesignable class UUTextField: UITextField
+@IBDesignable public class UUTextField: UITextField
 {
     @IBInspectable public var leftPadding : CGFloat = 0
     {
@@ -50,17 +50,17 @@ import UIKit
         return UIEdgeInsets(top: topPadding, left: leftPadding, bottom: bottomPadding, right: rightPadding)
     }
     
-    override func textRect(forBounds bounds: CGRect) -> CGRect
+    public override func textRect(forBounds bounds: CGRect) -> CGRect
     {
         return bounds.inset(by: paddingRect)
     }
     
-    override func placeholderRect(forBounds bounds: CGRect) -> CGRect
+    public override func placeholderRect(forBounds bounds: CGRect) -> CGRect
     {
         return bounds.inset(by: paddingRect)
     }
     
-    override func editingRect(forBounds bounds: CGRect) -> CGRect
+    public override func editingRect(forBounds bounds: CGRect) -> CGRect
     {
 		return bounds.inset(by: paddingRect)
     }
