@@ -51,6 +51,18 @@ public extension UIViewController
         
         return didFindController
     }
+    
+    func uuPopToController(at index: Int, animated : Bool = true) -> Bool
+    {
+        guard let navVc = self.navigationController, index >= 0 && index < navVc.viewControllers.count else
+        {
+            return false
+        }
+        
+        let vcToPopTo = navVc.viewControllers[index]
+        navVc.popToViewController(vcToPopTo, animated: animated)
+        return true
+    }
 }
 
 #endif
