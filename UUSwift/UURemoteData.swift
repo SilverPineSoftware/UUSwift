@@ -82,12 +82,9 @@ public class UURemoteData : NSObject, UURemoteDataProtocol
             return nil
         }
         
-		if UUDataCache.shared.dataExists(for: key) {
-			let data = UUDataCache.shared.data(for: key)
-			if (data != nil)
-			{
-				return data
-			}
+        if let data = UUDataCache.shared.data(for: key)
+        {
+            return data
         }
         
         if (self.isDownloadActive(for: key))
