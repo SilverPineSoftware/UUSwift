@@ -19,4 +19,9 @@ public extension NSObject
     {
         return objc_getAssociatedObject(self, key)
     }
+    
+    class var uuClassName: String
+    {
+        return String(describing: self)
+    }
 }
