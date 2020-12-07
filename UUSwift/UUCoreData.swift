@@ -675,7 +675,7 @@ public extension NSManagedObject
                 {
                     if (rel.value.isToMany)
                     {
-                        if let dictionaryArray = dictionary.uuSafeGetDictionaryArray(rel.key)
+                        if let dictionaryArray = dictionary.uuGetDictionaryArray(rel.key)
                         {
                             var relSet : Set<NSManagedObject> = Set()
                             
@@ -691,7 +691,7 @@ public extension NSManagedObject
                     }
                     else
                     {
-                        if let d = dictionary.uuSafeGetDictionary(rel.key)
+                        if let d = dictionary.uuGetDictionary(rel.key)
                         {
                             let relObj = NSEntityDescription.insertNewObject(forEntityName: destEntityName, into: ctx)
                             relObj.uuFill(from: d, context: ctx)
