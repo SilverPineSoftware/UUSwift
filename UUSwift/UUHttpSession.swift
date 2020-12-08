@@ -88,7 +88,7 @@ public class UUHttpRequest: NSObject
 {
 	public static var defaultTimeout : TimeInterval = 60.0
 	public static var defaultCachePolicy : URLRequest.CachePolicy = .useProtocolCachePolicy
-	
+    
     public var url : String = ""
     public var httpMethod : UUHttpMethod = .get
     public var queryArguments : UUQueryStringArgs = [:]
@@ -104,6 +104,7 @@ public class UUHttpRequest: NSObject
 	public var httpTask : URLSessionTask? = nil
     public var responseHandler : UUHttpResponseHandler? = nil
     public var form : UUHttpForm? = nil
+    public var appendSquareBracketsToQueryStringArrays: Bool = true
     
     public init(url : String, method: UUHttpMethod = .get, queryArguments: UUQueryStringArgs = [:], headers: UUHttpHeaders = [:], body : Data? = nil, contentType : String? = nil)
     {
@@ -345,8 +346,9 @@ public class UUHttpSession: NSObject
 {
     private var urlSession : URLSession? = nil
     private var sessionConfiguration : URLSessionConfiguration? = nil
-    private var activeTasks : UUThreadSafeArray<URLSessionTask> = UUThreadSafeArray()
+    private var activeTasks : [Int:URLSessionTask] = [:]
     private var responseHandlers : [String:UUHttpResponseHandler] = [:]
+    private var activeTasksLock = NSRecursiveLock()
     
     public static let shared = UUHttpSession()
     
@@ -394,10 +396,8 @@ public class UUHttpSession: NSObject
         
         request.startTime = Date.timeIntervalSinceReferenceDate
         
-        /*UUDebugLog("Begin Request\n\nMethod: %@\nURL: %@\nHeaders: %@)",
-            String(describing: request.httpRequest?.httpMethod),
-            String(describing: request.httpRequest?.url),
-            String(describing: request.httpRequest?.allHTTPHeaderFields))
+        // LOGGING
+        UUDebugLog("\n\(request.httpMethod.rawValue.uppercased()) \(httpRequest?.url?.absoluteString ?? "null"), Begin Request\n\nHeaders: \(String(describing: request.httpRequest?.allHTTPHeaderFields))\n")
         
         if (request.body != nil)
         {
@@ -413,20 +413,52 @@ public class UUHttpSession: NSObject
                 }
             }
         }
-        */
+        // LOGGING
+        
         let task = urlSession!.dataTask(with: request.httpRequest!)
         { (data : Data?, response: URLResponse?, error : Error?) in
 			
-			if let httpTask = request.httpTask {
-				self.activeTasks.remove(httpTask)
-			}
+            if let task = request.httpTask
+            {
+                self.removeActiveTask(task)
+            }
+            
             self.handleResponse(request, data, response, error, completion)
         }
 		request.httpTask = task
 		
-        activeTasks.append(task)
+        addActiveTask(task)
         task.resume()
         return request
+    }
+    
+    private func removeActiveTask(_ task: URLSessionTask)
+    {
+        defer { activeTasksLock.unlock() }
+        activeTasksLock.lock()
+        
+        activeTasks.removeValue(forKey: task.taskIdentifier)
+    }
+    
+    private func addActiveTask(_ task: URLSessionTask)
+    {
+        defer { activeTasksLock.unlock() }
+        activeTasksLock.lock()
+        
+        activeTasks[task.taskIdentifier] = task
+    }
+    
+    public func cancellAllTasks()
+    {
+        defer { activeTasksLock.unlock() }
+        activeTasksLock.lock()
+        
+        for task in activeTasks.values
+        {
+            task.cancel()
+        }
+        
+        activeTasks.removeAll()
     }
     
     private func buildRequest(_ request : UUHttpRequest) -> URLRequest?
@@ -434,7 +466,7 @@ public class UUHttpSession: NSObject
         var fullUrl = request.url;
         if (request.queryArguments.count > 0)
         {
-            fullUrl = "\(request.url)\(request.queryArguments.uuBuildQueryString())"
+            fullUrl = "\(request.url)\(request.queryArguments.uuBuildQueryString(request.appendSquareBracketsToQueryStringArrays))"
         }
         
         guard let url = URL.init(string: fullUrl) else
@@ -500,18 +532,18 @@ public class UUHttpSession: NSObject
             httpResponseCode = httpResponse!.statusCode
         }
         
-		/*
-        UUDebugLog("Http Response Code: %d", httpResponseCode)
+		// LOGGING
+        UUDebugLog("\(request.httpMethod.rawValue.uppercased()) \(request.url), Http Response Code: \(httpResponseCode)")
         
         if let responseHeaders = httpResponse?.allHeaderFields
         {
-            UUDebugLog("Response Headers: %@", responseHeaders)
+            UUDebugLog("\(request.httpMethod.rawValue.uppercased()) \(request.url), Response Headers: \(responseHeaders)")
         }
-		*/
+		// LOGGING
         
         if (error != nil)
         {
-            UUDebugLog("Got an error: %@", String(describing: error!))
+            UUDebugLog("\(request.httpMethod.rawValue.uppercased()) \(request.url), Got an error: \(String(describing: error!))")
         }
         else
         {
@@ -554,8 +586,8 @@ public class UUHttpSession: NSObject
             
             let mimeType = httpResponse!.mimeType
             
-            /*UUDebugLog("Parsing response,\n%@ %@", String(describing: httpRequest?.httpMethod), String(describing: httpRequest?.url))
-            UUDebugLog("Response Mime: %@", String(describing: mimeType))
+            // LOGGING
+            UUDebugLog("\(request.httpMethod.rawValue.uppercased()) \(request.url), Response Mime: \(String(describing: mimeType))")
             
             if let responseData = data
             {
@@ -570,9 +602,10 @@ public class UUHttpSession: NSObject
                     responseStr = String(data: responseData, encoding: .utf8)
                 }
                 
-                //UUDebugLog("Raw Response: %@", String(describing: responseStr))
+                UUDebugLog("\(request.httpMethod.rawValue.uppercased()) \(request.url), Raw Response: \(String(describing: responseStr))")
             }
-            */
+            // LOGGING
+            
             var handler = request.responseHandler
             
             if (handler == nil && mimeType != nil)
@@ -627,5 +660,37 @@ public class UUHttpSession: NSObject
     public static func registerResponseHandler(_ handler : UUHttpResponseHandler)
     {
         shared.registerResponseHandler(handler)
+    }
+}
+
+public extension NSError
+{
+    var uuHttpResponseCode: Int?
+    {
+        get
+        {
+            guard domain == UUHttpSessionErrorDomain else
+            {
+                return nil
+            }
+            
+            guard code == UUHttpSessionError.httpError.rawValue else
+            {
+                return nil
+            }
+            
+            return userInfo[UUHttpSessionHttpErrorCodeKey] as? Int
+        }
+    }
+}
+
+public extension Error
+{
+    var uuHttpResponseCode: Int?
+    {
+        get
+        {
+            return (self as NSError).uuHttpResponseCode
+        }
     }
 }

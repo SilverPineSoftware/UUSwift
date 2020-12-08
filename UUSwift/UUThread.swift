@@ -231,4 +231,18 @@ public class UUMutexWrapper: NSObject
 	}
 }
 
+public func uuInvokeBackground(_ block: @escaping (()->()))
+{
+    DispatchQueue.global(qos: .background).async
+    {
+        block()
+    }
+}
 
+public func uuInvokeMain(_ block: @escaping (()->()))
+{
+    DispatchQueue.main.async
+    {
+        block()
+    }
+}

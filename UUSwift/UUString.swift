@@ -11,6 +11,7 @@
 	import AppKit
 #else
 	import UIKit
+    import MobileCoreServices
 #endif
 
 public extension String
@@ -194,5 +195,98 @@ public extension String
         return working.lowercased()
     }
     
+    private static let kUUDayOfMonthSuffixFirst = "st"
+    private static let kUUDayOfMonthSuffixSecond = "nd"
+    private static let kUUDayOfMonthSuffixThird = "rd"
+    private static let kUUDayOfMonthSuffixNth = "th"
+    
+    private static let kUUDayOfMonthSuffixFirstKey  = "UUDayOfMonthSuffixFirstKey"
+    private static let kUUDayOfMonthSuffixSecondKey = "UUDayOfMonthSuffixSecondKey"
+    private static let kUUDayOfMonthSuffixThirdKey  = "UUDayOfMonthSuffixThirdKey"
+    private static let kUUDayOfMonthSuffixNthKey    = "UUDayOfMonthSuffixNthKey"
+
+    static func uuNumberSuffix(_ number: Int) -> String
+    {
+        switch (number.uuLastDigit())
+        {
+            case 1:
+                return Bundle.main.localizedString(forKey: kUUDayOfMonthSuffixFirstKey, value: kUUDayOfMonthSuffixFirst, table: nil)
+                
+            case 2:
+                return Bundle.main.localizedString(forKey: kUUDayOfMonthSuffixSecondKey, value: kUUDayOfMonthSuffixSecond, table: nil)
+                
+            case 3:
+                return Bundle.main.localizedString(forKey: kUUDayOfMonthSuffixThirdKey, value: kUUDayOfMonthSuffixThird, table: nil)
+            
+            default:
+                return Bundle.main.localizedString(forKey: kUUDayOfMonthSuffixNthKey, value: kUUDayOfMonthSuffixNth, table: nil)
+        }
+    }
+    
+    func uuRemoveQueryString() -> String
+    {
+        if let url = URL(string: self),
+           let scheme = url.scheme,
+           let host = url.host,
+           !scheme.isEmpty,
+           !host.isEmpty,
+           !url.path.isEmpty
+        {
+            let result = "\(scheme)://\(host)\(url.path)"
+            if (!result.isEmpty)
+            {
+               return result
+            }
+        }
+                   
+        return self
+    }
+    
+    func uuGetFileName() -> String
+    {
+        let tmp = uuRemoveQueryString()
+        let nsString = tmp as NSString
+        let ext = nsString.lastPathComponent
+        return ext
+    }
+    
+    func uuGetFileExtension() -> String
+    {
+        let tmp = uuRemoveQueryString()
+        let nsString = tmp as NSString
+        let ext = nsString.pathExtension
+        return ext
+    }
+    
+    #if os(iOS)
+    
+    func uuGetMimeType() -> String?
+    {
+        let ext = uuGetFileExtension()
+        
+        if let utiRef = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext as CFString, nil)
+        {
+            let uti = utiRef.takeUnretainedValue()
+            utiRef.release()
+            
+            if let mimeTypeRef = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType)
+            {
+                let mimeType = mimeTypeRef.takeUnretainedValue()
+                mimeTypeRef.release()
+                return mimeType as String
+            }
+        }
+        
+        return nil
+    }
+    
+    #endif
 }
 
+extension Int
+{
+    func uuLastDigit() -> Int
+    {
+        return Int("\(self)".uuLastNChars(1)) ?? 0
+    }
+}
