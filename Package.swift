@@ -16,10 +16,31 @@ let package = Package(
             name: "UUSwift",
             targets: ["UUSwift"]),
     ],
+	dependencies: [
+		// Here we define our package's external dependencies
+		// and from where they can be fetched:
+		.package(
+			url: "https://github.com/SilverPineSoftware/UUSwiftCore.git",
+			from: "1.0.3"
+		),
+		.package(
+			url: "https://github.com/SilverPineSoftware/UUSwiftUX.git",
+			from: "1.0.3"
+		),
+		.package(
+			url: "https://github.com/SilverPineSoftware/UUSwiftImage.git",
+			from: "1.0.3"
+		),
+		.package(
+			url: "https://github.com/SilverPineSoftware/UUSwiftNetworking.git",
+			from: "1.0.3"
+		)
+	],
+
     targets: [
         .target(
             name: "UUSwift",
-            dependencies: [],
+            dependencies: ["UUSwiftCore", "UUSwiftUX", "UUSwiftImage", "UUSwiftNetworking" ],
             path: "UUSwift",
             exclude: ["UUSwift-Info.plist"])
     ],
@@ -28,3 +49,4 @@ let package = Package(
             .v5
     ]
 )
+
