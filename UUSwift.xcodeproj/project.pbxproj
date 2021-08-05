@@ -18,6 +18,10 @@
 		C574967026BBAAF300CECCC0 /* UUSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UUSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C574967326BBAAF300CECCC0 /* UUSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUSwift.h; sourceTree = "<group>"; };
 		C574967426BBAAF300CECCC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C574968726BBADDB00CECCC0 /* UUSwift.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UUSwift.podspec; sourceTree = "<group>"; };
+		C574968826BBADDB00CECCC0 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		C574968926BBADDB00CECCC0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C574968A26BBADDB00CECCC0 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +42,10 @@
 		C574966626BBAAF300CECCC0 = {
 			isa = PBXGroup;
 			children = (
+				C574968A26BBADDB00CECCC0 /* LICENSE.md */,
+				C574968826BBADDB00CECCC0 /* Package.swift */,
+				C574968926BBADDB00CECCC0 /* README.md */,
+				C574968726BBADDB00CECCC0 /* UUSwift.podspec */,
 				C574967226BBAAF300CECCC0 /* UUSwift */,
 				C574967126BBAAF300CECCC0 /* Products */,
 			);
@@ -108,6 +116,7 @@
 				TargetAttributes = {
 					C574966F26BBAAF300CECCC0 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -281,6 +290,7 @@
 		C574967926BBAAF300CECCC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.1.1;
 				DEFINES_MODULE = YES;
@@ -299,6 +309,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.silverpine.UUSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -307,6 +318,7 @@
 		C574967A26BBAAF300CECCC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.1.1;
 				DEFINES_MODULE = YES;
