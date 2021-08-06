@@ -12,6 +12,7 @@
 		C574968026BBABCE00CECCC0 /* UUSwiftNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = C574967F26BBABCE00CECCC0 /* UUSwiftNetworking */; };
 		C574968326BBAC4B00CECCC0 /* UUSwiftImage in Frameworks */ = {isa = PBXBuildFile; productRef = C574968226BBAC4B00CECCC0 /* UUSwiftImage */; };
 		C574968626BBACC000CECCC0 /* UUSwiftUX in Frameworks */ = {isa = PBXBuildFile; productRef = C574968526BBACC000CECCC0 /* UUSwiftUX */; };
+		C57599E326BD060200B8F90D /* UUSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57599E226BD05FE00B8F90D /* UUSwift.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		C574968826BBADDB00CECCC0 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		C574968926BBADDB00CECCC0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C574968A26BBADDB00CECCC0 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		C57599E226BD05FE00B8F90D /* UUSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUSwift.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 		C574967226BBAAF300CECCC0 /* UUSwift */ = {
 			isa = PBXGroup;
 			children = (
+				C57599E226BD05FE00B8F90D /* UUSwift.swift */,
 				C574967326BBAAF300CECCC0 /* UUSwift.h */,
 				C574967426BBAAF300CECCC0 /* Info.plist */,
 			);
@@ -159,6 +162,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C57599E326BD060200B8F90D /* UUSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

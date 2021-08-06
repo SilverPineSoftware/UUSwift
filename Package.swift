@@ -41,7 +41,7 @@ let package = Package(
         .target(
             name: "UUSwift",
             dependencies: ["UUSwiftCore", "UUSwiftUX", "UUSwiftImage", "UUSwiftNetworking" ],
-            path: "",
+            path: "UUSwift",
             exclude: ["UUSwift-Info.plist"])
     ],
     swiftLanguageVersions: [
