@@ -33,7 +33,7 @@ let package = Package(
 		),
 		.package(
 			url: "https://github.com/SilverPineSoftware/UUSwiftNetworking.git",
-			from: "1.0.3"
+			from: "1.0.5"
 		)
 	],
 
