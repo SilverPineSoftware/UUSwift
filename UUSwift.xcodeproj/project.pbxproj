@@ -19,7 +19,6 @@
 		C574967026BBAAF300CECCC0 /* UUSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UUSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C574967326BBAAF300CECCC0 /* UUSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUSwift.h; sourceTree = "<group>"; };
 		C574967426BBAAF300CECCC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C574968726BBADDB00CECCC0 /* UUSwift.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UUSwift.podspec; sourceTree = "<group>"; };
 		C574968826BBADDB00CECCC0 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		C574968926BBADDB00CECCC0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C574968A26BBADDB00CECCC0 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
@@ -47,7 +46,6 @@
 				C574968A26BBADDB00CECCC0 /* LICENSE.md */,
 				C574968826BBADDB00CECCC0 /* Package.swift */,
 				C574968926BBADDB00CECCC0 /* README.md */,
-				C574968726BBADDB00CECCC0 /* UUSwift.podspec */,
 				C574967226BBAAF300CECCC0 /* UUSwift */,
 				C574967126BBAAF300CECCC0 /* Products */,
 			);
