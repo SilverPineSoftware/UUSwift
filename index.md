@@ -1,20 +1,20 @@
 Useful Utilities is a collection of helper classes that extend or complement existing UIKit framework classes. UUSwift has been used in hundreds of shipping macOS and iOS apps.
 
 UUSwift brings together into one package several sub-packages, specifically:
-- (UUSwiftCore)[https://github.com/SilverPineSoftware/UUSwiftCore]
-- (UUSwiftNetworking)[https://github.com/SilverPineSoftware/UUSwiftNetworking]
-- (UUSwiftImage)[https://github.com/SilverPineSoftware/UUSwiftImage]
-- (UUSwiftUX)[https://github.com/SilverPineSoftware/UUSwiftUX]
+- [UUSwiftCore](https://github.com/SilverPineSoftware/UUSwiftCore)
+- [UUSwiftNetworking](https://github.com/SilverPineSoftware/UUSwiftNetworking)
+- [UUSwiftImage](https://github.com/SilverPineSoftware/UUSwiftImage)
+- [UUSwiftUX](https://github.com/SilverPineSoftware/UUSwiftUX)
 
 # Installation
 
 ### Swift Package Manager
 
-UUSwift has native SPM support. The individual sub-projects are also part of the (Swift Package Index)[https://swiftpackageindex.com] project:
-- (UUSwiftCore)[https://swiftpackageindex.com/SilverPineSoftware/UUSwiftCore]
-- (UUSwiftNetworking)[https://swiftpackageindex.com/SilverPineSoftware/UUSwiftNetworking]
-- (UUSwiftImage)[https://swiftpackageindex.com/SilverPineSoftware/UUSwiftImage]
-- (UUSwiftUX)[https://swiftpackageindex.com/SilverPineSoftware/UUSwiftUX]
+UUSwift has native SPM support. The individual sub-projects are also part of the [Swift Package Index](https://swiftpackageindex.com) project:
+- [UUSwiftCore](https://swiftpackageindex.com/SilverPineSoftware/UUSwiftCore)
+- [UUSwiftNetworking](https://swiftpackageindex.com/SilverPineSoftware/UUSwiftNetworking)
+- [UUSwiftImage](https://swiftpackageindex.com/SilverPineSoftware/UUSwiftImage)
+- [UUSwiftUX](https://swiftpackageindex.com/SilverPineSoftware/UUSwiftUX)
 
 ### Carthage
 
