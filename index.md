@@ -1,8 +1,6 @@
-<img src = "https://jonhays.me/uploads/2020/86a3741f4b.jpg" alt="" />
-
 Useful Utilities is a collection of helper classes that extend or complement existing UIKit framework classes.
 
-## Installation
+# Installation
 
 ### - Swift Package Manager
 
