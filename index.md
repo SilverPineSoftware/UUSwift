@@ -1,3 +1,6 @@
+[![Platform](http://cocoapod-badges.herokuapp.com/p/UUSwift/badge.png)](http://cocoadocs.org/docsets/UUSwift)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 Useful Utilities is a collection of helper classes that extend or complement existing UIKit framework classes. UUSwift has been used in hundreds of shipping macOS and iOS apps.
 
 UUSwift brings together into one package several sub-packages, specifically:
