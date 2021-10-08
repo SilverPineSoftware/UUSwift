@@ -1,37 +1,45 @@
-## Welcome to GitHub Pages
+<img src = "https://jonhays.me/uploads/2020/86a3741f4b.jpg" alt="" />
 
-You can use the [editor on GitHub](https://github.com/SilverPineSoftware/UUSwift/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Useful Utilities is a collection of helper classes that extend or complement existing UIKit framework classes.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Installation
 
-### Markdown
+### - Swift Package Manager
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+UUSwift has native SPM support.
 
-```markdown
-Syntax highlighted code block
+### - Carthage
 
-# Header 1
-## Header 2
-### Header 3
+UUSwift may be installed via [Carthage](https://github.com/Carthage/Carthage). To install it, simply add the following line to your `Cartfile`:
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+github "SilverPineSoftware/UUSwift"
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Then, following the instructions for [integrating Carthage frameworks into your app](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos), link the `UUSwift` framework into your project.
 
-### Jekyll Themes
+## Requirements
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/SilverPineSoftware/UUSwift/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+This library requires a deployment target of iOS 10.0 or greater or OSX 10.10 or greater.
+UUSwift currently supports Swift version 4.0 
 
-### Support or Contact
+## Contributing
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Please **open pull requests against the `develop` branch**
+
+## Swift
+
+UUSwift is written entirely in Swift and currently does not support Objective-C interoperability.
+
+## Inspiration
+
+UUSwift is an updated implementation of the Objective-C classes available here:
+[https://github.com/cheesemaker/toolbox](https://github.com/cheesemaker/toolbox)
+
+## License
+
+UUSwift is available under the MIT license. See [`LICENSE.md`](https://github.com/SilverPineSoftware/UUSwift/blob/master/LICENSE.md) for more information.
+
+## Contributors
+
+[A list of contributors is available through GitHub.](https://github.com/SilverPineSoftware/UUSwift/graphs/contributors)
