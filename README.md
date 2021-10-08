@@ -38,7 +38,7 @@ UUSwift is an updated implementation of the Objective-C classes available here:
 
 ## License
 
-UUSwift is available under the Apache 2.0 license. See [`LICENSE.md`](https://github.com/SilverPineSoftware/UUSwift/blob/master/LICENSE.md) for more information.
+UUSwift is available under the MIT license. See [`LICENSE.md`](https://github.com/SilverPineSoftware/UUSwift/blob/master/LICENSE.md) for more information.
 
 ## Contributors
 
