@@ -21,19 +21,19 @@ let package = Package(
 		// and from where they can be fetched:
 		.package(
 			url: "https://github.com/SilverPineSoftware/UUSwiftCore.git",
-			from: "1.0.4"
+			from: "1.1.3"
 		),
 		.package(
 			url: "https://github.com/SilverPineSoftware/UUSwiftUX.git",
-			from: "1.0.3"
+			from: "1.0.7"
 		),
 		.package(
 			url: "https://github.com/SilverPineSoftware/UUSwiftImage.git",
-			from: "1.0.3"
+			from: "1.1.2"
 		),
 		.package(
 			url: "https://github.com/SilverPineSoftware/UUSwiftNetworking.git",
-			from: "1.0.5"
+			from: "1.0.9"
 		)
 	],
 
