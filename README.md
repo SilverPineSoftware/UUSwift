@@ -1,3 +1,6 @@
+[![Platform](http://cocoapod-badges.herokuapp.com/p/UUSwift/badge.png)](http://cocoadocs.org/docsets/UUSwift)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+
 <img src = "https://jonhays.me/uploads/2020/86a3741f4b.jpg" alt="" />
 
 Useful Utilities is a collection of helper classes that extend or complement existing UIKit framework classes.
@@ -38,7 +41,7 @@ UUSwift is an updated implementation of the Objective-C classes available here:
 
 ## License
 
-UUSwift is available under the Apache 2.0 license. See [`LICENSE.md`](https://github.com/SilverPineSoftware/UUSwift/blob/master/LICENSE.md) for more information.
+UUSwift is available under the MIT license. See [`LICENSE.md`](https://github.com/SilverPineSoftware/UUSwift/blob/master/LICENSE.md) for more information.
 
 ## Contributors
 
