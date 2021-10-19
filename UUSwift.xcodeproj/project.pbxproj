@@ -385,7 +385,7 @@
 			repositoryURL = "https://github.com/SilverPineSoftware/UUSwiftNetworking";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.9;
+				minimumVersion = 1.1.0;
 			};
 		};
 		C574968126BBAC4B00CECCC0 /* XCRemoteSwiftPackageReference "UUSwiftImage" */ = {
